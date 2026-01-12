@@ -1,0 +1,41 @@
+---
+import { SITE } from "@/constants";
+import HeaderIsland from '../islands/HeaderIsland.tsx';
+
+const colorModeSSR = Astro.locals.colorMode;
+---
+
+<header class="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <div class="flex items-center space-x-8">
+        <a
+          href="/"
+          class="flex items-center space-x-2 text-gray-900 dark:text-white hover:text-blue-600 transition-colors"
+        >
+          <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+            <span class="text-white font-bold text-sm">AW</span>
+          </div>
+          <span class="font-bold text-xl">AWFixer Wiki</span>
+        </a>
+      </div>
+
+      <nav class="flex items-center space-x-4">
+        <a
+          href="/overview/getting-started"
+          class="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
+        >
+          Getting Started
+        </a>
+        <a
+          href="/overview/guides"
+          class="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
+        >
+          Guides
+        </a>
+      </nav>
+    </div>
+  </div>
+  
+  <HeaderIsland client:load initialColorMode={colorModeSSR} />
+</header>

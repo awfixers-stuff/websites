@@ -1,0 +1,26 @@
+---
+export interface Props {
+  title?: string;
+  message?: string;
+  homeUrl?: string;
+}
+
+const { 
+  title = "404", 
+  message = "Page not found", 
+  homeUrl = "/" 
+} = Astro.props;
+---
+
+<div class="flex items-center justify-center min-h-screen">
+  <div class="text-center">
+    <h1 class="text-4xl font-bold text-gray-900 mb-4">{title}</h1>
+    <p class="text-xl text-gray-600 mb-8">{message}</p>
+    <a
+      href={homeUrl}
+      class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+    >
+      Go back home
+    </a>
+  </div>
+</div>

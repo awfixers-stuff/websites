@@ -1,0 +1,77 @@
+---
+import { GitHub, Twitter, RssIcon, XIcon } from "./Icons";
+import { Link } from "./Link";
+import { FOOTER_COLUMNS, FOOTER_QUOTE, FOOTER_INFO } from "@/constants";
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="relative z-20 bg-black/80 backdrop-blur-md border-t border-white/10">
+  <div class="container mx-auto px-8 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
+      {
+        FOOTER_COLUMNS.map((column) => (
+          <div key={column.title} class="space-y-4">
+            <h3 class="text-lg font-semibold text-white mb-4">
+              {column.title}
+            </h3>
+            <ul class="space-y-2">
+              {
+                column.links.map((link) => {
+                  const isExternal = link.href.startsWith("http");
+                  return (
+                    <li key={link.id}>
+                      <a
+                        href={link.href}
+                        class="text-white/60 hover:text-white transition-colors duration-200 text-sm"
+                        target={isExternal ? "_blank" : undefined}
+                        rel={isExternal ? "noopener noreferrer" : undefined}
+                      >
+                        {link.text}
+                      </a>
+                    </li>
+                  );
+                })
+              }
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="border-t border-white/10 pt-8">
+      <blockquote class="text-center mb-8">
+        <p class="text-white/80 italic text-lg md:text-xl font-serif">
+          "{FOOTER_QUOTE.text}"
+        </p>
+        <footer class="text-white/60 text-sm mt-2">
+          — {FOOTER_QUOTE.author}
+        </footer>
+      </blockquote>
+    </div>
+
+    <div class="border-t border-white/10 pt-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-4">
+          <img
+            src={FOOTER_INFO.logoUrl}
+            alt={FOOTER_INFO.logoAlt}
+            width={40}
+            height={40}
+            class="rounded-full border-2 border-white/20"
+          />
+          <div>
+            <p class="text-white/60 text-sm">
+              © {currentYear} {FOOTER_INFO.companyName}
+            </p>
+            <p class="text-white/40 text-xs">All rights reserved</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-6">
+          <p class="text-white/40 text-sm">{FOOTER_INFO.tagline}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

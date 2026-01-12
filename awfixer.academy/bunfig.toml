@@ -1,0 +1,22 @@
+[install]
+# Use exact versions for reproducible builds
+exact = true
+
+# Prefer faster, more recent algorithms
+fingerprint = true
+
+[lockfile]
+# Print installation progress
+print = "yarn"
+
+[test]
+# Enable test coverage
+coverage = true
+
+[run]
+# Enable hot module replacement
+hot = true
+
+[target]
+# Default to Node.js compatibility when needed
+bundler = true

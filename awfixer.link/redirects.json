@@ -1,0 +1,12 @@
+[
+  {
+    "source": "/discord",
+    "destination": "https://discord.awfixer.com",
+    "permanent": true
+  },
+  {
+    "source": "/",
+    "destination": "https://awfixer.com",
+    "permanent": true
+  }
+]

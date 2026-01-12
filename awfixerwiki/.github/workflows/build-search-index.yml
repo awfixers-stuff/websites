@@ -1,0 +1,27 @@
+name: Build Search Index
+
+on:
+  workflow_dispatch:
+  deployment_status:
+    states: [success]
+
+jobs:
+  build-index:
+    runs-on: ubuntu-latest
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.deployment_status.state == 'success' &&
+       contains(github.event.deployment.environment, 'production'))
+    steps:
+      - uses: actions/checkout@master
+      - name: Scrape and index docs
+        env:
+          HOST_URL: ${{ secrets.MEILISEARCH_HOST_URL }}
+          API_KEY: ${{ secrets.MEILISEARCH_WRITE_API_KEY }}
+          CONFIG_FILE_PATH: ${{ github.workspace }}/meilisearch-docs-scraper.config.json
+        run: |
+          docker run -t --rm \
+            -e MEILISEARCH_HOST_URL=$HOST_URL \
+            -e MEILISEARCH_API_KEY=$API_KEY \
+            -v $CONFIG_FILE_PATH:/docs-scraper/config.json \
+            getmeili/docs-scraper:latest pipenv run ./docs_scraper config.json

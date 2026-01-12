@@ -1,0 +1,12 @@
+[install]
+cache = true
+frozen-lockfile = true
+
+[run]
+shell = "bun"
+
+[test]
+preload = ["./test-setup.ts"]
+
+[lockfile]
+print = "yarn"

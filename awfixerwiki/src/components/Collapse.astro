@@ -1,0 +1,31 @@
+---
+import { slugify } from "@/utils/slugify";
+import { Arrow } from "./Icon";
+import CollapseIsland from "../islands/CollapseIsland.tsx";
+
+const { title, slug } = Astro.props;
+const newSlug = slug ?? slugify(title);
+
+---
+
+<details
+  className="my-4 mx-2 cursor-pointer"
+  id={newSlug}
+>
+  <summary className="font-medium flex items-center">
+    <span className="mr-2">
+      <Arrow isExpanded={false} />
+    </span>
+    {title}
+  </summary>
+  <div className="cursor-default pl-6">
+    <slot />
+  </div>
+  
+  <CollapseIsland 
+    client:load 
+    title={title} 
+    slug={slug} 
+    initialExpanded={false}
+  />
+</details>

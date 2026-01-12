@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "@opencode-ai/plugin": "1.0.223"
+  },
+  "workspaces": {
+    "packages": [
+      "plugin",
+      "tool"
+    ]
+  }
+}

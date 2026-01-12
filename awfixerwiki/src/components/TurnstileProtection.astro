@@ -1,0 +1,17 @@
+---
+interface TurnstileProtectionProps {
+  onVerified: () => void;
+  requireVerification?: boolean;
+  verificationMessage?: string;
+  error?: string;
+  loading?: boolean;
+}
+
+const { children, requireVerification = false } = Astro.props;
+---
+
+{!requireVerification ? (
+  children
+) : (
+  children
+)}

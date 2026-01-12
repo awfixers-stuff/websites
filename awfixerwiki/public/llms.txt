@@ -1,0 +1,76 @@
+# AWFixer Wiki - LLM Crawler Access Policy
+# This file manages which LLM crawlers are allowed to access specific content
+
+# Allowed LLM Providers (with restrictions)
+# OpenAI - Limited access to overview and getting started content
+User-agent: ChatGPT-User
+Allow: /overview/
+Allow: /quick-start
+Allow: /guides/getting-started
+Disallow: /
+
+User-agent: GPTBot
+Allow: /overview/
+Allow: /quick-start
+Allow: /guides/getting-started
+Disallow: /
+
+# Anthropic Claude - Limited access
+User-agent: Claude-Web
+Allow: /overview/
+Allow: /quick-start
+Disallow: /
+
+User-agent: ClaudeBot
+Allow: /overview/
+Allow: /quick-start
+Disallow: /
+
+# Google Gemini - Limited access
+User-agent: Google-Extended
+Allow: /overview/
+Allow: /quick-start
+Allow: /guides/getting-started
+Disallow: /
+
+# Perplexity - Limited access
+User-agent: PerplexityBot
+Allow: /overview/
+Allow: /quick-start
+Disallow: /
+
+# Blocked LLM Providers
+User-agent: YouBot
+Disallow: /
+
+User-agent: cohere-ai
+Disallow: /
+
+User-agent: omgili
+Disallow: /
+
+# General restrictions for all LLM crawlers
+User-agent: *
+Disallow: /api/
+Disallow: /admin/
+Disallow: /export/
+Disallow: /*?format=md$
+Disallow: /tutorials/
+Disallow: /reference/
+Disallow: /maturity/
+Disallow: /migration/
+
+# Rate limiting notice
+# All LLM crawlers are subject to rate limiting via middleware
+# Excessive requests will be blocked automatically
+
+# Content usage restrictions
+# Allowed content may be used for training AI models
+# Users should be directed to the original source for complete information
+# Commercial use requires explicit permission
+
+# Contact for access requests
+# For expanded access, contact: webmaster@awfixer.com
+
+# Last updated: 2025-01-11
+# Review date: 2025-04-11

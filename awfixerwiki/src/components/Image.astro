@@ -1,0 +1,31 @@
+---
+export interface Props {
+  src: string;
+  alt?: string;
+  title?: string;
+  href?: string;
+  width?: number;
+  height?: number;
+  className?: string;
+}
+
+const { 
+  src, 
+  alt = "", 
+  title, 
+  href, 
+  width, 
+  height, 
+  className = "" 
+} = Astro.props;
+---
+
+{href ? (
+  <a href={href} target="_blank" rel="noopener" class={`block xl:-mx-8 ${className}`}>
+    <img src={src} alt={alt} title={title} width={width} height={height} />
+  </a>
+) : (
+  <div class={`block xl:-mx-8 ${className}`}>
+    <img src={src} alt={alt} title={title} width={width} height={height} />
+  </div>
+)}

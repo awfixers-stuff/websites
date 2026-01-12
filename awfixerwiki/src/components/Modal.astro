@@ -1,0 +1,17 @@
+---
+import ModalDialogIsland from '../islands/ModalDialogIsland.tsx';
+
+export interface Props {
+  title: string;
+  isOpen?: boolean;
+  onClose?: () => void;
+}
+
+const { title, isOpen = false, onClose } = Astro.props;
+---
+
+{isOpen && (
+  <ModalDialogIsland client:load title={title} isOpen={isOpen} onClose={onClose}>
+    <slot />
+  </ModalDialogIsland>
+)}

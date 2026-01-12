@@ -1,0 +1,38 @@
+---
+import { Link } from "./Link";
+import { Logo } from "./Logo";
+import { ScrollArea } from "./ScrollArea";
+import OpenSearchModalButton from "./Search/OpenModalButton.astro";
+import ThemeSwitcher from "./ThemeSwitcher.astro";
+import { SITE } from "@/constants";
+import { sidebarContent } from "../data/sidebar";
+
+export interface Props {
+  className?: string;
+}
+
+const { className = "" } = Astro.props;
+---
+
+<nav
+  class={`hidden md:h-screen md:sticky md:top-0 md:overflow-hidden md:block md:min-w-sidebar md:border-r md:border-gray-200 bg-background sidebar ${className}`}
+>
+  <ScrollArea>
+    <div class="pt-6 pb-6 px-4 sticky top-0 bg-background z-10">
+      <div class="flex items-center justify-between">
+        <Link className="flex items-center" href="/">
+          <div class="flex items-center">
+            <Logo className="w-8 h-8 mr-4 rounded-full" />
+            <span class="font-bold">{SITE.TITLE}</span>
+          </div>
+        </Link>
+
+        <ThemeSwitcher />
+      </div>
+
+      <div class="pb-12">
+        <slot />
+      </div>
+    </div>
+  </ScrollArea>
+</nav>

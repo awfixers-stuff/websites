@@ -1,0 +1,27 @@
+---
+import GlobalBannerIsland from '../islands/GlobalBannerIsland.tsx';
+import { useGlobalBanners } from '@/hooks/useGlobalBanners';
+
+export interface Props {
+  className?: string;
+}
+
+const { className = "" } = Astro.props;
+---
+
+{(() => {
+  const { currentBanner, dismissGlobalBanner } = useGlobalBanners();
+  
+  if (currentBanner == null) return null;
+
+  return (
+    <div class={className}>
+      <GlobalBannerIsland 
+        client:load
+        variant={currentBanner.variant}
+        message={currentBanner.message}
+        onDismiss={() => dismissGlobalBanner(currentBanner.id)}
+      />
+    </div>
+  );
+})()}

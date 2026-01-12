@@ -1,0 +1,20 @@
+---
+interface TurnstileProps {
+  siteKey?: string;
+  onVerify?: (token: string) => void;
+  onError?: (error: any) => void;
+  onExpire?: () => void;
+  theme?: "light" | "dark" | "auto";
+  size?: "normal" | "compact";
+  tabIndex?: number;
+  language?: string;
+  retry?: "auto" | "never";
+  retryInterval?: number;
+  appearance?: "always" | "execute" | "interaction-only";
+  refreshExpired?: "auto" | "manual" | "never";
+}
+
+const {} = Astro.props;
+---
+
+<div />

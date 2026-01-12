@@ -1,0 +1,42 @@
+---
+import { darkCodeTheme, lightCodeTheme } from "../../styles/codeThemes";
+import { useTheme } from "../../styles/theme";
+import { useIsMounted } from "@/hooks/useIsMounted";
+import CodeBlockIsland from '../islands/CodeBlockIsland.tsx';
+
+const colorModeSSR = Astro.locals.colorMode;
+const isMounted = useIsMounted();
+const colorMode = !isMounted ? colorModeSSR : useTheme().colorMode;
+const theme = colorMode === "light" ? lightCodeTheme : darkCodeTheme;
+
+export interface Props {
+  children: string;
+  className?: string;
+  language?: string;
+}
+
+const { children, className = "", language } = Astro.props;
+const preClasses = `rounded-lg bg-gray-50 dark:bg-gray-800 p-4 overflow-x-auto text-sm relative group ${className}`;
+const codeClasses = theme['pre[class*="language-"]'];
+---
+
+<div class={preClasses}>
+  <div class="absolute top-2 right-2 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+    <button
+      class="p-2 rounded-md bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-800 transition-colors"
+      aria-label="Copy code"
+    >
+      <span class="sr-only">Copy</span>
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5v6l4-4 4 4" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 3h5a2 2 0 012 2v3a2 2 0 01-2h5a2 2 0 01-2v-3a2 2 0 012-2z" />
+      </svg>
+    </button>
+  </div>
+  
+  <div class={codeClasses}>
+    <CodeBlockIsland client:load language={language}>
+      {children}
+    </CodeBlockIsland>
+  </div>
+</div>

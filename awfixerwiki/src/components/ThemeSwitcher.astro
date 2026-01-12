@@ -1,0 +1,7 @@
+---
+import ThemeSwitcherIsland from '../islands/ThemeSwitcherIsland.tsx'
+
+const { initialTheme } = Astro.props
+---
+
+<ThemeSwitcherIsland client:load initialTheme={initialTheme} />
