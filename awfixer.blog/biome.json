@@ -1,0 +1,138 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.3.10/schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "ignoreUnknown": true,
+    "includes": [
+      "**",
+      "!src/styles/globals.css",
+      "!**/node_modules/",
+      "!**/.next/",
+      "!**/public/",
+      "!**/migration/",
+      "!**/*.config.js",
+      "!**/*.config.ts",
+      "!src/lib/collections/generated"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 100,
+    "lineEnding": "lf"
+  },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "nursery": {
+        "noImportCycles": "error"
+      },
+      "a11y": {
+        "useAltText": "error",
+        "useValidAnchor": "error",
+        "useKeyWithClickEvents": "error",
+        "useButtonType": "error",
+        "noAccessKey": "error",
+        "noPositiveTabindex": "error",
+        "noAutofocus": "warn",
+        "useHeadingContent": "error",
+        "useAnchorContent": "error"
+      },
+      "complexity": {
+        "noBannedTypes": "off",
+        "noUselessTypeConstraint": "off",
+        "noExcessiveCognitiveComplexity": "warn",
+        "useFlatMap": "error"
+      },
+      "correctness": {
+        "noUnusedVariables": "error",
+        "useExhaustiveDependencies": "error",
+        "noUnusedImports": "error",
+        "useHookAtTopLevel": "error"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "warn",
+        "noGlobalEval": "error"
+      },
+      "suspicious": {
+        "noConsole": "warn",
+        "noExplicitAny": "error",
+        "noArrayIndexKey": "warn",
+        "noDoubleEquals": "error",
+        "noShadowRestrictedNames": "error",
+        "noEmptyBlockStatements": "warn"
+      },
+      "style": {
+        "noNonNullAssertion": "warn",
+        "useConst": "error",
+        "useTemplate": "warn",
+        "useImportType": "error",
+        "noUselessElse": "warn"
+      }
+    },
+    "domains": {
+      "react": "none",
+      "next": "recommended",
+      "test": "recommended"
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "trailingCommas": "es5",
+      "semicolons": "always"
+    }
+  },
+  "css": {
+    "parser": {
+      "cssModules": true
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["src/test/**", "**/*.test.ts", "**/*.test.tsx", "**/*.contract.ts"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noConsole": "off",
+            "noExplicitAny": "off",
+            "noEmptyBlockStatements": "off"
+          },
+          "style": {
+            "noNonNullAssertion": "off"
+          },
+          "complexity": {
+            "noExcessiveCognitiveComplexity": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["scripts/**"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noConsole": "off"
+          },
+          "complexity": {
+            "noExcessiveCognitiveComplexity": "off"
+          }
+        }
+      }
+    }
+  ]
+}
