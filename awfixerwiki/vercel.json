@@ -3,7 +3,7 @@
   "outputDirectory": "dist",
   "installCommand": "bun install --frozen-lockfile",
   "framework": "astro",
-  "regions": ["iad1", "sfo1"],
+  "regions": ["sfo1"],
   "functions": {
     "pages/api/**/*.ts": {
       "runtime": "nodejs20.x",
