@@ -1,0 +1,12 @@
+{
+  "name": "awfixer-websites",
+  "version": "1.0.0",
+  "description": "AWFixer brand websites monorepo",
+  "private": true,
+  "scripts": {
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7"
+  }
+}

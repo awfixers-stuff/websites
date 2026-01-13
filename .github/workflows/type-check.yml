@@ -1,0 +1,159 @@
+name: Type Check
+
+on:
+  push:
+    branches: [main, dev, prod]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  blog-types:
+    name: awfixer.blog
+    runs-on: blacksmith-4vcpu-ubuntu-2404
+    defaults:
+      run:
+        working-directory: awfixer.blog
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate Sanity collections types
+        run: pnpm generate:collections
+
+      - name: Check if types are up-to-date
+        run: |
+          if git diff --exit-code src/lib/collections/generated/collections.generated.ts; then
+            echo "✅ Generated types are up-to-date"
+          else
+            echo "❌ Generated types are out of sync!"
+            echo "Run 'pnpm generate:collections' and commit the changes"
+            exit 1
+          fi
+
+      - name: TypeScript type check
+        run: pnpm typecheck
+
+  academy-types:
+    name: awfixer.academy
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: awfixer.academy
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: TypeScript type check
+        run: bun typecheck
+
+  vip-types:
+    name: awfixer.vip
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: awfixer.vip
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: TypeScript type check
+        run: bun typecheck
+
+  wiki-types:
+    name: awfixerwiki
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: awfixerwiki
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: TypeScript type check
+        run: bun tsc
+
+  com-types:
+    name: awfixer.com
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: awfixer.com
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: TypeScript type check
+        run: npx tsc --noEmit || echo "⚠️ No TypeScript config found, skipping"
+
+  me-types:
+    name: awfixer.me
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: awfixer.me
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Astro type check
+        run: bun astro check

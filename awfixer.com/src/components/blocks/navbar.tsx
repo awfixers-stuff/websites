@@ -23,18 +23,48 @@ import { cn } from "@/lib/utils";
 const ITEMS = [
   {
     label: "Projects",
-    href: "#projects",
+    href: "/projects",
     dropdownItems: [
       {
-        title: "Modern product teams",
-        href: "/#feature-modern-teams",
-        description:
-          "AWFixer is built on the habits that make the best product teams successful",
+        title: "Modern Product Teams",
+        href: "/projects/modern-teams",
+        description: "Built on habits that make the best product teams successful",
       },
       {
         title: "Resource Allocation",
-        href: "/#resource-allocation",
-        description: "AWFixer your resource allocation and execution",
+        href: "/projects/resource-allocation",
+        description: "Optimize your resource allocation and execution",
+      },
+      {
+        title: "Momentum Building",
+        href: "/projects/momentum-building",
+        description: "Build momentum and healthy habits for continuous improvement",
+      },
+    ],
+  },
+  { 
+    label: "Products", 
+    href: "/products",
+    dropdownItems: [
+      {
+        title: "AWFixerOS",
+        href: "/products/awfixeros",
+        description: "A modern, secure operating system built for performance and reliability",
+      },
+      {
+        title: "AWFixer Cloud",
+        href: "/products/cloud",
+        description: "Scalable cloud infrastructure solutions for modern applications",
+      },
+      {
+        title: "AWFixer Security",
+        href: "/products/security", 
+        description: "Enterprise-grade security solutions to protect your digital assets",
+      },
+      {
+        title: "AWFixer Tools",
+        href: "/products/tools",
+        description: "Professional development tools to boost your productivity",
       },
     ],
   },

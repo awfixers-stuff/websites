@@ -278,11 +278,46 @@ Each site manages its own environment variables:
 - **awfixer.blog** has strict environment validation via `lib/env.ts`
 - Never commit `.env.local` or `.env` files
 
-### Git Workflow
+### Git Workflow & CI/CD
+
+**Centralized at Monorepo Root:**
+
+All projects now share centralized Git hooks and GitHub workflows managed at the repository root.
+
+#### Pre-commit Hooks (Root Level)
+
+Location: `/.husky/pre-commit`
+
+The monorepo pre-commit hook automatically:
+- Detects which projects have staged changes
+- Runs project-specific linters and type checkers
+- Regenerates types for awfixer.blog (Sanity schema)
+- Respects each project's package manager (pnpm, bun, npm)
+
+**To bypass:** `git commit --no-verify` (not recommended - CI will catch issues)
+
+#### GitHub Workflows (Root Level)
+
+Centralized workflows at `/.github/workflows/`:
+- **type-check.yml** - TypeScript validation for all projects
+- **lint.yml** - Code linting (Biome, ESLint, Prettier)
+- **test.yml** - Run test suites (Vitest, Playwright)
+
+These workflows run for all projects on every push to catch cross-project breaking changes early.
+
+#### Project-Specific Workflows
+
+Some workflows remain project-specific due to unique requirements:
+- **awfixer.blog**: Azure Container Apps deployment (prod, preview, cleanup, reaper)
+- **awfixer.vip**: Comprehensive test matrix (unit, E2E, visual, accessibility)
+- **awfixerwiki**: Meilisearch documentation indexing
+
+See individual project `.github/workflows/` directories for these project-specific workflows.
+
+#### Branch Strategy
 
 - **Main branch:** Most sites use `main` or `dev`
-- **awfixer.blog** has a `prod` branch for production deployments (Azure Container Apps)
-- Pre-commit hooks vary per project (Biome, ESLint, or Prettier)
+- **awfixer.blog** has a `prod` branch for production deployments to Azure Container Apps
 
 ## Important Notes
 

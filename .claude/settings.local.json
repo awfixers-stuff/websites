@@ -14,7 +14,11 @@
       "Bash(ls:*)",
       "mcp__serena__get_current_config",
       "mcp__acp__Bash",
-      "mcp__serena__find_file"
+      "mcp__serena__find_file",
+      "Bash(chmod:*)",
+      "mcp__serena__search_for_pattern",
+      "Bash(grep:*)",
+      "Bash(done)"
     ],
     "deny": [],
     "ask": []

@@ -517,8 +517,31 @@ NEXT_PUBLIC_IMAGE_PROXY_URL      # Custom image proxy (enables custom loader)
 ## Git Workflow
 
 - **Main branch**: `dev`
-- **Production deploy**: Push to `prod` branch triggers Azure Container Apps deployment
-- **Pre-commit hook**: Runs `pnpm lint` (Biome check)
+- **Production deploy**: Push to `prod` branch triggers Azure Container Apps deployment (`.github/workflows/prod.yml`)
+- **Pre-commit hook**: Managed at monorepo root (`/.husky/pre-commit`)
+  - Regenerates Sanity collections types (`pnpm generate:collections`)
+  - Auto-stages updated generated files
+  - Runs `pnpm lint` (Biome check)
+- **CI validation**: Root-level workflows (`/.github/workflows/`) validate types, linting, and tests
+
+### Type Generation Automation
+
+To prevent TypeScript errors from outdated generated types:
+- **Local development**: Root pre-commit hook automatically regenerates `collections.generated.ts`
+- **CI/CD**: Root `type-check.yml` workflow validates types match Sanity schema
+- **Build time**: `prebuild` script ensures types are fresh before production builds
+
+If you bypass the pre-commit hook (e.g., `git commit --no-verify`), CI will catch missing type updates.
+
+### Project-Specific Workflows
+
+This project has unique Azure Container Apps deployment workflows in `.github/workflows/`:
+- **prod.yml** - Production deployment to Azure
+- **preview.yml** - PR preview deployments
+- **preview-cleanup.yml** - Cleanup preview environments on PR close
+- **preview-reaper.yml** - Daily cleanup of orphaned previews
+
+These are kept project-specific as no other projects deploy to Azure.
 
 ## Image Handling
 
