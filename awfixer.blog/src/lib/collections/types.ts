@@ -18,13 +18,13 @@ export type CollectionType =
  * This is the SINGLE SOURCE OF TRUTH for collection types.
  * Import this instead of defining your own array.
  */
-export const COLLECTION_TYPES: CollectionType[] = [
+export const COLLECTION_TYPES: readonly CollectionType[] = [
   'collection.article',
   'collection.documentation',
   'collection.changelog',
   'collection.newsletter',
   'collection.events',
-] as const satisfies readonly CollectionType[];
+] as const;
 
 /**
  * Collection metadata interface
