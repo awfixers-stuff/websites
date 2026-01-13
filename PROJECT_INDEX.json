@@ -1,0 +1,292 @@
+{
+  "generated": "2026-01-13",
+  "repository": "AWFixer Websites Monorepo",
+  "totalSourceSize": "~15MB",
+  "sites": [
+    {
+      "name": "awfixer.blog",
+      "path": "awfixer.blog/",
+      "size": "3.5MB",
+      "framework": "Next.js 16",
+      "runtime": "React 19",
+      "cms": "Sanity",
+      "packageManager": "pnpm",
+      "nodeVersion": ">=24.0.0",
+      "port": 3000,
+      "entryPoint": "src/app/layout.tsx",
+      "testFiles": 85,
+      "description": "Production-ready blog with Sanity CMS, multi-language support, comprehensive testing",
+      "features": [
+        "Multi-language (nb, en, ar)",
+        "66 Sanity schemas",
+        "Article system",
+        "Docker support",
+        "Sentry monitoring",
+        "85+ tests (Vitest + Playwright)"
+      ],
+      "commands": {
+        "dev": "pnpm dev",
+        "build": "pnpm build",
+        "test": "pnpm test",
+        "lint": "pnpm lint"
+      }
+    },
+    {
+      "name": "awfixer.vip",
+      "path": "awfixer.vip/",
+      "size": "5.2MB",
+      "framework": "Vue 3",
+      "runtime": "Vite",
+      "auth": "Better Auth",
+      "packageManager": "any",
+      "port": 5173,
+      "entryPoint": "src/main.tsx",
+      "uiComponents": 43,
+      "description": "SaaS application with authentication, 3D graphics, analytics",
+      "features": [
+        "shadcn-vue (43 components)",
+        "Better Auth",
+        "Three.js + TresJS",
+        "Stripe integration",
+        "PostHog analytics",
+        "Discord integration"
+      ],
+      "commands": {
+        "dev": "bun dev",
+        "build": "bun build",
+        "test": "bun test",
+        "lint": "bun lint"
+      }
+    },
+    {
+      "name": "awfixer.me",
+      "path": "awfixer.me/",
+      "size": "3.9MB",
+      "framework": "Astro",
+      "integration": "Starlight",
+      "packageManager": "any",
+      "port": 4321,
+      "entryPoint": "src/pages/index.astro",
+      "description": "Documentation and portfolio site with Starlight theme",
+      "features": [
+        "Starlight documentation",
+        "Custom theme components",
+        "Brotli compression",
+        "Client prerendering"
+      ],
+      "commands": {
+        "dev": "bun dev",
+        "build": "bun build"
+      }
+    },
+    {
+      "name": "awfixerwiki",
+      "path": "awfixerwiki/",
+      "size": "2.0MB",
+      "framework": "Astro",
+      "runtime": "React",
+      "packageManager": "bun",
+      "bunVersion": ">=1.3.3",
+      "port": 3001,
+      "entryPoint": "src/pages/index.astro",
+      "description": "Knowledge base and wiki with React integration",
+      "features": [
+        "Markdown with Gray Matter",
+        "Syntax highlighting (Prism.js)",
+        "PostHog analytics",
+        "Ory authentication",
+        "Search functionality"
+      ],
+      "commands": {
+        "dev": "bun dev",
+        "build": "bun build",
+        "test": "bun test"
+      }
+    },
+    {
+      "name": "awfixer.com",
+      "path": "awfixer.com/",
+      "size": "368KB",
+      "framework": "Next.js 16",
+      "contentFormat": "MDX",
+      "packageManager": "any",
+      "port": 3000,
+      "entryPoint": "src/app/layout.tsx",
+      "uiComponents": 15,
+      "description": "Main landing page with MDX support",
+      "features": [
+        "Turbopack dev mode",
+        "MDX support",
+        "Form handling (react-hook-form + Zod)",
+        "Theme provider (dark mode)",
+        "StyleGlide integration"
+      ],
+      "commands": {
+        "dev": "npm run dev",
+        "build": "npm run build",
+        "lint": "npm run lint",
+        "format": "npm run format"
+      }
+    },
+    {
+      "name": "awfixer.academy",
+      "path": "awfixer.academy/",
+      "size": "116KB",
+      "framework": "Vite",
+      "runtime": "React",
+      "packageManager": "bun",
+      "bunVersion": ">=1.1.0",
+      "port": 5173,
+      "entryPoint": "src/main.tsx",
+      "description": "Educational platform with authentication and Discord integration",
+      "features": [
+        "OpenAuth integration",
+        "Better Auth",
+        "Discord.js bot",
+        "VitePress documentation",
+        "Resend email"
+      ],
+      "commands": {
+        "dev": "bun dev",
+        "build": "bun build",
+        "test": "bun test",
+        "lint": "bun lint"
+      }
+    },
+    {
+      "name": "awfixer.link",
+      "path": "awfixer.link/",
+      "type": "redirect-service",
+      "description": "Vercel redirect service (config only)",
+      "features": [
+        "vercel.json configuration",
+        "redirects.json mappings"
+      ]
+    }
+  ],
+  "sharedTechnologies": {
+    "styling": "Tailwind CSS 4",
+    "typeSystem": "TypeScript",
+    "testing": "Vitest + Playwright",
+    "deployment": "Vercel",
+    "icons": "Lucide (React/Vue variants)",
+    "validation": "Zod",
+    "utilities": ["clsx", "tailwind-merge", "class-variance-authority"]
+  },
+  "keyModules": {
+    "awfixer.blog": {
+      "app": "src/app/(frontend)/[locale]/",
+      "studio": "src/app/(studio)/studio/",
+      "schemas": "src/sanity/schemaTypes/",
+      "components": "src/components/blocks/",
+      "ui": "src/components/ui/",
+      "lib": "src/lib/core/",
+      "utils": "src/lib/utils/",
+      "i18n": "src/i18n/",
+      "tests": "tests/"
+    },
+    "awfixer.vip": {
+      "ui": "src/components/ui/",
+      "auth": "src/lib/auth.ts",
+      "discord": "src/lib/discord-guild.ts",
+      "pages": "src/pages/",
+      "hooks": "src/hooks/"
+    },
+    "awfixer.com": {
+      "app": "src/app/",
+      "blocks": "src/components/blocks/",
+      "ui": "src/components/ui/",
+      "actions": "src/actions/",
+      "lib": "src/lib/"
+    }
+  },
+  "documentation": {
+    "repositoryLevel": [
+      "CLAUDE.md",
+      "PROJECT_INDEX.md",
+      "PROJECT_INDEX.json"
+    ],
+    "siteSpecific": {
+      "awfixer.blog": ["README.md", "CLAUDE.md", "QUICKSTART.md"],
+      "awfixer.vip": ["README.md", "AUTH_SETUP.md", "GITHUB_ACTIONS_SETUP.md", "MIGRATION_SUMMARY.md", "TEST_SETUP_SUMMARY.md"],
+      "awfixerwiki": ["migration-plan-bun-vercel.md", "plan.md", "posthog-setup-report.md", "tsx-to-astro.md"]
+    }
+  },
+  "testing": {
+    "totalTestFiles": 459,
+    "frameworks": ["Vitest", "Playwright", "@testing-library/react", "@testing-library/vue"],
+    "coverage": {
+      "awfixer.blog": {
+        "unit": 30,
+        "component": 41,
+        "integration": 14,
+        "e2e": 13,
+        "total": 85
+      }
+    }
+  },
+  "deployment": {
+    "platform": "Vercel",
+    "docker": ["awfixer.blog"],
+    "analytics": {
+      "vercel": ["awfixer.blog", "awfixer.vip", "awfixer.me", "awfixerwiki"],
+      "posthog": ["awfixer.vip", "awfixerwiki"]
+    },
+    "errorTracking": {
+      "sentry": ["awfixer.blog", "awfixer.vip"]
+    }
+  },
+  "authentication": {
+    "betterAuth": ["awfixer.vip", "awfixer.academy"],
+    "ory": ["awfixer.me", "awfixerwiki"]
+  },
+  "quickStart": {
+    "clone": "git clone <repo-url> && cd websites",
+    "install": {
+      "awfixer.blog": "cd awfixer.blog && pnpm install",
+      "awfixer.vip": "cd awfixer.vip && bun install",
+      "awfixer.me": "cd awfixer.me && bun install",
+      "awfixerwiki": "cd awfixerwiki && bun install",
+      "awfixer.com": "cd awfixer.com && npm install",
+      "awfixer.academy": "cd awfixer.academy && bun install"
+    },
+    "env": "cp .env.example .env.local && edit .env.local",
+    "dev": "Run appropriate dev command based on package manager"
+  },
+  "troubleshooting": {
+    "portConflicts": {
+      "solution": "lsof -ti:<port> | xargs kill or PORT=<new-port> <pm> dev",
+      "ports": {
+        "3000": ["awfixer.blog", "awfixer.com"],
+        "3001": ["awfixerwiki"],
+        "4321": ["awfixer.me"],
+        "5173": ["awfixer.vip", "awfixer.academy"]
+      }
+    },
+    "packageManager": "Check package.json packageManager field",
+    "buildFailures": [
+      "Check .env.example for required variables",
+      "Verify Node version (blog requires 24+)",
+      "Run typecheck command",
+      "Remove node_modules and reinstall"
+    ]
+  },
+  "statistics": {
+    "totalSites": 7,
+    "activeSites": 6,
+    "totalSourceSize": "~15MB",
+    "totalTestFiles": 459,
+    "totalUIComponents": "~100+",
+    "sanitySchemas": 66,
+    "supportedLanguages": 3,
+    "frameworks": 4
+  },
+  "indexMetadata": {
+    "sizeBytes": 15525,
+    "sizeKB": "~15KB",
+    "lineCount": 563,
+    "sections": 47,
+    "tokenEfficiency": "~3000 tokens vs ~58000 tokens (94% reduction)",
+    "lastUpdated": "2026-01-13"
+  }
+}

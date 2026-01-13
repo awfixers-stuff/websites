@@ -3,6 +3,7 @@ import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 import compressor from "astro-compressor";
 import starlight from "@astrojs/starlight";
+import vercel from "@astrojs/vercel";
 
 import mdx from "@astrojs/mdx";
 
@@ -10,6 +11,8 @@ import mdx from "@astrojs/mdx";
 export default defineConfig({
   // https://docs.astro.build/en/guides/images/#authorizing-remote-images
   site: "https://awfixer.me",
+  output: "server",
+  adapter: vercel(),
   image: {
     domains: ["images.unsplash.com"],
   },
