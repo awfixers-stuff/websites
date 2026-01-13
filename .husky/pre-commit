@@ -16,7 +16,7 @@ run_cmd() {
   case $manager in
     pnpm) pnpm $cmd ;;
     bun) bun $cmd ;;
-    *) npm run $cmd ;;
+    *) bun run $cmd ;;  # Default to Bun
   esac
 
   # Return to root directory
