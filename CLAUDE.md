@@ -1,400 +1,566 @@
-# AWFixer's Lounge - Codebase Guide
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project Overview
 
-A dynamic portfolio website built with React, TypeScript, Vite, and Three.js featuring:
-- Interactive 3D Hyperspeed background animation
-- Smooth scroll-based project showcase with card stacking effects
-- Centralized content management via constants
-- GSAP-powered navigation animations
-- Spotlight card interactions
+This is a monorepo containing multiple AWFixer brand websites and applications, each serving a different purpose. All sites share common infrastructure patterns (Tailwind CSS 4, Vercel deployment, Vitest testing) but use different frameworks based on their specific needs.
 
-## Technology Stack
+## Tool Preferences & Requirements
 
-- **React 19.2.0** - UI library with modern JSX transform
-- **TypeScript 5.9.3** - Type-safe development with strict mode
-- **Vite 7.2.4** - Lightning-fast build tool and dev server
-- **Tailwind CSS 4.1.17** - Utility-first styling with @tailwindcss/vite plugin
-- **Three.js 0.167.1** - WebGL 3D rendering for Hyperspeed background
-- **Postprocessing 6.38.2** - Bloom and SMAA effects for Three.js
-- **GSAP 3.13.0** - High-performance animations (PillNav)
-- **Lenis 1.3.17** - Smooth scrolling physics
-- **React Router DOM 6.30.3** - Client-side routing
+**CRITICAL: Always follow these tool preferences when working in this repository.**
 
-## Common Commands
+### Package Manager & Runtime: Bun First
+
+**Default to Bun for everything:**
+- ✅ **Use Bun** as the default package manager and JavaScript/TypeScript runtime
+- ✅ **Use `bun` commands** instead of `npm`, `yarn`, or `node`
+- ✅ **Use `bunx`** instead of `npx` for running packages
+- ✅ **Use `bun run <script>`** instead of `npm run <script>`
+- ✅ **Execute TypeScript directly** with `bun <file.ts>` (no need for tsx, ts-node, or tsc)
+
+**Exception: awfixer.blog**
+- ⚠️ This project uses **pnpm** due to native Node.js dependencies (sharp, Sanity CMS)
+- Always use `pnpm` commands for awfixer.blog
+- All other projects use Bun
+
+**Examples:**
+```bash
+# Correct (Bun)
+bun install
+bun run dev
+bun run build
+bunx prettier --write .
+bun scripts/my-script.ts
+
+# Wrong (npm/node)
+npm install          # ❌ Use: bun install
+npm run dev          # ❌ Use: bun run dev
+npx prettier         # ❌ Use: bunx prettier
+node scripts/file.js # ❌ Use: bun scripts/file.js
+tsx scripts/file.ts  # ❌ Use: bun scripts/file.ts
+```
+
+### Python: uv Package Manager
+
+**Always use `uv` for Python:**
+- ✅ **Use `uv run`** instead of `python`, `python3`, or direct script execution
+- ✅ **Use `uv pip install`** instead of `pip install`
+- ✅ **Use `uv venv`** instead of `python -m venv`
+- ✅ **Use `uv add`** to add dependencies
+- ✅ **Use `uv sync`** to sync dependencies
+
+**Examples:**
+```bash
+# Correct (uv)
+uv run script.py
+uv run python -m pytest
+uv pip install requests
+uv venv
+uv add fastapi
+
+# Wrong (python/pip)
+python script.py        # ❌ Use: uv run script.py
+python3 script.py       # ❌ Use: uv run script.py
+pip install requests    # ❌ Use: uv pip install requests
+python -m venv .venv    # ❌ Use: uv venv
+```
+
+### Command Execution Priority
+
+When deciding which tool to use:
+
+1. **JavaScript/TypeScript** → Use Bun (except awfixer.blog → use pnpm)
+2. **Python** → Use uv
+3. **Shell scripts** → Use bash/sh directly
+4. **Git operations** → Use git directly
+5. **Docker** → Use docker directly
+
+## Repository Structure
+
+```
+websites/
+├── awfixer.blog/          # Next.js 16 + Sanity CMS - Blog/content platform (NextMedal template)
+├── awfixer.com/           # Next.js 16 + MDX - Main landing page
+├── awfixer.vip/           # Vue 3 + Vite - SaaS application with authentication
+├── awfixer.me/            # Astro + Starlight - Documentation and portfolio
+├── awfixerwiki/           # Astro + React - Knowledge base and wiki
+├── awfixer.academy/       # Vite + React - Educational platform
+├── awfixer.link/          # Redirect service (Vercel config only)
+└── .opencode/             # OpenCode AI assistant configuration
+```
+
+## Site-Specific Commands
+
+### awfixer.blog (Next.js + Sanity)
+
+**Package manager:** pnpm (enforced)
+**Node version:** ≥24.0.0
 
 ```bash
-# Development server with hot reload
-pnpm dev
+cd awfixer.blog
 
-# Production build with type checking
-pnpm build
+# Development
+pnpm dev                    # Start dev server with Turbopack (http://localhost:3000)
+pnpm build                  # Production build
+pnpm start                  # Run production build
 
-# Lint check
-pnpm lint
+# Code Quality
+pnpm lint                   # Run Biome linting
+pnpm format                 # Auto-format with Biome
+pnpm typecheck              # TypeScript type checking
 
-# Preview production build
-pnpm preview
+# Testing (Vitest)
+pnpm test                   # Run all tests
+pnpm test:watch             # Run tests in watch mode
+pnpm test:unit              # Run unit tests only
+pnpm test:components        # Run component tests only
+pnpm test:integration       # Run integration tests only
+pnpm test:coverage          # Run tests with coverage
+
+# E2E Testing (Playwright)
+pnpm e2e                    # Run full E2E tests
+pnpm e2e:smoke              # Run smoke tests
+pnpm e2e:visual             # Run visual regression tests
+pnpm e2e:a11y               # Run accessibility tests
+pnpm e2e:perf               # Run performance/Lighthouse tests
+
+# Sanity
+pnpm generate:collections   # Generate Sanity collection types
+pnpm setup:check            # Validate environment setup
+
+# Docker
+pnpm docker:build           # Build production Docker image
 ```
 
-## Architecture Patterns
+This site has extensive documentation in its own `awfixer.blog/CLAUDE.md` and `awfixer.blog/README.md`.
 
-### 1. Content Management System
+### awfixer.vip (Vue 3 + Vite)
 
-All website content is centralized in `/src/constants.ts` for easy updates without touching component code:
+**Package manager:** npm/pnpm/bun
+**Node version:** Latest stable
 
-- `SITE_CONFIG` - Site title, subtitle, logo
-- `NAV_ITEMS` - Navigation menu items
-- `PROJECTS` - "In The Pipe" project showcase items
-- `THEME_COLORS` - Color palette for theming
-- `CTA_CONTENT` - Call-to-action section content
-- `FOOTER_COLUMNS` - Footer link columns
-- `FOOTER_QUOTE` - Inspirational quote
-- `FOOTER_INFO` - Company information
-- `STATUS_CONFIG` - Project status badge styling
+```bash
+cd awfixer.vip
 
-**Pattern**: Export strongly-typed constants with `as const` for type safety. Components import and consume these constants rather than containing hardcoded content.
+# Development
+bun dev                     # Start dev server (http://localhost:5173)
+bun build                   # Production build
+bun preview                 # Preview production build
 
-### 2. Z-Index Layering Strategy
+# Code Quality
+bun lint                    # Run ESLint
 
-The app uses a carefully orchestrated z-index system:
+# Testing
+bun test                    # Run Vitest tests
+bun test:ui                 # Run Vitest with UI
+bun test:run                # Run tests once
+bun test:coverage           # Run tests with coverage
 
-```
--z-10  → Hyperspeed 3D background (fixed, full viewport)
-z-10   → All content sections (hero, projects, about, footer)
-z-20   → Footer (slightly elevated for prominence)
-default → PillNav navigation (sits naturally on top)
-```
-
-**Critical**: Always ensure content sections have `relative z-10` to appear above the Hyperspeed background.
-
-### 3. Three.js Memory Management
-
-The Hyperspeed component demonstrates proper WebGL resource disposal to prevent memory leaks:
-
-```typescript
-// Dispose geometries
-mesh.geometry.dispose();
-
-// Dispose materials (handles arrays)
-if (Array.isArray(mesh.material)) {
-  mesh.material.forEach((m: THREE.Material) => m.dispose());
-} else {
-  mesh.material.dispose();
-}
-
-// Traverse scene graph for complete cleanup
-scene.traverse((object: THREE.Object3D) => {
-  if (object instanceof THREE.Mesh) {
-    // dispose geometry and materials
-  }
-});
-scene.clear();
-
-// Dispose renderer and remove DOM element
-renderer.dispose();
-renderer.domElement.parentElement?.removeChild(renderer.domElement);
+# E2E Testing
+bun test:e2e                # Run Playwright E2E tests
+bun test:e2e:ui             # Run E2E tests with UI
+bun test:e2e:debug          # Debug E2E tests
+bun test:e2e:update         # Update E2E snapshots
 ```
 
-**Pattern**: In useEffect cleanup function, call comprehensive `dispose()` method that cleans up ALL WebGL resources.
+### awfixer.me (Astro + Starlight)
 
-**Critical**: Use empty dependency array `[]` for Three.js initialization to prevent recreation on every render.
+**Package manager:** npm/pnpm/bun
+**Node version:** Latest stable
 
-### 4. TypeScript Strict Mode Compliance
+```bash
+cd awfixer.me
 
-The project uses `verbatimModuleSyntax: true` which requires:
-
-```typescript
-// Split value and type imports
-import { useState, useEffect } from 'react';
-import type { FC, ReactElement } from 'react';
-
-// NOT: import { useState, FC, ReactElement } from 'react';
+# Development
+bun dev                     # Start dev server (http://localhost:4321)
+bun build                   # Production build (includes HTML processing)
+bun preview                 # Preview production build
+bun start                   # Alias for dev
 ```
 
-**Pattern**: Always use `import type` for types, interfaces, and type-only imports.
+### awfixerwiki (Astro + React)
 
-### 5. Component Structure
+**Package manager:** bun (enforced)
+**Bun version:** ≥1.3.3
 
-```
-src/
-├── components/
-│   ├── PillNav.tsx          # Animated navigation with GSAP hover effects
-│   ├── ScrollStack.tsx      # Scroll-based card stacking container
-│   ├── SpotlightCard.tsx    # Mouse-tracking spotlight effect
-│   ├── Hyperspeed.tsx       # Three.js 3D background animation
-│   ├── Footer.tsx           # Multi-column footer with quote
-│   ├── CardSwap.tsx         # Card swap animation utility
-│   └── MagicBento.tsx       # Bento grid layout component
-├── constants.ts             # Centralized content management
-├── App.tsx                  # Main application component
-└── main.tsx                 # React app entry point
-```
+```bash
+cd awfixerwiki
 
-## Component Usage Guide
+# Development
+bun dev                     # Start dev server (http://localhost:3001 or $PORT)
+bun build                   # Production build
+bun preview                 # Preview production build
 
-### PillNav
+# Code Quality
+bun tsc                     # TypeScript type checking
 
-Animated navigation with morphing pill background:
+# Testing
+bun test                    # Run Vitest tests
+bun test:ui                 # Run Vitest with UI
+bun test:coverage           # Run tests with coverage
 
-```typescript
-<PillNav
-  logo={SITE_CONFIG.logo}
-  logoAlt={SITE_CONFIG.logoAlt}
-  items={NAV_ITEMS}
-  activeHref={activeHref}
-  baseColor={THEME_COLORS.nav.baseColor}
-  pillColor={THEME_COLORS.nav.pillColor}
-  hoveredPillTextColor={THEME_COLORS.nav.hoveredPillTextColor}
-  pillTextColor={THEME_COLORS.nav.pillTextColor}
-/>
+# Maintenance
+bun clean                   # Clean build artifacts
 ```
 
-**Animation**: GSAP morphs pill background to hovered item position/size.
+### awfixer.com (Next.js + MDX)
 
-### ScrollStack
+**Package manager:** npm/pnpm/yarn
+**Node version:** Latest stable
 
-Creates stacking card effect on scroll:
+```bash
+cd awfixer.com
 
-```typescript
-<ScrollStack
-  itemDistance={150}        // Scroll pixels between items
-  itemScale={0.04}          // Scale factor per item
-  itemStackDistance={40}    // Stacking offset distance
-  stackPosition="25%"       // Where stacking begins
-  scaleEndPosition="15%"    // Where scaling ends
-  baseScale={0.9}          // Starting scale
-  useWindowScroll={true}   // Use window scroll vs container
->
-  {PROJECTS.map((project) => (
-    <ScrollStackItem key={project.id}>
-      <ProjectCard project={project} />
-    </ScrollStackItem>
-  ))}
-</ScrollStack>
+# Development
+npm run dev                 # Start dev server with Turbopack (http://localhost:3000)
+npm run build               # Production build
+npm run start               # Run production build
+
+# Code Quality
+npm run lint                # Run ESLint with auto-fix
+npm run format              # Format with Prettier
 ```
 
-**Physics**: Uses Lenis for smooth scroll interpolation.
+### awfixer.academy (Vite + React)
 
-### SpotlightCard
+**Package manager:** bun (enforced)
+**Bun version:** ≥1.1.0
 
-Interactive card with mouse-tracking radial gradient:
+```bash
+cd awfixer.academy
 
-```typescript
-<SpotlightCard
-  className="p-12 md:p-16 bg-black/40 backdrop-blur-md border-white/10"
-  spotlightColor="rgba(100, 100, 255, 0.15)"
->
-  {children}
-</SpotlightCard>
+# Development
+bun dev                     # Start dev server (http://localhost:5173)
+bun build                   # Production build (includes type checking)
+bun preview                 # Preview production build
+
+# Code Quality
+bun lint                    # Run ESLint
+bun typecheck               # TypeScript type checking
+
+# Testing
+bun test                    # Run Vitest tests
+bun test:ui                 # Run Vitest with UI
 ```
 
-**Effect**: Radial gradient follows mouse position with opacity transitions.
+### awfixer.link (Redirect Service)
 
-### Hyperspeed
+No build process. This is a simple Vercel configuration for URL redirects.
 
-Three.js 3D animated background:
+## Cross-Project Patterns
 
-```typescript
-<Hyperspeed />
-```
+### Package Managers
 
-**Optimization**: Automatically handles resize, disposal, and RAF cleanup. Use `fixed inset-0 -z-10` positioning.
+Different sites use different package managers:
+- **awfixer.blog:** pnpm (enforced via `preinstall` script)
+- **awfixerwiki:** bun (preferred, specified in `packageManager` field)
+- **awfixer.academy:** bun (preferred, specified in `packageManager` field)
+- **awfixer.vip, awfixer.me, awfixer.com:** Any package manager
 
-## Dark Theme System
+Always use the package manager specified in each project's `package.json` or documentation.
 
-The site uses a black background with glowing text effects:
+### Styling
 
-```css
-/* Background */
-bg-black
+All projects use **Tailwind CSS 4** via `@tailwindcss/vite` or `@tailwindcss/postcss`. Key patterns:
+- Mobile-first responsive design
+- Consistent breakpoints: `sm` (640px), `md` (768px), `lg` (1024px), `xl` (1280px)
+- Common utilities: `clsx`, `tailwind-merge`, `class-variance-authority`
+- Animation libraries: `motion` (formerly Framer Motion), `gsap`, `@vueuse/motion` (Vue)
 
-/* Text gradients with glow */
-bg-gradient-to-r from-white via-blue-200 to-purple-300
-bg-clip-text text-transparent
-drop-shadow-[0_0_30px_rgba(100,100,255,0.3)]
+### Testing
 
-/* Semi-transparent cards */
-bg-black/40 backdrop-blur-md border-white/10
-```
+Most projects use **Vitest** for unit/component/integration tests:
+- Test files: `*.test.ts`, `*.test.tsx`
+- Setup files in `tests/setup/` or project root
+- Common libraries: `@testing-library/react`, `@testing-library/vue`, `vitest-axe`
 
-**Pattern**: Use gradient text with drop-shadow for glowing effects. Use backdrop-blur for glass morphism.
+E2E testing (where present):
+- **Playwright** for browser automation
+- **@axe-core/playwright** for accessibility testing
+- Visual regression tests with screenshot comparison
 
-## Build Configuration
+### UI Components
 
-### Vite Config
+Common component libraries:
+- **Radix UI** - Accessible primitives (Next.js/React projects)
+- **Base UI** - Headless components (awfixer.blog)
+- **shadcn/ui** - Component patterns (awfixer.vip)
+- **Reka UI / Radix Vue** - Vue equivalents (awfixer.vip)
+- **Lucide** - Icon library (all projects)
 
-```typescript
-export default defineConfig({
-  plugins: [
-    react(),
-    tailwindcss()
-  ],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src')
-    }
-  }
-});
-```
+### Authentication & Services
 
-### TypeScript Config
+- **Better Auth** - Authentication solution (awfixer.vip, awfixer.academy)
+- **Sanity** - Headless CMS (awfixer.blog)
+- **Ory** - Identity management (awfixer.me, awfixerwiki)
+- **Vercel Analytics** - Analytics (most sites)
+- **PostHog** - Product analytics (awfixer.vip, awfixerwiki)
+- **Sentry** - Error monitoring (awfixer.blog, awfixer.vip)
 
-```json
-{
-  "compilerOptions": {
-    "strict": true,
-    "verbatimModuleSyntax": true,
-    "target": "ES2020",
-    "module": "ESNext",
-    "jsx": "react-jsx"
-  }
-}
-```
+### Deployment
 
-**Note**: `verbatimModuleSyntax` requires explicit `import type` for type-only imports.
+All sites deploy to **Vercel**:
+- `vercel.json` for configuration (where needed)
+- Environment variables managed per project
+- Most projects use `vercel` package for deployment utilities
 
-## Adding New Content
+## Architecture Guidelines
 
-### Adding a New Project
+### Framework Selection
 
-Edit `src/constants.ts`:
+- **Next.js** - For SEO-critical content sites, blogs, and marketing pages (awfixer.blog, awfixer.com)
+- **Astro** - For documentation, static content, and fast-loading sites (awfixer.me, awfixerwiki)
+- **Vue + Vite** - For interactive applications with complex state (awfixer.vip)
+- **React + Vite** - For educational platforms and SPAs (awfixer.academy)
 
-```typescript
-export const PROJECTS: Project[] = [
-  // ... existing projects
-  {
-    id: 'project-6',
-    title: 'New Project',
-    description: 'Project description here...',
-    status: 'planning', // 'planning' | 'in-progress' | 'testing' | 'launching-soon'
-    tags: ['Tag1', 'Tag2', 'Tag3'],
-    gradient: 'from-cyan-500 to-blue-500' // Tailwind gradient
-  }
-];
-```
+### Code Organization
 
-### Adding Navigation Items
+Each project follows its framework's conventions:
+- **Next.js:** App Router in `app/` directory, Server Components by default
+- **Astro:** Pages in `src/pages/`, components in `src/components/`
+- **Vue:** Composition API with `<script setup>`, components in `src/components/`
+- **React:** Functional components with hooks, components in `src/components/`
 
-Edit `src/constants.ts`:
+### Shared Utilities
 
-```typescript
-export const NAV_ITEMS: PillNavItem[] = [
-  // ... existing items
-  {
-    label: 'Blog',
-    href: '/blog',
-    ariaLabel: 'Read our blog'
-  }
-];
-```
-
-### Updating Footer Links
-
-Edit `src/constants.ts`:
-
-```typescript
-export const FOOTER_COLUMNS: FooterColumn[] = [
-  {
-    title: 'New Section',
-    links: [
-      { id: 'link-1', text: 'Link 1', href: '/link1' },
-      { id: 'link-2', text: 'Link 2', href: '/link2' }
-    ]
-  }
-];
-```
-
-## Performance Considerations
-
-### Three.js Best Practices
-
-1. **Always dispose resources**: Geometries, materials, textures, and renderers must be manually disposed
-2. **Empty dependency arrays**: Prevent unnecessary recreation of Three.js scenes
-3. **Use requestAnimationFrame**: Cleanup RAF handles in useEffect cleanup
-4. **Scene traversal**: Use `scene.traverse()` for complete resource cleanup
-
-### Scroll Performance
-
-- Lenis provides RAF-based smooth scrolling
-- ScrollStack uses transform-based positioning (GPU-accelerated)
-- Avoid layout thrashing by batching scroll calculations
-
-### Build Optimization
-
-- Vite automatically code-splits and tree-shakes
-- Three.js imports are optimized via named imports
-- Tailwind purges unused classes in production
-
-## Common Issues & Solutions
-
-### Content Not Visible
-
-**Symptom**: Content appears but is not visible against background.
-
-**Solution**: Ensure sections have `relative z-10` class to appear above Hyperspeed background.
-
-### TypeScript Import Errors
-
-**Symptom**: `TS1484: Type must be imported using a type-only import`
-
-**Solution**: Use `import type { ... }` for types/interfaces.
-
-### Hyperspeed Memory Leaks
-
-**Symptom**: RAM usage increases over time.
-
-**Solution**: Verify useEffect has empty dependency array and comprehensive disposal in cleanup.
-
-### Build Type Errors
-
-**Symptom**: Build fails with type errors that don't appear in dev.
-
-**Solution**: Run `pnpm build` frequently. Vite dev mode is more permissive than build.
-
-## Asset Management
-
-Static assets are in `/public`:
-
-- `/morty.jpeg` - Logo and favicon
-- `/mortywelcome.png` - OG image for social sharing
-
-Reference in code without `/public` prefix:
-
-```typescript
-logo: '/morty.jpeg'  // ✅ Correct
-logo: '/public/morty.jpeg'  // ❌ Incorrect
-```
-
-## Meta Tags & SEO
-
-All meta tags are in `index.html`:
-
-- Primary meta tags (title, description)
-- Open Graph tags (og:title, og:image, og:description)
-- Twitter Card tags (twitter:card, twitter:image)
-- Favicon link
-
-**Update**: Edit `index.html` directly for meta tag changes.
+While there's no shared library (yet), common patterns include:
+- Environment validation with **Zod** (all projects)
+- Date formatting with **date-fns** (Next.js projects)
+- Form validation with **Zod** + **react-hook-form** or **vee-validate**
+- Type safety with **TypeScript** (all projects)
 
 ## Development Workflow
 
-1. **Start dev server**: `pnpm dev`
-2. **Edit constants**: Update content in `src/constants.ts`
-3. **Edit components**: Modify components in `src/components/`
-4. **Build & test**: `pnpm build && pnpm preview`
-5. **Lint check**: `pnpm lint`
+### Working Across Multiple Sites
 
-## Key Files to Understand
+When making changes that affect multiple sites:
 
-1. **src/constants.ts** - All content configuration
-2. **src/App.tsx** - Main layout and section composition
-3. **src/components/Hyperspeed.tsx** - Three.js background with memory management patterns
-4. **src/components/ScrollStack.tsx** - Scroll physics and stacking calculations
-5. **vite.config.ts** - Build configuration and aliases
+1. Make changes in each site's directory independently
+2. Test each site individually with its own test suite
+3. Ensure consistent patterns (e.g., same Tailwind classes, component structure)
+4. Commit changes per site or as a logical group
+
+### Environment Variables
+
+Each site manages its own environment variables:
+- `.env.example` or `.env.local.example` files show required variables
+- **awfixer.blog** has strict environment validation via `lib/env.ts`
+- Never commit `.env.local` or `.env` files
+
+### Git Workflow & CI/CD
+
+**Centralized at Monorepo Root:**
+
+All projects now share centralized Git hooks and GitHub workflows managed at the repository root.
+
+#### Pre-commit Hooks (Root Level)
+
+Location: `/.husky/pre-commit`
+
+The monorepo pre-commit hook automatically:
+- Detects which projects have staged changes
+- Runs project-specific linters and type checkers
+- Regenerates types for awfixer.blog (Sanity schema)
+- Respects each project's package manager (pnpm, bun, npm)
+
+**To bypass:** `git commit --no-verify` (not recommended - CI will catch issues)
+
+#### GitHub Workflows (Root Level)
+
+Centralized workflows at `/.github/workflows/`:
+- **type-check.yml** - TypeScript validation for all projects
+- **lint.yml** - Code linting (Biome, ESLint, Prettier)
+- **test.yml** - Run test suites (Vitest, Playwright)
+
+These workflows run for all projects on every push to catch cross-project breaking changes early.
+
+#### Project-Specific Workflows
+
+Some workflows remain project-specific due to unique requirements:
+- **awfixer.blog**: Azure Container Apps deployment (prod, preview, cleanup, reaper)
+- **awfixer.vip**: Comprehensive test matrix (unit, E2E, visual, accessibility)
+- **awfixerwiki**: Meilisearch documentation indexing
+
+See individual project `.github/workflows/` directories for these project-specific workflows.
+
+#### Branch Strategy
+
+- **Main branch:** Most sites use `main` or `dev`
+- **awfixer.blog** has a `prod` branch for production deployments to Azure Container Apps
+
+## Important Notes
+
+### awfixer.blog (NextMedal Template)
+
+This is the most complex site, built from the Medal Social NextMedal template. It has:
+- Comprehensive testing (85+ test files)
+- Multi-language support (Norwegian, English, Arabic)
+- Sanity CMS integration with 66 schema types
+- Extensive accessibility and SEO tooling
+- Docker support with standalone output
+
+**Always refer to `awfixer.blog/CLAUDE.md` for detailed guidance on this project.**
+
+### .opencode Directory
+
+This contains OpenCode AI assistant configuration. Do not modify unless specifically working on AI assistant features.
+
+### uhm.astro File
+
+This appears to be a reference/example file demonstrating two ways to import SVG in Astro:
+1. As raw HTML (`?raw` suffix)
+2. As a component
+
+Not part of the active build process.
+
+## Code Style
+
+### General Principles
+
+- **TypeScript** for all new code
+- **Functional programming** preferred over classes
+- **Composition** over inheritance
+- **Explicit** over implicit (avoid magic)
+- **Descriptive names** over single-letter variables (except simple loop indices)
+
+### Project-Specific Styles
+
+- **awfixer.blog:** Biome (2 spaces, single quotes, semicolons always, 100 char width)
+- **awfixer.vip, awfixer.academy:** ESLint + TypeScript ESLint
+- **awfixer.com:** ESLint + Prettier
+- **awfixerwiki, awfixer.me:** Prettier
+
+### Accessibility Standards
+
+All projects should follow:
+- **WCAG 2.2 AA** compliance
+- Semantic HTML first, ARIA as enhancement
+- Keyboard navigation support
+- Focus indicators on all interactive elements
+- Color contrast ratios: 4.5:1 (normal text), 3:1 (large text)
+- `alt` text on all images
+- `aria-label` on icon-only buttons
+
+## Testing Philosophy
+
+### What to Test
+
+- **Unit tests:** Pure functions, utilities, helpers
+- **Component tests:** React/Vue component behavior and accessibility
+- **Integration tests:** API routes, form submissions, multi-step flows
+- **E2E tests:** Critical user paths, smoke tests
+- **Visual tests:** UI regressions (where Playwright is configured)
+- **Performance tests:** Core Web Vitals (where configured)
+
+### What NOT to Test
+
+- Third-party library internals
+- Framework behavior (Next.js, Astro, Vue internals)
+- Simple pass-through functions
+- CSS styling (use visual regression instead)
+
+## Common Tasks
+
+### Adding a New Site
+
+1. Create new directory in repository root
+2. Initialize with chosen framework (`npm create`, `bun create`, etc.)
+3. Install Tailwind CSS 4: `npm install -D tailwindcss @tailwindcss/vite`
+4. Configure common tools: TypeScript, ESLint/Biome, Vitest
+5. Add environment variable examples
+6. Update this CLAUDE.md with site-specific commands
+7. Configure Vercel deployment
+
+### Updating Dependencies
+
+Each site manages its own dependencies. To update:
+
+```bash
+cd <site-directory>
+
+# Check outdated packages
+npm outdated  # or pnpm outdated, bun outdated
+
+# Update carefully (test after each major update)
+npm update <package>  # or pnpm update, bun update
+
+# For major version updates
+npm install <package>@latest
+```
+
+### Running All Tests
+
+There's no root-level test command. Run tests per project:
+
+```bash
+# Example: Run all tests across two key sites
+cd awfixer.blog && pnpm test && cd ..
+cd awfixer.vip && bun test && cd ..
+```
+
+## Troubleshooting
+
+### Port Conflicts
+
+Sites use different default ports:
+- awfixer.blog: 3000
+- awfixer.com: 3000
+- awfixer.vip: 5173
+- awfixer.academy: 5173
+- awfixer.me: 4321
+- awfixerwiki: 3001 (or `$PORT`)
+
+If ports conflict, set the `PORT` environment variable or kill the conflicting process:
+```bash
+lsof -ti:3000 | xargs kill
+```
+
+### Package Manager Errors
+
+If you see errors like "This project requires pnpm":
+- Check the project's `package.json` for `packageManager` field
+- Use the specified package manager (pnpm, bun, or npm)
+- Some projects enforce this via `preinstall` scripts
+
+### Build Failures
+
+Common causes:
+- **Missing environment variables:** Check `.env.example` files
+- **Node version mismatch:** awfixer.blog requires Node 24+
+- **Type errors:** Run `npm run typecheck` or `tsc --noEmit`
+- **Outdated dependencies:** Try removing `node_modules` and reinstalling
+
+### Sanity Issues (awfixer.blog)
+
+- **Studio won't load:** Check CORS settings at sanity.io/manage
+- **Missing content:** Create an index page with slug = "index" in Studio
+- **Schema changes not reflecting:** Run `pnpm generate:collections`
+
+## Performance Targets
+
+### Core Web Vitals (Google Standards)
+
+All sites should aim for:
+- **LCP (Largest Contentful Paint):** ≤2.5s
+- **INP (Interaction to Next Paint):** ≤200ms
+- **CLS (Cumulative Layout Shift):** ≤0.1
+
+### Framework-Specific Optimizations
+
+- **Next.js:** Use Server Components, `next/image`, App Router
+- **Astro:** Partial hydration, `client:load` directives
+- **Vue/React:** Code splitting, lazy loading, `React.lazy()`
+- **All:** Optimize images (WebP), defer non-critical scripts, minimize bundle size
+
+## Support & Documentation
+
+- **awfixer.blog:** Extensive docs in `awfixer.blog/README.md` and `awfixer.blog/CLAUDE.md`
+- **Framework docs:** Next.js, Astro, Vue, Vite official documentation
+- **Component libraries:** Radix UI, Base UI, shadcn/ui documentation
+- **Deployment:** Vercel documentation
 
 ---
 
-**Last Updated**: January 2026
-**Maintainer**: AWFixer
-**License**: See LICENSE file
+**Last updated:** 2026-01-13
+**Maintained by:** AWFixer

@@ -1,0 +1,488 @@
+@import "tailwindcss";
+
+@plugin "tailwindcss-animate";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-highlight-foreground: var(--highlight-foreground);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+  
+  /* Brand Tonal Palette */
+  --color-brand-50: #F5F3F7;
+  --color-brand-100: #E8E4ED;
+  --color-brand-200: #D4CCE0;
+  --color-brand-300: #B9A8CC;
+  --color-brand-400: #9F5FC8;
+  --color-brand-500: #7E3FAC;
+  --color-brand-600: #5B2D8C;
+  --color-brand-700: #3B1D6C;
+  --color-brand-800: #2D1650;
+  --color-brand-900: #1A1035;
+
+  /* Brand Specific Utility Colors (mapped to tonal palette) */
+  --color-brand-navy: var(--color-brand-900);
+  --color-brand-purple: var(--color-brand-700);
+  --color-brand-rich: var(--color-brand-600);
+  --color-brand-vibrant: var(--color-brand-500);
+  --color-brand-lavender: var(--color-brand-200);
+  
+  /* Other Brand Colors */
+  --color-brand-cyan: #06B6D4;
+  --color-brand-magenta: #C026D3;
+  --color-brand-gold: #D97706;
+
+  /* Sidebar vars */
+  --color-sidebar: var(--sidebar-background);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  
+  --animate-marquee: marquee var(--marquee-duration, 30s) linear infinite;
+  --animate-fade: anim-fade-to var(--default-transition-duration, 0.2s) ease-in-out forwards;
+  --animate-fade-to-l: anim-fade-to-l var(--default-transition-duration, 0.2s) ease-in-out forwards;
+  --animate-fade-to-r: anim-fade-to-r var(--default-transition-duration, 0.2s) ease-in-out forwards;
+  --animate-fade-to-t: anim-fade-to-t var(--default-transition-duration, 0.2s) ease-in-out forwards;
+  --animate-fade-to-b: anim-fade-to-b var(--default-transition-duration, 0.2s) ease-in-out forwards;
+
+  /* Accordion animations with spring-like easing */
+  --animate-accordion-expand: accordion-expand 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  --animate-accordion-collapse: accordion-collapse 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes anim-fade-to {
+    from {
+      opacity: 0;
+      translate: 0 0;
+    }
+  }
+
+  @keyframes anim-fade-to-l {
+    from {
+      opacity: 0;
+      translate: 1rem 0;
+    }
+  }
+
+  @keyframes anim-fade-to-r {
+    from {
+      opacity: 0;
+      translate: -1rem 0;
+    }
+  }
+
+  @keyframes anim-fade-to-t {
+    from {
+      opacity: 0;
+      translate: 0 1rem;
+    }
+  }
+
+  @keyframes anim-fade-to-b {
+    from {
+      opacity: 0;
+      translate: 0 -1rem;
+    }
+  }
+
+  /* Accordion expand/collapse animations */
+  @keyframes accordion-expand {
+    from {
+      height: 0;
+      opacity: 0;
+    }
+    to {
+      height: var(--accordion-panel-height);
+      opacity: 1;
+    }
+  }
+
+  @keyframes accordion-collapse {
+    from {
+      height: var(--accordion-panel-height);
+      opacity: 1;
+    }
+    to {
+      height: 0;
+      opacity: 0;
+    }
+  }
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/*
+  BRAND IDENTITY SYSTEM
+  Based on VISUAL_SYSTEM in lib/brand-data.ts
+*/
+
+:root {
+  --banner-height: 0px;
+  --header-height: 4rem;
+  --header-z-index: 50;
+
+  --background: oklch(0.985 0 0);
+  --foreground: oklch(0.19 0.013 285.82);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.19 0.013 285.82);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.19 0.013 285.82);
+  --primary: oklch(0.319 0.132 282.82);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.95 0.005 285.82);
+  --secondary-foreground: oklch(0.319 0.132 282.82);
+  --muted: oklch(0.95 0.005 285.82);
+  --muted-foreground: oklch(0.556 0.02 285.82);
+  --accent: oklch(0.924 0.02 282.82);
+  --accent-foreground: oklch(0.319 0.132 282.82);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.88 0.01 285.82);
+  --input: oklch(0.88 0.01 285.82);
+  --ring: oklch(0.319 0.132 282.82);
+  --highlight-foreground: var(--primary);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --radius: 0.625rem;
+  --sidebar: oklch(1 0 0);
+  --sidebar-foreground: oklch(0.19 0.013 285.82);
+  --sidebar-primary: oklch(0.319 0.132 282.82);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.95 0.005 285.82);
+  --sidebar-accent-foreground: oklch(0.319 0.132 282.82);
+  --sidebar-border: oklch(0.88 0.01 285.82);
+  --sidebar-ring: oklch(0.319 0.132 282.82);
+}
+
+.dark {
+  /* Modern deep violet-gray background - Further softened for eye comfort */
+  --background: oklch(0.20 0.03 285);
+  /* Dimmed white text to reduce glare */
+  --foreground: oklch(0.92 0.01 285);
+
+  /* Elevated surfaces with slightly more purple tint */
+  --card: oklch(0.25 0.04 285);
+  --card-foreground: oklch(0.92 0.01 285);
+  
+  --popover: oklch(0.25 0.04 285);
+  --popover-foreground: oklch(0.92 0.01 285);
+  
+  /* 
+     Elegant Dark Mode Primary:
+     Using a very light, almost white lavender creates a premium, high-contrast look.
+     This avoids the "dullness" of mid-tones while keeping it elegant.
+  */
+  --primary: oklch(0.96 0.01 285); 
+  /* Rich brand purple text anchors the identity */
+  --primary-foreground: var(--color-brand-700);
+  
+  --secondary: oklch(0.30 0.05 285);
+  --secondary-foreground: oklch(0.985 0 0);
+  
+  --muted: oklch(0.30 0.05 285);
+  --muted-foreground: oklch(0.75 0.02 285);
+  
+  --accent: oklch(0.30 0.05 285);
+  --accent-foreground: oklch(0.985 0 0);
+  
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.985 0 0);
+  
+  /* Subtle borders that define structure without being heavy */
+  --border: oklch(0.32 0.05 285);
+  --input: oklch(0.32 0.05 285);
+  /* Use vibrant brand color for focus rings to add a pop of "on-brand" energy */
+  --ring: var(--color-brand-500);
+  
+  --highlight-foreground: var(--color-brand-200);
+  
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  
+  /* Sidebar matching card/surface tones */
+  --sidebar: oklch(0.23 0.04 285);
+  --sidebar-foreground: oklch(0.92 0.01 285);
+  --sidebar-primary: oklch(0.96 0.01 285);
+  --sidebar-primary-foreground: var(--color-brand-700);
+  --sidebar-accent: oklch(0.30 0.05 285);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(0.32 0.05 285);
+  --sidebar-ring: var(--color-brand-500);
+}
+
+/* Ensure font variables are available on :root for Tailwind @theme to resolve */
+html {
+  --font-geist-sans: var(--font-geist-sans, ui-sans-serif, system-ui, sans-serif);
+  --font-geist-mono: var(--font-geist-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography Defaults & Brand Rules */
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: 2.5rem;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+
+h2 {
+  font-size: 1.8rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+h3 {
+  font-size: 1.4rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.8rem;
+}
+
+p {
+  margin-bottom: 1.25rem;
+  line-height: 1.8;
+}
+
+li {
+  margin-bottom: 0.5rem;
+}
+
+strong {
+  color: var(--primary); /* Updated to use var(--primary) */
+}
+
+/* 
+   BRAND RULE: Technical Type (Global Level)
+   Geist Mono should ONLY be used for code, data, & micro-labels.
+*/
+code,
+pre,
+kbd,
+samp,
+.font-mono {
+  font-family: var(--font-geist-mono), monospace;
+  font-style: italic;
+}
+
+/* Markdown Content Styles */
+.prose {
+  max-width: 800px;
+}
+
+.prose a {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+.prose blockquote {
+  border-left: 4px solid var(--primary);
+  padding-left: 1rem;
+  font-style: italic;
+  background: var(--muted);
+  color: var(--muted-foreground);
+  padding: 1rem;
+}
+
+.prose code {
+  background: var(--muted);
+  color: var(--primary);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+  font-style: italic;
+}
+
+.prose pre {
+  background: var(--card); /* Use card background (darker/lighter) */
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+  border: 1px solid var(--border);
+}
+
+.prose pre code {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+}
+
+/* Better spacing between headings and code blocks */
+.prose h2 + pre,
+.prose h3 + pre,
+.prose h4 + pre {
+  margin-top: 1rem;
+}
+
+.prose pre + h2,
+.prose pre + h3,
+.prose pre + h4 {
+  margin-top: 2.5rem;
+}
+
+@layer base {
+  * {
+    min-width: 0;
+    @apply border-border outline-ring/50;
+  }
+
+  ::selection {
+    background-color: var(--color-brand-lavender);
+    color: var(--color-brand-purple);
+  }
+
+  /* Dark mode specific selection - Muted Steel Violet */
+  .dark ::selection {
+    /* 
+       "Steel Violet" - A very desaturated, mid-tone slate.
+       Tuned down significantly:
+       - Lightness: 0.40 (visible but not bright)
+       - Chroma: 0.06 (very low saturation, almost gray)
+       - Hue: 285 (matches brand hue, but barely)
+       This feels like a native OS selection but subtly tinted to the brand.
+    */
+    background-color: oklch(0.40 0.06 285);
+    /* Keep text white for readability */
+    color: oklch(0.985 0 0);
+  }
+
+  [hidden] {
+    display: none;
+  }
+
+  :target {
+    scroll-margin-top: var(--header-height);
+
+    &:is(h1, h2, h3, h4, h5, h6) {
+      animation: target 2s ease-in-out forwards;
+    }
+  }
+
+  @keyframes target {
+    0%,
+    50% {
+      background-color: color-mix(in oklab, var(--color-brand-gold, #fbbf24) 50%, transparent);
+    }
+  }
+
+  html {
+    accent-color: var(--color-primary);
+    caret-color: var(--color-primary);
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--header-height);
+  }
+
+  summary,
+  label,
+  input[type="submit"],
+  button {
+    cursor: pointer;
+  }
+
+  input {
+    background-color: transparent;
+  }
+
+  ::-webkit-details-marker {
+    display: none; /* Often desired to hide default triangle */
+  }
+
+  /* Mermaid Diagrams */
+  .mermaid-diagram {
+    @apply my-6 flex justify-center overflow-x-auto;
+    @apply rounded-lg bg-gray-900 p-6;
+  }
+
+  .mermaid-diagram svg {
+    @apply h-auto max-w-full;
+  }
+
+  /* Responsive: smaller text on mobile */
+  @media (max-width: 768px) {
+    .mermaid-diagram svg {
+      font-size: 12px;
+    }
+  }
+
+  /* Ensure diagrams don't overflow */
+  .mermaid-diagram svg {
+    max-width: 100%;
+    height: auto;
+  }
+}

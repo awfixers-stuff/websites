@@ -12,7 +12,7 @@ export default defineConfig({
     },
   },
   esbuild: {
-    target: "bun",
+    target: "es2020",
   },
   optimizeDeps: {
     exclude: ["@openauthjs/core", "@openauthjs/openauth", "@openauthjs/openevent", "@openauthjs/react"],

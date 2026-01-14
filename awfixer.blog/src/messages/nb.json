@@ -1,0 +1,285 @@
+{
+  "HomePage": {
+    "title": "Hei verden!"
+  },
+  "common": {
+    "loading": "Laster...",
+    "error": "Feil",
+    "success": "Suksess",
+    "close": "Lukk",
+    "cancel": "Avbryt",
+    "done": "Ferdig",
+    "processing": "Behandler...",
+    "untitled": "Uten tittel"
+  },
+  "pagination": {
+    "previous": "Forrige",
+    "next": "Neste",
+    "goToPrevious": "Gå til forrige side",
+    "goToNext": "Gå til neste side",
+    "morePages": "Flere sider"
+  },
+  "Accessibility": {
+    "skipToContent": "Hopp til innhold",
+    "openSearch": "Åpne søk",
+    "loadingTheme": "Laster temavalg",
+    "mobileNavigation": "Mobilnavigasjonsmeny",
+    "dismissBanner": "Lukk kunngjøringsbanner",
+    "required": "påkrevd",
+    "toggleTheme": "Bytt tema",
+    "changeLanguage": "Endre språk"
+  },
+  "TranslationDialog": {
+    "title": "Oversettelse ikke tilgjengelig",
+    "description": "Denne siden er ikke tilgjengelig på {locale}. Vil du gå til {locale} hjemmeside i stedet?",
+    "availableIn": "Denne siden er tilgjengelig på:",
+    "goToHome": "Gå til {locale} hjemmeside",
+    "stay": "Bli på denne siden"
+  },
+  "search": {
+    "placeholder": "Søk...",
+    "commandPlaceholder": "Søk i sider, artikler, dokumentasjon...",
+    "noResults": "Ingen resultater funnet. Prøv andre søkeord.",
+    "categories": {
+      "articles": "Artikler",
+      "documentation": "Dokumentasjon",
+      "changelog": "Endringslogg",
+      "newsletter": "Nyhetsbrev",
+      "pages": "Sider"
+    }
+  },
+  "code": {
+    "copied": "Kopiert til utklippstavle",
+    "copyFailed": "Kunne ikke kopiere. Prøv å oppdatere siden.",
+    "copyCode": "Kopier kode",
+    "copiedState": "Kopiert"
+  },
+  "brand": {
+    "copyLogoPng": "Kopier logo PNG",
+    "copyLogoSvg": "Kopier logo SVG",
+    "logoCopied": "Logo-URL kopiert til utklippstavle",
+    "copyFailed": "Kunne ikke kopiere logo",
+    "goToHome": "Gå til forsiden",
+    "brandCenter": "Merkevaresenter"
+  },
+  "article": {
+    "home": "Hjem",
+    "shareArticle": "Del artikkel",
+    "onThisPage": "På denne siden",
+    "shareOn": "Del på {platform}",
+    "copyLink": "Kopier lenke",
+    "linkCopied": "Lenke kopiert til utklippstavle",
+    "linkCopyFailed": "Kunne ikke kopiere lenke",
+    "minute": "minutt",
+    "minutes": "minutter",
+    "featuredInsight": "Fremhevet innsikt",
+    "recent": "Nylig",
+    "popular": "Populær",
+    "gridView": "Rutenettvisning",
+    "listView": "Listevisning",
+    "rssFeed": "RSS-feed",
+    "allArticles": "Alle artikler",
+    "noArticles": "Ingen artikler ennå",
+    "noArticlesDescription": "Artikler vil vises her når de publiseres.",
+    "filterByCategory": "Filtrer etter kategori",
+    "allCategories": "Alle kategorier",
+    "sortBy": "Sorter etter",
+    "sortNewest": "Nyeste først",
+    "sortOldest": "Eldste først",
+    "sortTitle": "Etter tittel"
+  },
+  "video": {
+    "preparing": "Forbereder video...",
+    "loading": "Laster høykvalitets opplevelse",
+    "error": "Videofeil",
+    "noVideoId": "Ingen video-ID angitt",
+    "noMuxPlaybackId": "Ingen Mux avspillings-ID funnet",
+    "extractYouTubeError": "Kunne ikke hente YouTube video-ID",
+    "extractError": "Kunne ikke laste video",
+    "invalidVideoId": "Kunne ikke finne en gyldig video-ID for denne videoen",
+    "playerError": "Videospillerfeil: {message}",
+    "backToThumbnail": "Tilbake til miniatyrbilde",
+    "play": "Spill av video",
+    "youtubePlayer": "YouTube-videospiller",
+    "thumbnail": "Videominiatyrbilde",
+    "noThumbnail": "Ingen miniatyrbilde tilgjengelig",
+    "defaultTitle": "Video"
+  },
+  "NotFound": {
+    "title": "Siden ble ikke funnet",
+    "description": "Beklager, vi kunne ikke finne siden du leter etter. Den kan ha blitt fjernet, slettet, eller har kanskje aldri eksistert.",
+    "goHome": "Gå til forsiden"
+  },
+  "Error": {
+    "title": "Noe gikk galt",
+    "description": "Vi støtte på en uventet feil under lasting av denne siden.",
+    "errorId": "Feil-ID:",
+    "tryAgain": "Prøv igjen",
+    "persistsHint": "Hvis problemet vedvarer, vennligst prøv å oppdatere siden."
+  },
+  "LocaleSwitcher": {
+    "label": "Endre språk",
+    "locale": "{locale, select, en {English} nb {Norsk} ar {العربية} other {Ukjent}}",
+    "selectLanguage": "Velg språk",
+    "language": "Språk",
+    "translationNotAvailable": "Ikke tilgjengelig på {locale}",
+    "goToHome": "Gå til forsiden"
+  },
+  "ThemeSelector": {
+    "theme": "Tema",
+    "light": "Lys",
+    "dark": "Mørk",
+    "system": "System"
+  },
+  "DraftMode": {
+    "title": "Forhåndsvisning",
+    "description": "Se hvordan endringene ser ut før publisering.",
+    "learnMore": "Lær mer",
+    "exit": "Avslutt",
+    "exiting": "Avslutter..."
+  },
+  "contact-form": {
+    "email": "E-post",
+    "phone": "Telefon",
+    "privacy-link": "personvernerklæring",
+    "privacy-consent-label": "Jeg godtar {privacyLink}",
+    "privacy-aria-label": "Les vår personvernerklæring",
+    "address": "Adresse",
+    "opening-hours": "Åpningstider",
+    "success-title": "Takk!",
+    "success-message": "Vi har mottatt meldingen din og svarer innen 1 virkedag.",
+    "submitting": "Sender...",
+    "submit-button": "Send inn",
+    "validationFailed": "Vennligst sjekk skjemaet og prøv igjen.",
+    "acceptTerms": "Du må godta personvernerklæringen for å fortsette."
+  },
+  "cookies": {
+    "title": "Vi bruker informasjonskapsler",
+    "description": "Vi bruker informasjonskapsler for å forbedre din opplevelse og analysere trafikken vår.",
+    "acceptAll": "Godta alle",
+    "onlyNecessary": "Kun nødvendige",
+    "preferences": "Innstillinger for informasjonskapsler"
+  },
+  "emptyState": {
+    "title": "Ingen innhold ennå",
+    "description": "Innhold vil vises her når det er lagt til.",
+    "cta": "Åpne redigering"
+  },
+  "modules": {
+    "pricing": {
+      "monthly": "Månedlig",
+      "yearly": "Årlig",
+      "yearlyDiscount": "Årlig (-{discount}%)"
+    },
+    "leadMagnet": {
+      "defaultButtonText": "Få tilgang nå",
+      "defaultFormTitle": "Registrer deg"
+    },
+    "events": {
+      "viewDetails": "Se detaljer",
+      "register": "Meld deg på",
+      "registerNow": "Meld deg på nå",
+      "joinNow": "Bli med nå",
+      "watchReplay": "Se opptak",
+      "upcoming": "Kommende",
+      "live": "Direkte",
+      "liveNow": "Direkte nå",
+      "past": "Tidligere",
+      "completed": "Avsluttet",
+      "featured": "Fremhevet",
+      "eventTypes": {
+        "webinar": "Webinar",
+        "video": "Video",
+        "physical": "Fysisk",
+        "hybrid": "Hybrid"
+      },
+      "duration": {
+        "minutes": "{count} min",
+        "hour": "1 time",
+        "hours": "{count} timer",
+        "hoursMinutes": "{hours}t {minutes}min"
+      },
+      "timeRange": "{start} – {end}",
+      "noEvents": "Ingen arrangementer funnet",
+      "allEvents": "Alle arrangementer",
+      "filterByType": "Filtrer etter type",
+      "layouts": {
+        "calendar": "Kalender",
+        "grid": "Rutenett",
+        "list": "Liste",
+        "timeline": "Tidslinje"
+      },
+      "rss": "Abonner på RSS",
+      "today": "I dag",
+      "nextEvent": "Neste arrangement",
+      "comingUpNext": "Kommer snart",
+      "noEventsOnDate": "Ingen arrangementer denne datoen",
+      "selectDateWithDot": "Velg en dato med en prikk for å se arrangementer",
+      "showPastEvents": "Vis tidligere arrangementer",
+      "speakers": "{count, plural, =1 {1 foredragsholder} other {# foredragsholdere}}",
+      "noEventsInCollection": "Det er ingen arrangementer i denne samlingen ennå.",
+      "eventCount": "{count, plural, =1 {1 arrangement} other {# arrangementer}}",
+      "upcomingEventCount": "{count, plural, =1 {1 kommende arrangement} other {# kommende arrangementer}}",
+      "previousMonth": "Forrige måned",
+      "nextMonth": "Neste måned",
+      "showCalendar": "Vis kalender",
+      "hideCalendar": "Skjul kalender",
+      "registration": {
+        "title": "Påmelding bekreftet",
+        "successMessage": "Du er påmeldt! Sjekk e-posten din for arrangementsdetaljer.",
+        "registerFor": "Meld deg på {title}",
+        "formDescription": "Fyll ut skjemaet nedenfor for å reservere din plass.",
+        "registering": "Melder deg på...",
+        "close": "Ferdig"
+      }
+    }
+  },
+  "setup": {
+    "title": "Velkommen til NextMedal!",
+    "description": "Nettstedet ditt kjører, men ingen indeksside eksisterer ennå. La oss lage en!",
+    "quickSetup": "Rask oppsett (3 trinn):",
+    "step1": {
+      "title": "Åpne Sanity Studio",
+      "description": "Besøk {studioUrl}"
+    },
+    "step2": {
+      "title": "Konfigurer nettstedsinnstillinger",
+      "description": "Sett opp topptekst, bunntekst og navigasjon i \"Nettstedsinnstillinger\""
+    },
+    "step3": {
+      "title": "Opprett en indeksside",
+      "description": "Klikk \"Opprett\" → \"Side\" → Sett slug til <slug>index</slug>, publiser deretter"
+    },
+    "needHelp": "Trenger du hjelp? Sjekk <readme>README</readme> eller <contact>kontakt Medal Social</contact>",
+    "openStudio": "Åpne Sanity Studio",
+    "header": {
+      "yourSite": "Ditt nettsted",
+      "configureHint": "Konfigurer i Studio → Nettstedsinnstillinger",
+      "completeSetup": "Fullfør oppsett"
+    },
+    "footer": {
+      "brandName": "NextMedal",
+      "description": "Nesten klar! Fullfør nettstedsoppsettet i Sanity Studio for å tilpasse denne bunnteksten med merkevaren, lenker og sosiale medier.",
+      "configureHint": "Konfigurer i Studio → Nettstedsinnstillinger",
+      "copyright": "NextMedal • Laget av <link>Medal Social</link> © {year}"
+    }
+  },
+  "collectionSetup": {
+    "siteSettingsMissing": {
+      "title": "Nettstedsinnstillinger ikke funnet",
+      "description": "Konfigurer nettstedsinnstillinger for dette språket for å aktivere samlinger.",
+      "step1": "Gå til Sanity Studio",
+      "step2": "Opprett eller oversett nettstedsinnstillinger for {locale}",
+      "step3": "Konfigurer samlingsforsider",
+      "step4": "Publiser innstillingene"
+    },
+    "frontpageMissing": {
+      "title": "Samlingsforside mangler",
+      "description": "Konfigurer {collection}-forsiden for dette språket.",
+      "step1": "Gå til Nettstedsinnstillinger ({locale}) → Samlingsforsider",
+      "step2": "Velg en side for {collection}",
+      "step3": "Publiser innstillingene"
+    },
+    "openStudio": "Åpne Sanity Studio"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__serena__get_symbols_overview",
+      "mcp__serena__list_dir",
+      "mcp__serena__activate_project",
+      "mcp__serena__check_onboarding_performed",
+      "mcp__acp__Write",
+      "mcp__acp__Edit",
+      "Bash(bun run typecheck:*)"
+    ]
+  }
+}

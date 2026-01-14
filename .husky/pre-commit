@@ -1,0 +1,63 @@
+#!/bin/sh
+# Monorepo pre-commit hook - runs checks only for changed projects
+
+# Detect which projects have staged changes
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM)
+
+# Function to run package manager command
+run_cmd() {
+  local project=$1
+  local manager=$2
+  local cmd=$3
+
+  cd "$project" || exit 1
+  echo "[$project] Running: $manager $cmd"
+
+  case $manager in
+    pnpm) pnpm $cmd ;;
+    bun) bun $cmd ;;
+    *) bun run $cmd ;;  # Default to Bun
+  esac
+
+  # Return to root directory
+  cd - > /dev/null || exit 1
+}
+
+# awfixer.blog - Sanity type generation + linting
+if echo "$STAGED_FILES" | grep -q "^awfixer.blog/"; then
+  echo "🔧 [awfixer.blog] Regenerating Sanity types..."
+  run_cmd "awfixer.blog" "pnpm" "generate:collections"
+  git add awfixer.blog/src/lib/collections/generated/collections.generated.ts 2>/dev/null || true
+
+  echo "🔍 [awfixer.blog] Running linter..."
+  run_cmd "awfixer.blog" "pnpm" "lint"
+fi
+
+# awfixer.academy - ESLint
+if echo "$STAGED_FILES" | grep -q "^awfixer.academy/"; then
+  echo "🔍 [awfixer.academy] Running linter..."
+  run_cmd "awfixer.academy" "bun" "lint"
+fi
+
+# awfixer.vip - ESLint
+if echo "$STAGED_FILES" | grep -q "^awfixer.vip/"; then
+  echo "🔍 [awfixer.vip] Running linter..."
+  run_cmd "awfixer.vip" "bun" "lint"
+fi
+
+# awfixer.com - ESLint + Prettier
+if echo "$STAGED_FILES" | grep -q "^awfixer.com/"; then
+  echo "🔍 [awfixer.com] Running linter..."
+  run_cmd "awfixer.com" "npm" "lint"
+fi
+
+# awfixerwiki - Type checking
+if echo "$STAGED_FILES" | grep -q "^awfixerwiki/"; then
+  echo "🔍 [awfixerwiki] Running type check..."
+  run_cmd "awfixerwiki" "bun" "tsc"
+fi
+
+# awfixer.me - No linting configured (Astro default)
+# awfixer.link - No build process
+
+echo "✅ Pre-commit checks complete"

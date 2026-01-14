@@ -1,0 +1,24 @@
+{
+  "name": "awfixer-websites",
+  "version": "1.0.0",
+  "description": "AWFixer brand websites monorepo",
+  "private": true,
+  "packageManager": "bun@1.2.0",
+  "engines": {
+    "bun": ">=1.2.0"
+  },
+  "scripts": {
+    "prepare": "bun husky install",
+    "install:all": "bun run install:blog && bun run install:others",
+    "install:blog": "cd awfixer.blog && pnpm install",
+    "install:com": "cd awfixer.com && bun install",
+    "install:vip": "cd awfixer.vip && bun install",
+    "install:me": "cd awfixer.me && bun install",
+    "install:wiki": "cd awfixerwiki && bun install",
+    "install:academy": "cd awfixer.academy && bun install",
+    "install:others": "bun run install:com && bun run install:vip && bun run install:me && bun run install:wiki && bun run install:academy"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7"
+  }
+}

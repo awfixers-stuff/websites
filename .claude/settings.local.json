@@ -7,7 +7,18 @@
       "mcp__serena__get_symbols_overview",
       "mcp__serena__list_dir",
       "mcp__serena__activate_project",
-      "Bash(wc:*)"
+      "Bash(wc:*)",
+      "mcp__serena__check_onboarding_performed",
+      "Bash(du:*)",
+      "Bash(find:*)",
+      "Bash(ls:*)",
+      "mcp__serena__get_current_config",
+      "mcp__acp__Bash",
+      "mcp__serena__find_file",
+      "Bash(chmod:*)",
+      "mcp__serena__search_for_pattern",
+      "Bash(grep:*)",
+      "Bash(done)"
     ],
     "deny": [],
     "ask": []
