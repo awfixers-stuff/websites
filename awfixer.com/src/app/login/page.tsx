@@ -3,13 +3,13 @@
 import { useState } from "react";
 import Image from "next/image";
 import { authClient } from "@/lib/auth-client";
-import { useAuth } from "@/components/auth-provider";
+import { useEnhancedAuth } from "@/components/enhanced-auth-provider";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Background } from "@/components/background";
 
 export default function Login() {
-  const { user, isLoading } = useAuth();
+  const { user, isLoading } = useEnhancedAuth();
   const [isSigningIn, setIsSigningIn] = useState(false);
 
   if (isLoading) {

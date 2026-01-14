@@ -1,3 +1,5 @@
+"use client";
+
 import { AuthGuard } from '@/components/auth-guard';
 import { useAuth } from '@/hooks/use-auth';
 
