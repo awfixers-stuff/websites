@@ -53,12 +53,12 @@ export const Hero = () => {
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-4 lg:flex-nowrap">
-            <Button asChild>
+            <Button asChild className="rounded-2xl">
               <a href="https://discord.awfixer.com">Join Us</a>
             </Button>
             <Button
               variant="outline"
-              className="from-background h-auto gap-2 bg-linear-to-r to-transparent shadow-md"
+              className="from-background rounded-1x4 h-auto gap-2 bg-linear-to-r to-transparent shadow-md"
               asChild
             >
               <a
