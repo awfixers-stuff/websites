@@ -73,6 +73,10 @@ export function Footer() {
         </ul>
       </nav>
 
+      <p className="text-muted-foreground text-sm text-center mt-6">
+        © {new Date().getFullYear()} AWFixer Holdings LLC. All rights reserved.
+      </p>
+
       <div className="text-primary mt-10 w-full md:mt-14 lg:mt-20">
         <svg
           width="1570"

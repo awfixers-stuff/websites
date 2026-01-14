@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 
 import type { Metadata } from "next";
 
+import { EnhancedAuthProvider } from "@/components/enhanced-auth-provider";
 import { Footer } from "@/components/blocks/footer";
 import { Navbar } from "@/components/blocks/navbar";
 import { StyleGlideProvider } from "@/components/styleglide-provider";
@@ -64,25 +65,24 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://awfixer.com"),
   title: {
-    default: "AWFixer - Modern Next.js Template",
+    default: "AWFixer and Friends - Building the Future of Software",
     template: "%s | AWFixer",
   },
   description:
-    "A modern Next.js template built with shadcn/ui, Tailwind & MDX. Open source - MIT License.",
+    "AWFixer and Friends: Democratizing quality software through innovative development tools, debugging solutions, and performance monitoring.",
   keywords: [
-    "Next.js",
-    "nextjs template",
-    "nextjs theme",
-    "nextjs starter",
-    "shadcn template",
-    "shadcn theme",
-    "shadcn starter",
-    "tailwind template",
-    "tailwind theme",
-    "tailwind starter",
-    "mdx template",
-    "mdx theme",
-    "mdx starter",
+    "AWFixer",
+    "AWFixer and Friends",
+    "debugging tools",
+    "web development",
+    "software quality",
+    "development tools",
+    "productivity",
+    "code analysis",
+    "performance monitoring",
+    "developer tools",
+    "AWFixerOS",
+    "modern development",
   ],
   authors: [{ name: "awfixer.com" }],
   creator: "awfixer.com",
@@ -103,24 +103,24 @@ export const metadata: Metadata = {
     shortcut: [{ url: "/favicon/favicon.ico" }],
   },
   openGraph: {
-    title: "AWFixer - Modern Next.js Template",
+    title: "AWFixer and Friends - Building the Future of Software",
     description:
-      "A modern Next.js template built with shadcn/ui, Tailwind & MDX. Open source - MIT License.",
-    siteName: "AWFixer",
+      "AWFixer and Friends: Democratizing quality software through innovative development tools, debugging solutions, and performance monitoring.",
+    siteName: "AWFixer and Friends",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "AWFixer - Modern Next.js Template",
+        alt: "AWFixer and Friends - Building the Future of Software",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "AWFixer - Modern Next.js Template",
+    title: "AWFixer and Friends - Building the Future of Software",
     description:
-      "A modern Next.js template built with shadcn/ui, Tailwind & MDX. Open source - MIT License.",
+      "AWFixer and Friends: Democratizing quality software through innovative development tools, debugging solutions, and performance monitoring.",
     images: ["/og-image.jpg"],
     creator: "@awfixer",
   },
@@ -147,10 +147,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <StyleGlideProvider />
-          <Navbar />
-          <main className="">{children}</main>
-          <Footer />
+          <EnhancedAuthProvider>
+            <StyleGlideProvider />
+            <Navbar />
+            <main className="">{children}</main>
+            <Footer />
+          </EnhancedAuthProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -6,6 +6,76 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a monorepo containing multiple AWFixer brand websites and applications, each serving a different purpose. All sites share common infrastructure patterns (Tailwind CSS 4, Vercel deployment, Vitest testing) but use different frameworks based on their specific needs.
 
+## Tool Preferences & Requirements
+
+**CRITICAL: Always follow these tool preferences when working in this repository.**
+
+### Package Manager & Runtime: Bun First
+
+**Default to Bun for everything:**
+- ✅ **Use Bun** as the default package manager and JavaScript/TypeScript runtime
+- ✅ **Use `bun` commands** instead of `npm`, `yarn`, or `node`
+- ✅ **Use `bunx`** instead of `npx` for running packages
+- ✅ **Use `bun run <script>`** instead of `npm run <script>`
+- ✅ **Execute TypeScript directly** with `bun <file.ts>` (no need for tsx, ts-node, or tsc)
+
+**Exception: awfixer.blog**
+- ⚠️ This project uses **pnpm** due to native Node.js dependencies (sharp, Sanity CMS)
+- Always use `pnpm` commands for awfixer.blog
+- All other projects use Bun
+
+**Examples:**
+```bash
+# Correct (Bun)
+bun install
+bun run dev
+bun run build
+bunx prettier --write .
+bun scripts/my-script.ts
+
+# Wrong (npm/node)
+npm install          # ❌ Use: bun install
+npm run dev          # ❌ Use: bun run dev
+npx prettier         # ❌ Use: bunx prettier
+node scripts/file.js # ❌ Use: bun scripts/file.js
+tsx scripts/file.ts  # ❌ Use: bun scripts/file.ts
+```
+
+### Python: uv Package Manager
+
+**Always use `uv` for Python:**
+- ✅ **Use `uv run`** instead of `python`, `python3`, or direct script execution
+- ✅ **Use `uv pip install`** instead of `pip install`
+- ✅ **Use `uv venv`** instead of `python -m venv`
+- ✅ **Use `uv add`** to add dependencies
+- ✅ **Use `uv sync`** to sync dependencies
+
+**Examples:**
+```bash
+# Correct (uv)
+uv run script.py
+uv run python -m pytest
+uv pip install requests
+uv venv
+uv add fastapi
+
+# Wrong (python/pip)
+python script.py        # ❌ Use: uv run script.py
+python3 script.py       # ❌ Use: uv run script.py
+pip install requests    # ❌ Use: uv pip install requests
+python -m venv .venv    # ❌ Use: uv venv
+```
+
+### Command Execution Priority
+
+When deciding which tool to use:
+
+1. **JavaScript/TypeScript** → Use Bun (except awfixer.blog → use pnpm)
+2. **Python** → Use uv
+3. **Shell scripts** → Use bash/sh directly
+4. **Git operations** → Use git directly
+5. **Docker** → Use docker directly
+
 ## Repository Structure
 
 ```

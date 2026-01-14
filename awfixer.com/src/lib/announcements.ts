@@ -3,33 +3,29 @@ import path from "path";
 import matter from "gray-matter";
 import { getAuthorWithFallback, type Author } from "./authors";
 
-const postsDirectory = path.join(process.cwd(), "src/content/blog");
+const announcementsDirectory = path.join(process.cwd(), "src/content/announcements");
 
-export type Post = {
+export type Announcement = {
   slug: string;
   title: string;
   date: string;
   excerpt: string;
   author: Author;
+  category: "product" | "company" | "engineering" | "security";
   content: string;
 };
 
-export function getSortedPostsData(): Post[] {
+export function getSortedAnnouncementsData(): Announcement[] {
   // Create directory if it doesn't exist
-  if (!fs.existsSync(postsDirectory)) {
+  if (!fs.existsSync(announcementsDirectory)) {
     return [];
   }
 
-  const fileNames = fs.readdirSync(postsDirectory);
-  const allPostsData = fileNames.map((fileName) => {
-    // Remove ".mdx" from file name to get id
-    const slug = fileName.replace(/\.mdx$/, "");
-
-    // Read markdown file as string
-    const fullPath = path.join(postsDirectory, fileName);
+  const fileNames = fs.readdirSync(announcementsDirectory);
+  const allAnnouncementsData = fileNames.map((fileName) => {
+    const slug = fileName.replace(/\.mdx?$/, "");
+    const fullPath = path.join(announcementsDirectory, fileName);
     const fileContents = fs.readFileSync(fullPath, "utf8");
-
-    // Use gray-matter to parse the post metadata section
     const matterResult = matter(fileContents);
 
     const frontmatter = matterResult.data as {
@@ -37,21 +33,22 @@ export function getSortedPostsData(): Post[] {
       date: string;
       excerpt: string;
       author: string;
+      category: "product" | "company" | "engineering" | "security";
     };
 
-    // Combine the data with the id and resolve author
     return {
       slug,
       title: frontmatter.title,
       date: frontmatter.date,
       excerpt: frontmatter.excerpt,
       author: getAuthorWithFallback(frontmatter.author),
+      category: frontmatter.category,
       content: matterResult.content,
     };
   });
 
-  // Sort posts by date
-  return allPostsData.sort((a, b) => {
+  // Sort announcements by date
+  return allAnnouncementsData.sort((a, b) => {
     if (a.date < b.date) {
       return 1;
     } else {
@@ -60,16 +57,14 @@ export function getSortedPostsData(): Post[] {
   });
 }
 
-export function getPostData(slug: string): Post | null {
-  const fullPath = path.join(postsDirectory, `${slug}.mdx`);
+export function getAnnouncementData(slug: string): Announcement | null {
+  const fullPath = path.join(announcementsDirectory, `${slug}.mdx`);
 
   if (!fs.existsSync(fullPath)) {
     return null;
   }
 
   const fileContents = fs.readFileSync(fullPath, "utf8");
-
-  // Use gray-matter to parse the post metadata section
   const matterResult = matter(fileContents);
 
   const frontmatter = matterResult.data as {
@@ -77,6 +72,7 @@ export function getPostData(slug: string): Post | null {
     date: string;
     excerpt: string;
     author: string;
+    category: "product" | "company" | "engineering" | "security";
   };
 
   return {
@@ -85,6 +81,7 @@ export function getPostData(slug: string): Post | null {
     date: frontmatter.date,
     excerpt: frontmatter.excerpt,
     author: getAuthorWithFallback(frontmatter.author),
+    category: frontmatter.category,
     content: matterResult.content,
   };
 }

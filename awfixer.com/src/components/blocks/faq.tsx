@@ -15,17 +15,17 @@ const categories = [
       {
         question: "How do I update my account without breaking my laptop?",
         answer:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus voluptates deserunt officia temporibus dignissimos.",
+          "Account updates are designed to be seamless and safe. Simply navigate to your account settings, make your changes, and save. All updates are validated before being applied to prevent any issues with your system or data.",
       },
       {
         question: "Is support free, or do I need to Google everything?",
         answer:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus voluptates deserunt officia temporibus dignissimos.",
+          "We provide comprehensive documentation and community support free of charge. For enterprise customers, dedicated support is included with your subscription. We believe in empowering developers with the resources they need to succeed.",
       },
       {
         question: "Are you going to be subsumed by AI?",
         answer:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus voluptates deserunt officia temporibus dignissimos.",
+          "At AWFixer, we view AI as a powerful tool to enhance human capabilities, not replace them. We're building tools that leverage AI to make developers more productive while keeping humans firmly in control of the creative and strategic decisions.",
       },
     ],
   },
@@ -33,14 +33,14 @@ const categories = [
     title: "Your account",
     questions: [
       {
-        question: "Is support free, or do I need to Google everything?",
+        question: "How do I change my password?",
         answer:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus voluptates deserunt officia temporibus dignissimos.",
+          "Navigate to your account settings, select 'Security', and click 'Change Password'. You'll need to enter your current password and choose a new one. We recommend using a strong, unique password and enabling two-factor authentication for added security.",
       },
       {
-        question: "Are you going to be subsumed by AI?",
+        question: "How long do you store session tokens?",
         answer:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus voluptates deserunt officia temporibus dignissimos.",
+          "Session tokens are valid for 30 days by default. For security reasons, tokens are automatically refreshed during active use and invalidated after 90 days of inactivity. You can customize these settings in your security preferences.",
       },
     ],
   },
@@ -48,14 +48,14 @@ const categories = [
     title: "Other questions",
     questions: [
       {
-        question: "Is support free, or do I need to Google everything?",
+        question: "Where are you based?",
         answer:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus voluptates deserunt officia temporibus dignissimos.",
+          "AWFixer Holdings LLC is a remote-first company with team members distributed across the United States. This allows us to attract top talent from anywhere and build products that serve a global developer community.",
       },
       {
-        question: "Are you going to be subsumed by AI?",
+        question: "Who actually owns AWFixer?",
         answer:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus voluptates deserunt officia temporibus dignissimos.",
+          "AWFixer and Friends is owned and operated by AWFixer Holdings LLC. We're an independent company focused on democratizing quality software through innovative development tools and solutions.",
       },
     ],
   },

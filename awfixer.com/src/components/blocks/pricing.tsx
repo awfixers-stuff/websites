@@ -11,9 +11,9 @@ import { cn } from "@/lib/utils";
 
 const plans = [
   {
-    name: "Free",
-    monthlyPrice: "$0",
-    yearlyPrice: "$0",
+    name: "Nebula Nomad",
+    monthlyPrice: "$13",
+    yearlyPrice: "$156",
     description: "Free for everyone",
     features: [
       "Unlimited members",
@@ -23,22 +23,22 @@ const plans = [
     ],
   },
   {
-    name: "Startup",
-    monthlyPrice: "$8",
-    yearlyPrice: "$6",
+    name: "Vortex Vanguard",
+    monthlyPrice: "$25",
+    yearlyPrice: "$275",
     features: [
       "All free plan features and...",
-        "AWFixer AI",
-        "Unlimited teams",
-        "Unlimited projects and file uploads",
-        "AWFixer Insights",
+      "AWFixer AI",
+      "Unlimited teams",
+      "Unlimited projects and file uploads",
+      "AWFixer Insights",
       "Admin roles",
     ],
   },
   {
-    name: "Enterprise",
-    monthlyPrice: "$8",
-    yearlyPrice: "$6",
+    name: "Eclipse Enigma",
+    monthlyPrice: "$50",
+    yearlyPrice: "$500",
     features: [
       "All free plan features and...",
       "AWFixer AI",
@@ -84,8 +84,8 @@ export const Pricing = ({ className }: { className?: string }) => {
                       {isAnnual ? plan.yearlyPrice : plan.monthlyPrice}{" "}
                       {plan.name !== "Free" && (
                         <span className="text-muted-foreground">
-                          per user/
-                          {isAnnual ? "year" : "month"}
+                          per
+                          {isAnnual ? " year" : " month"}
                         </span>
                       )}
                     </div>

@@ -1,7 +1,7 @@
 {
-  "name": "awfixer-nextjs-template",
+  "name": "awfixer-com",
   "version": "1.0.0",
-  "author": "AWFixer",
+  "author": "AWFixer Holdings LLC",
   "private": true,
   "packageManager": "bun@1.2.0",
   "engines": {
@@ -29,6 +29,7 @@
     "@radix-ui/react-switch": "^1.2.6",
     "@styleglide/kit-view-provider": "^0.0.8",
     "@types/mdx": "^2.0.13",
+    "better-auth": "^1.4.12",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",

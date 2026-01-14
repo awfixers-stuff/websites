@@ -1,82 +1,121 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
-
-import { FcGoogle } from "react-icons/fc";
-
-import { Background } from "@/components/background";
+import { authClient } from "@/lib/auth-client";
+import { useAuth } from "@/components/auth-provider";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
+import { Background } from "@/components/background";
 
-const Login = () => {
-  return (
-    <Background>
-      <section className="py-28 lg:pt-44 lg:pb-32">
-        <div className="container">
-          <div className="flex flex-col gap-4">
-            <Card className="mx-auto w-full max-w-sm">
-              <CardHeader className="flex flex-col items-center space-y-0">
+export default function Login() {
+  const { user, isLoading } = useAuth();
+  const [isSigningIn, setIsSigningIn] = useState(false);
+
+  if (isLoading) {
+    return (
+      <Background>
+        <section className="py-28 lg:pt-44 lg:pb-32">
+          <div className="container">
+            <div className="flex justify-center">
+              <div className="text-muted-foreground">Loading...</div>
+            </div>
+          </div>
+        </section>
+      </Background>
+    );
+  }
+
+  if (user) {
+    return (
+      <Background>
+        <section className="py-28 lg:pt-44 lg:pb-32">
+          <div className="container">
+            <Card className="mx-auto w-full max-w-md p-6">
+              <CardHeader className="text-center">
                 <Image
                   src="/logo.svg"
                   alt="logo"
                   width={94}
                   height={18}
-                  className="mb-7 dark:invert"
+                  className="mb-4 mx-auto dark:invert"
                 />
-                <p className="mb-2 text-2xl font-bold">Welcome back</p>
-                <p className="text-muted-foreground">
-                  Please enter your details.
-                </p>
+                <h1 className="text-2xl font-bold">Welcome back, {user.name}!</h1>
               </CardHeader>
-              <CardContent>
-                <div className="grid gap-4">
-                  <Input type="email" placeholder="Enter your email" required />
-                  <div>
-                    <Input
-                      type="password"
-                      placeholder="Enter your password"
-                      required
-                    />
-                  </div>
-                  <div className="flex justify-between">
-                    <div className="flex items-center space-x-2">
-                      <Checkbox
-                        id="remember"
-                        className="border-muted-foreground"
-                      />
-                      <label
-                        htmlFor="remember"
-                        className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                      >
-                        Remember me
-                      </label>
-                    </div>
-                    <a href="#" className="text-primary text-sm font-medium">
-                      Forgot password
-                    </a>
-                  </div>
-                  <Button type="submit" className="mt-2 w-full">
-                    Create an account
-                  </Button>
-                  <Button variant="outline" className="w-full">
-                    <FcGoogle className="mr-2 size-5" />
-                    Sign up with Google
-                  </Button>
-                </div>
-                <div className="text-muted-foreground mx-auto mt-8 flex justify-center gap-1 text-sm">
-                  <p>Don&apos;t have an account?</p>
-                  <Link href="/signup" className="text-primary font-medium">
-                    Sign up
-                  </Link>
-                </div>
+              <CardContent className="text-center">
+                <p className="text-muted-foreground mb-4">
+                  You are successfully signed in.
+                </p>
+                <Button 
+                  onClick={() => window.location.href = '/'}
+                  className="w-full"
+                >
+                  Continue to Home
+                </Button>
               </CardContent>
             </Card>
           </div>
+        </section>
+      </Background>
+    );
+  }
+
+  const handlePatreonSignIn = async () => {
+    setIsSigningIn(true);
+    try {
+      await authClient.signIn.oauth2({
+        providerId: "patreon",
+        callbackURL: "/",
+      });
+    } catch (error) {
+      console.error("Sign in error:", error);
+    } finally {
+      setIsSigningIn(false);
+    }
+  };
+
+  return (
+    <Background>
+      <section className="py-28 lg:pt-44 lg:pb-32">
+        <div className="container">
+          <Card className="mx-auto w-full max-w-sm">
+            <CardHeader className="flex flex-col items-center space-y-0">
+              <Image
+                src="/logo.svg"
+                alt="logo"
+                width={94}
+                height={18}
+                className="mb-7 dark:invert"
+              />
+              <p className="mb-2 text-2xl font-bold">Welcome to AWFixer</p>
+              <p className="text-muted-foreground text-center">
+                Sign in with Patreon to access your account
+              </p>
+            </CardHeader>
+            <CardContent>
+              <Button 
+                onClick={handlePatreonSignIn}
+                disabled={isSigningIn}
+                className="w-full"
+              >
+                {isSigningIn ? "Signing in..." : "Continue with Patreon"}
+              </Button>
+              
+              <div className="text-muted-foreground mx-auto mt-8 flex justify-center gap-1 text-sm">
+                <p>Need Patreon access?</p>
+                <a 
+                  href="https://www.patreon.com/awfixer" 
+                  className="text-primary font-medium"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Become a Patron
+                </a>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
     </Background>
   );
-};
-
-export default Login;
+}

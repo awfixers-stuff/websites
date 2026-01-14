@@ -1,6 +1,14 @@
 import Link from "next/link";
 
-import { ArrowRight, Check, Cpu, Download, Shield, Zap } from "lucide-react";
+import {
+  ArrowRight,
+  Check,
+  Cpu,
+  Download,
+  Shield,
+  Zap,
+  Cloud,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -77,11 +85,11 @@ export default function AWFixerOSPage() {
       <div className="mb-16 text-center">
         <div className="mb-6 flex justify-center">
           <div className="bg-primary/10 rounded-2xl p-4">
-            <Cpu className="text-primary h-12 w-12" />
+            <Cloud className="text-primary h-12 w-12" />
           </div>
         </div>
         <h1 className="from-primary to-primary/60 mb-6 bg-gradient-to-r bg-clip-text text-4xl font-bold text-transparent lg:text-6xl">
-          AWFixerOS
+          AWFixer Cloud
         </h1>
         <p className="text-muted-foreground mx-auto mb-8 max-w-3xl text-xl">
           A modern, secure operating system designed for performance,

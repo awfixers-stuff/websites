@@ -2,6 +2,67 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Tool Preferences & Requirements
+
+**CRITICAL: Always follow these tool preferences when working in this project.**
+
+### Package Manager & Runtime: pnpm (Project-Specific Requirement)
+
+This project uses **pnpm** exclusively due to native Node.js dependencies (sharp, @swc/core, Sanity CMS). Do NOT use Bun, npm, or yarn for this project.
+
+**Correct Usage:**
+```bash
+✅ pnpm install
+✅ pnpm dev
+✅ pnpm build
+✅ pnpm test
+✅ pnpm generate:collections
+```
+
+**Wrong Usage:**
+```bash
+❌ bun install
+❌ npm install
+❌ yarn install
+❌ node script.js    # Use pnpm directly instead
+```
+
+**Why pnpm?**
+- Native dependencies require Node.js bindings (sharp@0.34.5, @swc/core)
+- Package manager enforced via `preinstall` script
+- `engine-strict=true` in `.npmrc`
+- Node.js 24+ required
+
+### Python: uv Package Manager
+
+For any Python-related commands (if needed in this project), use **uv** instead of pip or python directly.
+
+**Correct Usage:**
+```bash
+✅ uv run <script.py>
+✅ uv pip install <package>
+✅ uv venv
+✅ uv sync
+```
+
+**Wrong Usage:**
+```bash
+❌ python script.py
+❌ python3 script.py
+❌ pip install <package>
+❌ python -m venv
+```
+
+### Command Execution Priority
+
+1. **JavaScript/TypeScript** → Use **pnpm** (NOT Bun for this project)
+2. **Python** → Use **uv**
+3. **Shell scripts** → Use bash/sh directly
+4. **Git operations** → Use git directly
+5. **Docker** → Use docker directly
+
+---
+
 ## Project Overview
 
 NextMedal is a Next.js 16 + Sanity CMS website template built by Medal Social. It features Server Components, Turbopack, i18n support (Norwegian/English/Arabic), Docker-optimized standalone output, and a flexible article system for content publishing.

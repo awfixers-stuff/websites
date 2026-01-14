@@ -1,6 +1,14 @@
 import Link from "next/link";
 
-import { ArrowRight, Check, Cpu, Download, Shield, Zap } from "lucide-react";
+import {
+  ArrowRight,
+  Check,
+  Cpu,
+  Download,
+  Shield,
+  Zap,
+  Wrench,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -77,11 +85,11 @@ export default function AWFixerOSPage() {
       <div className="mb-16 text-center">
         <div className="mb-6 flex justify-center">
           <div className="bg-primary/10 rounded-2xl p-4">
-            <Cpu className="text-primary h-12 w-12" />
+            <Wrench className="text-primary h-12 w-12" />
           </div>
         </div>
-        <h1 className="from-primary to-primary/60 mb-6 bg-gradient-to-r bg-clip-text text-4xl font-bold text-transparent lg:text-6xl">
-          AWFixerOS
+        <h1 className="from-primary to-primary/60 mb-6 bg-linear-to-r bg-clip-text text-4xl font-bold text-transparent lg:text-6xl">
+          AWFixer Tools
         </h1>
         <p className="text-muted-foreground mx-auto mb-8 max-w-3xl text-xl">
           A modern, secure operating system designed for performance,
@@ -133,7 +141,7 @@ export default function AWFixerOSPage() {
             <ul className="space-y-3">
               {specifications.map((spec, index) => (
                 <li key={index} className="flex items-start">
-                  <Check className="mt-0.5 mr-3 h-5 w-5 flex-shrink-0 text-green-500" />
+                  <Check className="mt-0.5 mr-3 h-5 w-5 shrink-0 text-green-500" />
                   <span className="text-sm">{spec}</span>
                 </li>
               ))}
@@ -163,7 +171,7 @@ export default function AWFixerOSPage() {
         </div>
       </div>
 
-      <div className="from-primary/10 to-primary/5 mb-16 rounded-2xl bg-gradient-to-r p-8 text-center lg:p-12">
+      <div className="from-primary/10 to-primary/5 mb-16 rounded-2xl bg-linear-to-r p-8 text-center lg:p-12">
         <h2 className="mb-4 text-3xl font-bold">Get Started with AWFixerOS</h2>
         <p className="text-muted-foreground mx-auto mb-8 max-w-2xl">
           Download the latest version of AWFixerOS and experience the future of

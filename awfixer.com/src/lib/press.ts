@@ -3,33 +3,34 @@ import path from "path";
 import matter from "gray-matter";
 import { getAuthorWithFallback, type Author } from "./authors";
 
-const postsDirectory = path.join(process.cwd(), "src/content/blog");
+const pressDirectory = path.join(process.cwd(), "src/content/press");
 
-export type Post = {
+export type PressRelease = {
   slug: string;
   title: string;
   date: string;
   excerpt: string;
   author: Author;
+  location?: string;
+  contact?: {
+    name: string;
+    email: string;
+    phone?: string;
+  };
   content: string;
 };
 
-export function getSortedPostsData(): Post[] {
+export function getSortedPressReleasesData(): PressRelease[] {
   // Create directory if it doesn't exist
-  if (!fs.existsSync(postsDirectory)) {
+  if (!fs.existsSync(pressDirectory)) {
     return [];
   }
 
-  const fileNames = fs.readdirSync(postsDirectory);
-  const allPostsData = fileNames.map((fileName) => {
-    // Remove ".mdx" from file name to get id
-    const slug = fileName.replace(/\.mdx$/, "");
-
-    // Read markdown file as string
-    const fullPath = path.join(postsDirectory, fileName);
+  const fileNames = fs.readdirSync(pressDirectory);
+  const allPressReleasesData = fileNames.map((fileName) => {
+    const slug = fileName.replace(/\.mdx?$/, "");
+    const fullPath = path.join(pressDirectory, fileName);
     const fileContents = fs.readFileSync(fullPath, "utf8");
-
-    // Use gray-matter to parse the post metadata section
     const matterResult = matter(fileContents);
 
     const frontmatter = matterResult.data as {
@@ -37,21 +38,28 @@ export function getSortedPostsData(): Post[] {
       date: string;
       excerpt: string;
       author: string;
+      location?: string;
+      contact?: {
+        name: string;
+        email: string;
+        phone?: string;
+      };
     };
 
-    // Combine the data with the id and resolve author
     return {
       slug,
       title: frontmatter.title,
       date: frontmatter.date,
       excerpt: frontmatter.excerpt,
       author: getAuthorWithFallback(frontmatter.author),
+      location: frontmatter.location,
+      contact: frontmatter.contact,
       content: matterResult.content,
     };
   });
 
-  // Sort posts by date
-  return allPostsData.sort((a, b) => {
+  // Sort press releases by date
+  return allPressReleasesData.sort((a, b) => {
     if (a.date < b.date) {
       return 1;
     } else {
@@ -60,16 +68,14 @@ export function getSortedPostsData(): Post[] {
   });
 }
 
-export function getPostData(slug: string): Post | null {
-  const fullPath = path.join(postsDirectory, `${slug}.mdx`);
+export function getPressReleaseData(slug: string): PressRelease | null {
+  const fullPath = path.join(pressDirectory, `${slug}.mdx`);
 
   if (!fs.existsSync(fullPath)) {
     return null;
   }
 
   const fileContents = fs.readFileSync(fullPath, "utf8");
-
-  // Use gray-matter to parse the post metadata section
   const matterResult = matter(fileContents);
 
   const frontmatter = matterResult.data as {
@@ -77,6 +83,12 @@ export function getPostData(slug: string): Post | null {
     date: string;
     excerpt: string;
     author: string;
+    location?: string;
+    contact?: {
+      name: string;
+      email: string;
+      phone?: string;
+    };
   };
 
   return {
@@ -85,6 +97,8 @@ export function getPostData(slug: string): Post | null {
     date: frontmatter.date,
     excerpt: frontmatter.excerpt,
     author: getAuthorWithFallback(frontmatter.author),
+    location: frontmatter.location,
+    contact: frontmatter.contact,
     content: matterResult.content,
   };
 }

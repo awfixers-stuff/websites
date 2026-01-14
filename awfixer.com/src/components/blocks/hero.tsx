@@ -48,7 +48,7 @@ export const Hero = () => {
           </h1>
 
           <p className="text-muted-foreground text-1xl mt-5 md:text-3xl">
-            AWFixer and Friends is a company focused on builidng the best
+            AWFixer and Friends is a company focused on building the best
             version of the internet.
           </p>
 

@@ -6,10 +6,12 @@ import { Pricing } from "@/components/blocks/pricing";
 import { Projects } from "@/components/blocks/features";
 import { ResourceAllocation } from "@/components/blocks/resource-allocation";
 import { Testimonials } from "@/components/blocks/testimonials";
+import { Navbar } from "@/components/blocks/navbar";
 
 export default function Home() {
   return (
     <>
+      <Navbar />
       <Background className="via-muted to-muted/80">
         <Hero />
         <Logos />

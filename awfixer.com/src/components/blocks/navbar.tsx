@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { ChevronRight, Github } from "lucide-react";
+import { ChevronRight, Github, LogOut, User } from "lucide-react";
 
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
@@ -19,6 +19,7 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
+import { useEnhancedAuth } from "@/components/enhanced-auth-provider";
 
 const ITEMS = [
   {
@@ -79,6 +80,7 @@ export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const pathname = usePathname();
+  const { user, isLoading, signIn, signOut } = useEnhancedAuth();
 
   return (
     <section
@@ -151,13 +153,65 @@ export const Navbar = () => {
         {/* Auth Buttons */}
         <div className="flex items-center gap-2.5">
           <ThemeToggle />
-          <Link href="/login" className="max-lg:hidden">
-            <Button variant="outline">
-              <span className="relative z-10">Login</span>
+
+          {/* Loading State */}
+          {isLoading && (
+            <div className="flex items-center gap-2 max-lg:hidden">
+              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary border-t-transparent" />
+              <span className="text-sm text-muted-foreground">Loading...</span>
+            </div>
+          )}
+
+          {/* Authenticated User */}
+          {!isLoading && user && (
+            <div className="flex items-center gap-2 max-lg:hidden">
+              {/* User Avatar */}
+              {user.image ? (
+                <Image
+                  src={user.image}
+                  alt={user.name || "User"}
+                  width={32}
+                  height={32}
+                  className="rounded-full"
+                />
+              ) : (
+                <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-medium text-sm">
+                  {user.name?.charAt(0).toUpperCase() || 'U'}
+                </div>
+              )}
+
+              {/* User Links */}
+              <Link href="/protected">
+                <Button variant="ghost" size="sm">
+                  <User className="size-4 mr-1" />
+                  Dashboard
+                </Button>
+              </Link>
+
+              {/* Sign Out */}
+              <Button variant="ghost" size="sm" onClick={() => signOut()}>
+                <LogOut className="size-4 mr-1" />
+                Sign Out
+              </Button>
+            </div>
+          )}
+
+          {/* Not Authenticated */}
+          {!isLoading && !user && (
+            <Button
+              variant="outline"
+              className="max-lg:hidden"
+              onClick={() => signIn()}
+            >
+              <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+              </svg>
+              <span className="relative z-10">Sign In with Patreon</span>
             </Button>
-          </Link>
+          )}
+
           <a
-            href="https://github.com/awfixer/awfixer-nextjs-template"
+            href="https://github.com/awfixer-org"
             className="text-muted-foreground hover:text-foreground transition-colors"
           >
             <Github className="size-4" />
@@ -264,6 +318,82 @@ export const Navbar = () => {
               </Link>
             ),
           )}
+
+          {/* Mobile Auth Section */}
+          <div className="border-border border-t pt-4 mt-4">
+            {isLoading && (
+              <div className="flex items-center justify-center gap-2 py-4">
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary border-t-transparent" />
+                <span className="text-sm text-muted-foreground">Loading...</span>
+              </div>
+            )}
+
+            {!isLoading && user && (
+              <div className="space-y-3">
+                {/* User Info */}
+                <div className="flex items-center gap-3 px-2">
+                  {user.image ? (
+                    <Image
+                      src={user.image}
+                      alt={user.name || "User"}
+                      width={40}
+                      height={40}
+                      className="rounded-full"
+                    />
+                  ) : (
+                    <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-medium">
+                      {user.name?.charAt(0).toUpperCase() || 'U'}
+                    </div>
+                  )}
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-foreground truncate">
+                      {user.name || 'User'}
+                    </p>
+                    <p className="text-xs text-muted-foreground truncate">
+                      {user.email}
+                    </p>
+                  </div>
+                </div>
+
+                {/* User Actions */}
+                <Link
+                  href="/protected"
+                  className="hover:bg-accent flex items-center gap-2 rounded-md p-2 transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <User className="size-4" />
+                  <span className="text-sm font-medium">Dashboard</span>
+                </Link>
+
+                <button
+                  onClick={() => {
+                    signOut();
+                    setIsMenuOpen(false);
+                  }}
+                  className="hover:bg-accent flex w-full items-center gap-2 rounded-md p-2 text-left transition-colors"
+                >
+                  <LogOut className="size-4" />
+                  <span className="text-sm font-medium">Sign Out</span>
+                </button>
+              </div>
+            )}
+
+            {!isLoading && !user && (
+              <Button
+                variant="outline"
+                className="w-full"
+                onClick={() => {
+                  signIn();
+                  setIsMenuOpen(false);
+                }}
+              >
+                <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                </svg>
+                Sign In with Patreon
+              </Button>
+            )}
+          </div>
         </nav>
       </div>
     </section>

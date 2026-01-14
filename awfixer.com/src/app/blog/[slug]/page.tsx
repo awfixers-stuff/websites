@@ -4,6 +4,8 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import { getPostData, getSortedPostsData } from "@/lib/blog";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";
+import { AuthorByline } from "@/components/blocks/author-byline";
+import { AuthorCard } from "@/components/blocks/author-card";
 
 export async function generateStaticParams() {
   const posts = getSortedPostsData();
@@ -12,7 +14,9 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata(props: { params: Promise<{ slug: string }> }) {
+export async function generateMetadata(props: {
+  params: Promise<{ slug: string }>;
+}) {
   const params = await props.params;
   const post = getPostData(params.slug);
 
@@ -28,7 +32,9 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
   };
 }
 
-export default async function BlogPost(props: { params: Promise<{ slug: string }> }) {
+export default async function BlogPost(props: {
+  params: Promise<{ slug: string }>;
+}) {
   const params = await props.params;
   const post = getPostData(params.slug);
 
@@ -37,9 +43,14 @@ export default async function BlogPost(props: { params: Promise<{ slug: string }
   }
 
   return (
-    <article className="container py-24 md:py-32 max-w-3xl mx-auto">
+    <article className="container mx-auto max-w-3xl py-24 md:py-32">
       <div className="mb-8">
-        <Button variant="ghost" size="sm" asChild className="-ml-3 text-muted-foreground">
+        <Button
+          variant="ghost"
+          size="sm"
+          asChild
+          className="text-muted-foreground -ml-3"
+        >
           <Link href="/blog">
             <ChevronLeft className="mr-2 size-4" />
             Back to Blog
@@ -51,15 +62,16 @@ export default async function BlogPost(props: { params: Promise<{ slug: string }
         <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
           {post.title}
         </h1>
-        <div className="flex items-center gap-4 text-muted-foreground">
-          <time dateTime={post.date}>{post.date}</time>
-          <span>•</span>
-          <span>{post.author}</span>
-        </div>
+        <AuthorByline author={post.author} date={post.date} showAvatar />
       </header>
 
       <div className="prose prose-gray dark:prose-invert max-w-none">
         <MDXRemote source={post.content} />
+      </div>
+
+      {/* Author bio at the end of the post */}
+      <div className="mt-12 border-t pt-8">
+        <AuthorCard author={post.author} variant="full" />
       </div>
     </article>
   );

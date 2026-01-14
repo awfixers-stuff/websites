@@ -64,7 +64,7 @@ const bottomItems = [
   {
     title: "Graveyard it.",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do.",
+      "Archive completed or abandoned tasks without losing context. Keep your workspace clean while preserving history.",
     images: [
       {
         src: "/resource-allocation/graveyard.webp",
@@ -80,7 +80,7 @@ const bottomItems = [
   {
     title: "Task discussions.",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod.",
+      "Collaborate directly on tasks with threaded conversations. Keep all context in one place for better decision-making.",
     images: [
       {
         src: "/resource-allocation/discussions.webp",
@@ -96,7 +96,7 @@ const bottomItems = [
   {
     title: "Notifications.",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod.",
+      "Stay informed without being overwhelmed. Smart notifications surface what matters when you need to know.",
     images: [
       {
         src: "/resource-allocation/notifications.webp",
