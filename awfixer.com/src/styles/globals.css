@@ -264,3 +264,10 @@ body {
 body {
   position: relative;
 }
+
+/* Blog post heading scroll offset for sticky navbar and TOC tracking */
+article.prose h2,
+article.prose h3,
+article.prose h4 {
+  scroll-margin-top: 6rem;
+}
