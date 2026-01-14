@@ -11,11 +11,11 @@
     "test:real": "bun test.ts"
   },
   "dependencies": {
-    "@opencode-ai/sdk": "^0.10.0",
+    "@opencode-ai/sdk": "^0.15.0",
     "zod": "^4.1.9"
   },
   "devDependencies": {
-    "@opencode-ai/plugin": "^0.10.0",
+    "@opencode-ai/plugin": "^0.15.0",
     "@types/node": "^24.2.1",
     "bun-types": "latest"
   }
