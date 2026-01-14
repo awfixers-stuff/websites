@@ -15,7 +15,7 @@
     "zod": "^4.1.9"
   },
   "devDependencies": {
-    "@opencode-ai/plugin": "^0.10.0",
+    "@opencode-ai/plugin": "^0.15.0",
     "@types/node": "^24.2.1",
     "bun-types": "latest"
   }
