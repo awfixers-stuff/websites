@@ -3845,8 +3845,8 @@ packages:
     resolution: {integrity: sha512-bXuQGWgrpkSInZy8lfCMmOgdTNpsoZ7PORW0+zXss8qVpNo1DC002l1c8to6kfxNF0OaL9v7LwsPqKcTZ/VWrw==}
     engines: {node: '>=20'}
 
-  '@sanity/code-input@7.0.3':
-    resolution: {integrity: sha512-NTCTDDtVjax9LJnm0711Y8wBfVKrWygtf6nOtJcs+PesLD5pS6ABWvhxMUx0rgXt5Uoj/GSYBCLeFjNGG/EVWw==}
+  '@sanity/code-input@7.0.5':
+    resolution: {integrity: sha512-IrZt2f291WDS1w3czILgZ8843RvTPkFov/98xpmuKO7edkBiNr6+MnUGebfh85t+oEfbbIFcwoRLTlF9j9KzbA==}
     engines: {node: '>=20.19 <22 || >=22.12'}
     peerDependencies:
       react: ^19.2
