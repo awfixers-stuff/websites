@@ -18,8 +18,9 @@ const features = [
     title: "Lightning Fast",
     description:
       "Boot times under 10 seconds with optimized kernel and system services.",
-    content: "...",
-    footer: "...",
+    content:
+      "AWFixerOS uses a microkernel that asyncronosly loads drivers and a hightly optimized desktop enviorment, browser and ADK (app development kit) which keeps if fast, lean and ready to help you with whatever you need.",
+    footer: "even the gamers will be proud...",
   },
   {
     icon: Shield,
@@ -124,7 +125,7 @@ export default function AWFixerOSPage() {
             return (
               <Card
                 key={index}
-                className="hover:border-primary/20 border-2 text-center transition-colors"
+                className="hover:border-primary/20 justify-center-safe border-2 text-center transition-colors"
               >
                 <CardHeader>
                   <div className="bg-primary/10 mx-auto mb-4 rounded-lg p-3">
@@ -132,13 +133,13 @@ export default function AWFixerOSPage() {
                   </div>
                   <CardTitle className="text-xl">{feature.title}</CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-base">
+                <CardContent className="justify-around text-base">
+                  <p className="font-bold">{feature.content}</p>
+                  <br />
+                  <CardDescription className="italic">
                     {feature.description}
                   </CardDescription>
-                  {feature.content}
                 </CardContent>
-                <CardFooter>{feature.footer}</CardFooter>
               </Card>
             );
           })}
@@ -175,9 +176,7 @@ export default function AWFixerOSPage() {
                   <CardDescription className="text-sm">
                     {useCase.description}
                   </CardDescription>
-                  {useCase.content}
                 </CardContent>
-                <CardFooter>{useCase.footer}</CardFooter>
               </Card>
             ))}
           </div>

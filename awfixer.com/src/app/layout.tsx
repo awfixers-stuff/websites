@@ -3,11 +3,13 @@ import localFont from "next/font/local";
 
 import type { Metadata } from "next";
 
-import { EnhancedAuthProvider } from "@/components/enhanced-auth-provider";
 import { Footer } from "@/components/blocks/footer";
 import { Navbar } from "@/components/blocks/navbar";
+import { Chatwoot } from "@/components/chatwoot";
+import { EnhancedAuthProvider } from "@/components/enhanced-auth-provider";
 import { StyleGlideProvider } from "@/components/styleglide-provider";
 import { ThemeProvider } from "@/components/theme-provider";
+
 import "@/styles/globals.css";
 
 const dmSans = localFont({
@@ -152,6 +154,7 @@ export default function RootLayout({
             <Navbar />
             <main className="">{children}</main>
             <Footer />
+            <Chatwoot />
           </EnhancedAuthProvider>
         </ThemeProvider>
       </body>

@@ -2,5 +2,56 @@
 title: "AWFixerOS"
 date: "2026-01-12"
 excerpt: "A blog post with the overview of AWFixerOS, our goals for it and what it will do"
-author: "The Team"
+author: "awfixer"
 ---
+
+# AWFixerOS
+
+### What is AWFixerOS?
+
+AWFixerOS is a new operating system that was designed by AWFixer with a series of goals.
+
+the main reason that i began work on AWFixerOS was anger. Windows sucked, mac sucked, linux sucked. They all sucked in different ways but they were all undeniably broken and would one day have to be replaced by something else.
+
+so i have been working on this operating system for almost 3 years now. I began work on it before i had my stroke a few years ago. There are a few things in this operating system that i want to talk about and a few experiments that we will be including that I want to talk about as well
+
+## The Micro Kernel
+
+we have an in house kernel for AWFixerOS that we call helctic, which while it does not follow our normal naming schema (it was named by a former team member before the schema was established) it is one of the coolest parts of AWFixerOS.
+
+what helctic will have is colloquially known as the kernel space setup, which is a modification of the way that a traditional microkernel works but is still built with the microkernel architecture. The idea is that things like drivers will be loaded asyncronously and dynamically into their own space in the kernel, as well as there being dedcated spaces for things that can commonly cause the kernel to crash.
+
+This will also be used to augement one of the experiments that we have been working on when it comes to the function of the disk management of AWFixerOS.
+
+## the AntiCheat Engine
+
+we are working on an in house anticheat engine, one that is able to operate safely and securely on our systems and will superceed any DRM and Anticheat that other companies want to run on our systems.
+
+We firmly believe that security of our users comes before making the game studios and streaming platforms happy and we will work to actively protect our users and improve the functionality of our anticheat engine, in that order.
+
+## AWOS ADK
+
+the AWFixerOS Application Development Enviorment. the ADK is build of a modified version of Tauri, Vite and Bun, and it allows you to run applications, web apps and trusted web elements backed by our system webvew.
+
+## AWOS DE
+
+the AWOS DE is the only desktop that will be availible for AWFixerOS and will allow you to set it up the way that you want, when you want. The desktop enviorment will have a built in webview build with a modified version of webkit that will allow you to launch apps without needing to launch a full browser engine.
+
+
+
+
+## Experiments
+
+we are working on a series of experiments when it comes to AWFixerOS, and a few of them are layed out below. More detailed posts will be made about them later
+
+### Hashed and salted Pathing
+
+This is not exactly what we will be doing, though it is reasonably cloase. We will be working on a way to consistantly change the naming of paths on the AWFixerOS system to try to keep it one step ahead of anyone who may want to track something on your system remotely
+
+### ransomware resistence
+
+...
+
+### AWOSM
+
+...
