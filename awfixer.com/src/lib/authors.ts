@@ -12,40 +12,61 @@ export type Author = {
   };
 };
 
+// Individual author constants for direct import
+export const AWFIXER: Author = {
+  id: "AWFixer",
+  name: "AWFixer",
+  role: "Founder and CEO",
+  bio: "when broken fix",
+  avatar: "https://github.com/awfixer.png",
+  social: {
+    twitter: "https://twitter.com/awfixer",
+    github: "https://github.com/awfixer",
+  },
+};
+
+export const AWFIXER_TEAM: Author = {
+  id: "awfixer-team",
+  name: "AWFixer Team",
+  role: "Engineering Team",
+  bio: "The collective engineering and product team at AWFixer, building the next generation of cloud infrastructure and development tools.",
+  social: {
+    twitter: "https://twitter.com/awfixer-org",
+    github: "https://github.com/awandfriends",
+  },
+};
+
+export const JOHN_DOE: Author = {
+  id: "john-doe",
+  name: "John Doe",
+  role: "CEO & Founder",
+  bio: "Passionate about building scalable infrastructure and empowering developers worldwide.",
+  avatar: "/images/authors/john-doe.jpg",
+  social: {
+    twitter: "https://twitter.com/johndoe",
+    linkedin: "https://linkedin.com/in/johndoe",
+    github: "https://github.com/johndoe",
+  },
+};
+
+export const JANE_SMITH: Author = {
+  id: "jane-smith",
+  name: "Jane Smith",
+  role: "Head of Engineering",
+  bio: "Leading engineering efforts to create reliable, performant, and secure cloud solutions.",
+  avatar: "/images/authors/jane-smith.jpg",
+  social: {
+    github: "https://github.com/janesmith",
+    linkedin: "https://linkedin.com/in/janesmith",
+  },
+};
+
+// Record for lookup operations
 const authors: Record<string, Author> = {
-  "awfixer-team": {
-    id: "awfixer-team",
-    name: "AWFixer Team",
-    role: "Engineering Team",
-    bio: "The collective engineering and product team at AWFixer, building the next generation of cloud infrastructure and development tools.",
-    social: {
-      twitter: "https://twitter.com/awfixer",
-      github: "https://github.com/awfixer",
-    },
-  },
-  "john-doe": {
-    id: "john-doe",
-    name: "John Doe",
-    role: "CEO & Founder",
-    bio: "Passionate about building scalable infrastructure and empowering developers worldwide.",
-    avatar: "/images/authors/john-doe.jpg",
-    social: {
-      twitter: "https://twitter.com/johndoe",
-      linkedin: "https://linkedin.com/in/johndoe",
-      github: "https://github.com/johndoe",
-    },
-  },
-  "jane-smith": {
-    id: "jane-smith",
-    name: "Jane Smith",
-    role: "Head of Engineering",
-    bio: "Leading engineering efforts to create reliable, performant, and secure cloud solutions.",
-    avatar: "/images/authors/jane-smith.jpg",
-    social: {
-      github: "https://github.com/janesmith",
-      linkedin: "https://linkedin.com/in/janesmith",
-    },
-  },
+  AWFixer: AWFIXER,
+  "awfixer-team": AWFIXER_TEAM,
+  "john-doe": JOHN_DOE,
+  "jane-smith": JANE_SMITH,
 };
 
 /**
