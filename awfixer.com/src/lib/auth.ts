@@ -1,7 +1,13 @@
 import { betterAuth } from "better-auth";
 import { genericOAuth, patreon } from "better-auth/plugins";
 
+// Build-time fallback secret (only used during static generation, not for actual auth)
+const BUILD_TIME_SECRET = "build-time-placeholder-secret-not-for-production";
+
 export const auth = betterAuth({
+  // Secret is required - use env var in production, fallback for build
+  secret: process.env.BETTER_AUTH_SECRET || BUILD_TIME_SECRET,
+
   // No database configuration - enables stateless mode
   plugins: [
     genericOAuth({

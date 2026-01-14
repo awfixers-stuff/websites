@@ -6,8 +6,28 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { ChevronRight, Github, LogOut, User } from "lucide-react";
+import {
+  ChevronRight,
+  Github,
+  LogOut,
+  User,
+  FolderKanban,
+  Package,
+  Building2,
+  DollarSign,
+  HelpCircle,
+  FileText,
+  Mail,
+  Cloud,
+  Shield,
+  Cpu,
+  Wrench,
+  Users,
+  BarChart,
+  Target,
+} from "lucide-react";
 
+import { useEnhancedAuth } from "@/components/enhanced-auth-provider";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,61 +39,75 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
-import { useEnhancedAuth } from "@/components/enhanced-auth-provider";
 
 const ITEMS = [
   {
     label: "Projects",
     href: "/projects",
+    icon: FolderKanban,
     dropdownItems: [
       {
         title: "Modern Product Teams",
+        icon: Users,
         href: "/projects/modern-teams",
-        description: "Built on habits that make the best product teams successful",
+        description:
+          "Built on habits that make the best product teams successful",
       },
       {
         title: "Resource Allocation",
+        icon: BarChart,
         href: "/projects/resource-allocation",
         description: "Optimize your resource allocation and execution",
       },
       {
         title: "Momentum Building",
+        icon: Target,
         href: "/projects/momentum-building",
-        description: "Build momentum and healthy habits for continuous improvement",
+        description:
+          "Build momentum and healthy habits for continuous improvement",
       },
     ],
   },
-  { 
-    label: "Products", 
+  {
+    label: "Products",
     href: "/products",
+    icon: Package,
     dropdownItems: [
       {
         title: "AWFixerOS",
+        icon: Cpu,
         href: "/products/awfixeros",
-        description: "A modern, secure operating system built for performance and reliability",
+        description:
+          "A modern, secure operating system built for performance and reliability",
       },
       {
         title: "AWFixer Cloud",
+        icon: Cloud,
         href: "/products/cloud",
-        description: "Scalable cloud infrastructure solutions for modern applications",
+        description:
+          "Scalable cloud infrastructure solutions for modern applications",
       },
       {
         title: "AWFixer Security",
-        href: "/products/security", 
-        description: "Enterprise-grade security solutions to protect your digital assets",
+        icon: Shield,
+        href: "/products/security",
+        description:
+          "Enterprise-grade security solutions to protect your digital assets",
       },
       {
         title: "AWFixer Tools",
+        icon: Wrench,
         href: "/products/tools",
-        description: "Professional development tools to boost your productivity",
+        description:
+          "Professional development tools to boost your productivity",
       },
     ],
   },
-  { label: "About Us", href: "/about" },
-  { label: "Pricing", href: "/pricing" },
-  { label: "FAQ", href: "/faq" },
-  { label: "Blog", href: "/blog" },
-  { label: "Contact", href: "/contact" },
+  { label: "About Us", href: "/about", icon: Building2 },
+  { label: "Pricing", href: "/pricing", icon: DollarSign },
+  { label: "FAQ", href: "/faq", icon: HelpCircle },
+  { label: "Blog", href: "/blog", icon: FileText },
+  { label: "Contact", href: "/contact", icon: Mail },
 ];
 
 export const Navbar = () => {
@@ -107,6 +141,7 @@ export const Navbar = () => {
               link.dropdownItems ? (
                 <NavigationMenuItem key={link.label} className="">
                   <NavigationMenuTrigger className="data-[state=open]:bg-accent/50 bg-transparent! px-1.5">
+                    {link.icon && <link.icon className="mr-1.5 size-4" />}
                     {link.label}
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
@@ -116,8 +151,11 @@ export const Navbar = () => {
                           <NavigationMenuLink asChild>
                             <Link
                               href={item.href}
-                              className="group hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground flex items-center gap-4 rounded-md p-3 leading-none no-underline outline-hidden transition-colors select-none"
+                              className="group hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground flex items-center gap-3 rounded-md p-3 leading-none no-underline outline-hidden transition-colors select-none"
                             >
+                              {item.icon && (
+                                <item.icon className="text-muted-foreground group-hover:text-accent-foreground size-5 shrink-0 transition-colors" />
+                              )}
                               <div className="space-y-1.5 transition-transform duration-300 group-hover:translate-x-1">
                                 <div className="text-sm leading-none font-medium">
                                   {item.title}
@@ -138,10 +176,11 @@ export const Navbar = () => {
                   <Link
                     href={link.href}
                     className={cn(
-                      "relative bg-transparent px-1.5 text-sm font-medium transition-opacity hover:opacity-75",
+                      "relative flex items-center gap-1.5 bg-transparent px-1.5 text-sm font-medium transition-opacity hover:opacity-75",
                       pathname === link.href && "text-muted-foreground",
                     )}
                   >
+                    {link.icon && <link.icon className="size-4" />}
                     {link.label}
                   </Link>
                 </NavigationMenuItem>
@@ -157,8 +196,8 @@ export const Navbar = () => {
           {/* Loading State */}
           {isLoading && (
             <div className="flex items-center gap-2 max-lg:hidden">
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary border-t-transparent" />
-              <span className="text-sm text-muted-foreground">Loading...</span>
+              <div className="border-primary h-4 w-4 animate-spin rounded-full border-b-2 border-t-transparent" />
+              <span className="text-muted-foreground text-sm">Loading...</span>
             </div>
           )}
 
@@ -175,22 +214,22 @@ export const Navbar = () => {
                   className="rounded-full"
                 />
               ) : (
-                <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-medium text-sm">
-                  {user.name?.charAt(0).toUpperCase() || 'U'}
+                <div className="bg-primary text-primary-foreground flex h-8 w-8 items-center justify-center rounded-full text-sm font-medium">
+                  {user.name?.charAt(0).toUpperCase() || "U"}
                 </div>
               )}
 
               {/* User Links */}
               <Link href="/protected">
                 <Button variant="ghost" size="sm">
-                  <User className="size-4 mr-1" />
+                  <User className="mr-1 size-4" />
                   Dashboard
                 </Button>
               </Link>
 
               {/* Sign Out */}
               <Button variant="ghost" size="sm" onClick={() => signOut()}>
-                <LogOut className="size-4 mr-1" />
+                <LogOut className="mr-1 size-4" />
                 Sign Out
               </Button>
             </div>
@@ -203,8 +242,12 @@ export const Navbar = () => {
               className="max-lg:hidden"
               onClick={() => signIn()}
             >
-              <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+              <svg
+                className="mr-2 h-4 w-4"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
               </svg>
               <span className="relative z-10">Sign In with Patreon</span>
             </Button>
@@ -263,7 +306,10 @@ export const Navbar = () => {
                   }
                   className="text-primary flex w-full items-center justify-between text-base font-medium"
                 >
-                  {link.label}
+                  <span className="flex items-center gap-2">
+                    {link.icon && <link.icon className="size-4" />}
+                    {link.label}
+                  </span>
                   <ChevronRight
                     className={cn(
                       "size-4 transition-transform duration-200",
@@ -284,12 +330,15 @@ export const Navbar = () => {
                       <Link
                         key={item.title}
                         href={item.href}
-                        className="group hover:bg-accent block rounded-md p-2 transition-colors"
+                        className="group hover:bg-accent flex items-start gap-3 rounded-md p-2 transition-colors"
                         onClick={() => {
                           setIsMenuOpen(false);
                           setOpenDropdown(null);
                         }}
                       >
+                        {item.icon && (
+                          <item.icon className="text-muted-foreground mt-0.5 size-5 shrink-0" />
+                        )}
                         <div className="transition-transform duration-200 group-hover:translate-x-1">
                           <div className="text-primary font-medium">
                             {item.title}
@@ -309,22 +358,25 @@ export const Navbar = () => {
                 key={link.label}
                 href={link.href}
                 className={cn(
-                  "text-primary hover:text-primary/80 py-4 text-base font-medium transition-colors first:pt-0 last:pb-0",
+                  "text-primary hover:text-primary/80 flex items-center gap-2 py-4 text-base font-medium transition-colors first:pt-0 last:pb-0",
                   pathname === link.href && "text-muted-foreground",
                 )}
                 onClick={() => setIsMenuOpen(false)}
               >
+                {link.icon && <link.icon className="size-4" />}
                 {link.label}
               </Link>
             ),
           )}
 
           {/* Mobile Auth Section */}
-          <div className="border-border border-t pt-4 mt-4">
+          <div className="border-border mt-4 border-t pt-4">
             {isLoading && (
               <div className="flex items-center justify-center gap-2 py-4">
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary border-t-transparent" />
-                <span className="text-sm text-muted-foreground">Loading...</span>
+                <div className="border-primary h-4 w-4 animate-spin rounded-full border-b-2 border-t-transparent" />
+                <span className="text-muted-foreground text-sm">
+                  Loading...
+                </span>
               </div>
             )}
 
@@ -341,15 +393,15 @@ export const Navbar = () => {
                       className="rounded-full"
                     />
                   ) : (
-                    <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-medium">
-                      {user.name?.charAt(0).toUpperCase() || 'U'}
+                    <div className="bg-primary text-primary-foreground flex h-10 w-10 items-center justify-center rounded-full font-medium">
+                      {user.name?.charAt(0).toUpperCase() || "U"}
                     </div>
                   )}
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-foreground truncate">
-                      {user.name || 'User'}
+                  <div className="min-w-0 flex-1">
+                    <p className="text-foreground truncate text-sm font-medium">
+                      {user.name || "User"}
                     </p>
-                    <p className="text-xs text-muted-foreground truncate">
+                    <p className="text-muted-foreground truncate text-xs">
                       {user.email}
                     </p>
                   </div>
@@ -387,8 +439,12 @@ export const Navbar = () => {
                   setIsMenuOpen(false);
                 }}
               >
-                <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                <svg
+                  className="mr-2 h-4 w-4"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
                 </svg>
                 Sign In with Patreon
               </Button>

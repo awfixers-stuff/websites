@@ -5,6 +5,7 @@ import { ArrowRight, Check, Cpu, Download, Shield, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
+  CardFooter,
   CardContent,
   CardDescription,
   CardHeader,
@@ -17,23 +18,31 @@ const features = [
     title: "Lightning Fast",
     description:
       "Boot times under 10 seconds with optimized kernel and system services.",
+    content: "...",
+    footer: "...",
   },
   {
     icon: Shield,
     title: "Enterprise Security",
     description:
       "Built-in encryption, sandboxing, and advanced threat protection.",
+    content: "...",
+    footer: "...",
   },
   {
     icon: Cpu,
     title: "Hardware Optimized",
     description:
       "Supports latest hardware with automatic driver detection and installation.",
+    content: "...",
+    footer: "...",
   },
   {
     icon: Download,
     title: "Easy Updates",
     description: "Seamless over-the-air updates with rollback capabilities.",
+    content: "...",
+    footer: "...",
   },
 ];
 
@@ -53,21 +62,29 @@ const useCases = [
     title: "Business Workstations",
     description:
       "Perfect for office environments with enhanced security and productivity tools.",
+    content: "...",
+    footer: "...",
   },
   {
     title: "Development Systems",
     description:
       "Ideal for developers with pre-configured development environments and tools.",
+    content: "...",
+    footer: "...",
   },
   {
     title: "Educational Institutions",
     description:
       "Great for schools and universities with educational software and management tools.",
+    content: "...",
+    footer: "...",
   },
   {
     title: "Home Computing",
     description:
       "Excellent for personal use with multimedia support and user-friendly interface.",
+    content: "...",
+    footer: "...",
   },
 ];
 
@@ -119,7 +136,9 @@ export default function AWFixerOSPage() {
                   <CardDescription className="text-base">
                     {feature.description}
                   </CardDescription>
+                  {feature.content}
                 </CardContent>
+                <CardFooter>{feature.footer}</CardFooter>
               </Card>
             );
           })}
@@ -156,7 +175,9 @@ export default function AWFixerOSPage() {
                   <CardDescription className="text-sm">
                     {useCase.description}
                   </CardDescription>
+                  {useCase.content}
                 </CardContent>
+                <CardFooter>{useCase.footer}</CardFooter>
               </Card>
             ))}
           </div>
