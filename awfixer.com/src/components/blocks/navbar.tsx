@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -116,10 +116,20 @@ export const Navbar = () => {
   const pathname = usePathname();
   const { user, isLoading, signIn, signOut } = useEnhancedAuth();
 
+  // Sync mobile menu state to document for cross-component coordination
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.setAttribute("data-nav-open", "true");
+    } else {
+      document.body.removeAttribute("data-nav-open");
+    }
+    return () => document.body.removeAttribute("data-nav-open");
+  }, [isMenuOpen]);
+
   return (
     <section
       className={cn(
-        "bg-background/70 absolute left-1/2 z-50 w-[min(90%,700px)] -translate-x-1/2 rounded-4xl border backdrop-blur-md transition-all duration-300",
+        "bg-background/70 fixed left-1/2 z-50 w-[min(90%,700px)] -translate-x-1/2 rounded-4xl border backdrop-blur-md transition-all duration-300 lg:w-auto lg:max-w-[95%]",
         "top-5 lg:top-12",
       )}
     >
@@ -135,13 +145,15 @@ export const Navbar = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <NavigationMenu className="max-lg:hidden">
-          <NavigationMenuList>
+        <NavigationMenu className="ml-6 max-lg:hidden">
+          <NavigationMenuList className="gap-1">
             {ITEMS.map((link) =>
               link.dropdownItems ? (
-                <NavigationMenuItem key={link.label} className="">
-                  <NavigationMenuTrigger className="data-[state=open]:bg-accent/50 bg-transparent! px-1.5">
-                    {link.icon && <link.icon className="mr-1.5 size-4" />}
+                <NavigationMenuItem key={link.label}>
+                  <NavigationMenuTrigger className="data-[state=open]:bg-accent/50 bg-transparent! px-3 whitespace-nowrap">
+                    {link.icon && (
+                      <link.icon className="mr-1.5 size-4 shrink-0" />
+                    )}
                     {link.label}
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
@@ -172,15 +184,15 @@ export const Navbar = () => {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
               ) : (
-                <NavigationMenuItem key={link.label} className="">
+                <NavigationMenuItem key={link.label}>
                   <Link
                     href={link.href}
                     className={cn(
-                      "relative flex items-center gap-1.5 bg-transparent px-1.5 text-sm font-medium transition-opacity hover:opacity-75",
+                      "relative flex items-center gap-1.5 bg-transparent px-3 text-sm font-medium whitespace-nowrap transition-opacity hover:opacity-75",
                       pathname === link.href && "text-muted-foreground",
                     )}
                   >
-                    {link.icon && <link.icon className="size-4" />}
+                    {link.icon && <link.icon className="size-4 shrink-0" />}
                     {link.label}
                   </Link>
                 </NavigationMenuItem>
@@ -190,7 +202,7 @@ export const Navbar = () => {
         </NavigationMenu>
 
         {/* Auth Buttons */}
-        <div className="flex items-center gap-2.5">
+        <div className="ml-6 flex items-center gap-2.5">
           <ThemeToggle />
 
           {/* Loading State */}
@@ -221,15 +233,20 @@ export const Navbar = () => {
 
               {/* User Links */}
               <Link href="/protected">
-                <Button variant="ghost" size="sm">
-                  <User className="mr-1 size-4" />
+                <Button variant="ghost" size="sm" className="whitespace-nowrap">
+                  <User className="mr-1 size-4 shrink-0" />
                   Dashboard
                 </Button>
               </Link>
 
               {/* Sign Out */}
-              <Button variant="ghost" size="sm" onClick={() => signOut()}>
-                <LogOut className="mr-1 size-4" />
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => signOut()}
+                className="whitespace-nowrap"
+              >
+                <LogOut className="mr-1 size-4 shrink-0" />
                 Sign Out
               </Button>
             </div>
@@ -239,11 +256,11 @@ export const Navbar = () => {
           {!isLoading && !user && (
             <Button
               variant="outline"
-              className="max-lg:hidden"
+              className="whitespace-nowrap max-lg:hidden"
               onClick={() => signIn()}
             >
               <svg
-                className="mr-2 h-4 w-4"
+                className="mr-2 h-4 w-4 shrink-0"
                 fill="currentColor"
                 viewBox="0 0 24 24"
               >
