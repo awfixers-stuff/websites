@@ -73,7 +73,7 @@ export function Footer() {
         </ul>
       </nav>
 
-      <p className="text-muted-foreground text-sm text-center mt-6">
+      <p className="text-muted-foreground mt-6 text-center text-sm">
         © {new Date().getFullYear()} AWFixer Holdings LLC. All rights reserved.
       </p>
 
@@ -94,7 +94,7 @@ export function Footer() {
             fontFamily="var(--font-dm-sans), sans-serif"
             fontWeight="bold"
             fontSize="280"
-            letterSpacing="-0.05em"
+            letterSpacing="-0.02em"
             fill="url(#footer_gradient)"
           >
             awfixer
