@@ -8,6 +8,12 @@
 		"directory": ".open-next/assets",
 		"binding": "ASSETS"
 	},
+    "observability": {
+    "logs": {
+      "enabled": true,
+      "invocation_logs": true
+    }
+  }, 
 	"services": [
 		{
 			// Self-reference service binding, the service name must match the worker name
