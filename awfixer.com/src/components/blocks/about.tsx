@@ -6,15 +6,15 @@ import { cn } from "@/lib/utils";
 
 const About = () => {
   return (
-    <section className="container mt-10 flex max-w-5xl flex-col-reverse gap-8 md:mt-14 md:gap-14 lg:mt-20 lg:flex-row lg:items-end">
+    <section className="container mt-10 flex max-w-5xl flex-col-reverse gap-8 md:mt-14 md:gap-14 lg:mt-20 lg:flex-row lg:items-start">
       {/* Images Left - Text Right */}
-      <div className="flex flex-col gap-8 lg:gap-16 xl:gap-20">
+      <div className="flex flex-1 flex-col gap-8 lg:gap-16 xl:gap-20">
         <ImageSection
           images={[
             { src: "/about/1.webp", alt: "Team collaboration" },
             { src: "/about/2.webp", alt: "Team workspace" },
           ]}
-          className="xl:-translate-x-10"
+          className=""
         />
 
         <TextSection
@@ -32,7 +32,7 @@ const About = () => {
       </div>
 
       {/* Text Left - Images Right */}
-      <div className="flex flex-col gap-8 lg:gap-16 xl:gap-20">
+      <div className="flex flex-1 flex-col gap-8 lg:gap-16 xl:gap-20">
         <TextSection
           paragraphs={[
             "At AWFixer, we are dedicated to transforming the way developers build, deploy, and maintain web applications. Our mission is to provide our customers with an unbeatable edge over bugs, performance issues, and technical debt through actionable insights and seamless development workflows. We'll stop at nothing to give you the tools you need to get every project across the finish line.",
@@ -44,7 +44,7 @@ const About = () => {
             { src: "/about/3.webp", alt: "Modern workspace" },
             { src: "/about/4.webp", alt: "Team collaboration" },
           ]}
-          className="hidden lg:flex xl:translate-x-10"
+          className="hidden lg:flex"
         />
       </div>
     </section>
