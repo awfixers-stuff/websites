@@ -9,9 +9,9 @@
   },
   "scripts": {
     "dev": "next dev --turbopack",
-    "prebuild": "bun scripts/generate-posts.ts && bun scripts/generate-docs.ts",
+    "prebuild": "bun scripts/generate-posts.ts && bun scripts/generate-careers.ts && bun scripts/generate-docs.ts",
     "build": "next build",
-    "build:worker": "bun scripts/generate-posts.ts && bun scripts/generate-docs.ts && npx opennextjs-cloudflare build",
+    "build:worker": "bun scripts/generate-posts.ts && bun scripts/generate-careers.ts && bun scripts/generate-docs.ts && npx opennextjs-cloudflare build",
     "start": "next start",
     "preview": "wrangler dev",
     "deploy": "wrangler deploy",
@@ -20,8 +20,9 @@
     "lint": "next lint --fix",
     "format": "prettier -w .",
     "generate:posts": "bun scripts/generate-posts.ts",
+    "generate:careers": "bun scripts/generate-careers.ts",
     "generate:docs": "bun scripts/generate-docs.ts",
-    "generate": "bun scripts/generate-posts.ts && bun scripts/generate-docs.ts"
+    "generate": "bun scripts/generate-posts.ts && bun scripts/generate-careers.ts && bun scripts/generate-docs.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
