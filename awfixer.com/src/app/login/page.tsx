@@ -2,14 +2,13 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { authClient } from "@/lib/auth-client";
 import { useEnhancedAuth } from "@/components/enhanced-auth-provider";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Background } from "@/components/background";
 
 export default function Login() {
-  const { user, isLoading } = useEnhancedAuth();
+  const { user, isLoading, signIn } = useEnhancedAuth();
   const [isSigningIn, setIsSigningIn] = useState(false);
 
   if (isLoading) {
@@ -63,10 +62,7 @@ export default function Login() {
   const handlePatreonSignIn = async () => {
     setIsSigningIn(true);
     try {
-      await authClient.signIn.oauth2({
-        providerId: "patreon",
-        callbackURL: "/",
-      });
+      await signIn();
     } catch (error) {
       console.error("Sign in error:", error);
     } finally {
@@ -89,16 +85,16 @@ export default function Login() {
               />
               <p className="mb-2 text-2xl font-bold">Welcome to AWFixer</p>
               <p className="text-muted-foreground text-center">
-                Sign in with Patreon to access your account
+                Authentication has been removed from this application
               </p>
             </CardHeader>
             <CardContent>
               <Button 
                 onClick={handlePatreonSignIn}
-                disabled={isSigningIn}
-                className="w-full"
+                disabled
+                className="w-full cursor-not-allowed"
               >
-                {isSigningIn ? "Signing in..." : "Continue with Patreon"}
+                Sign In Disabled
               </Button>
               
               <div className="text-muted-foreground mx-auto mt-8 flex justify-center gap-1 text-sm">

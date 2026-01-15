@@ -1,8 +1,21 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
-import { authClient } from "@/lib/auth-client";
-import { EnhancedUserData, getFreshPatreonData } from "@/lib/patreon";
+
+export interface EnhancedUserData {
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    image?: string | null;
+    emailVerified: boolean;
+  } | null;
+  subscription: {
+    status: string;
+    tier?: string;
+    isDelinquent?: boolean;
+  } | null;
+}
 
 interface EnhancedAuthContextType {
   user: EnhancedUserData['user'] | null;
@@ -27,53 +40,13 @@ export function EnhancedAuthProvider({ children }: { children: ReactNode }) {
       setIsLoading(true);
       setError(null);
       
-      const session = await authClient.getSession();
-      
-      if (!session.data) {
-        setUser(null);
-        setSubscription(null);
-        return;
-      }
-
-      // Get fresh Patreon data from our API endpoint
-      const response = await fetch('/api/patreon', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include', // Include cookies for authentication
-      });
-
-      if (!response.ok) {
-        // If Patreon API fails, at least return basic session data
-        console.warn(`Patreon API failed: ${response.status}, using basic session data`);
-        setUser(session.data.user ? {
-          id: session.data.user.id,
-          name: session.data.user.name,
-          email: session.data.user.email,
-          image: session.data.user.image || '',
-          emailVerified: session.data.user.emailVerified,
-        } : null);
-        setSubscription(null);
-        return;
-      }
-
-      const freshData = await response.json();
-      setUser(freshData.user);
-      setSubscription(freshData.subscription);
+      setUser(null);
+      setSubscription(null);
     } catch (error) {
       console.error('Failed to refresh user data:', error);
-      // Fallback to basic session data
-      const session = await authClient.getSession().catch(() => ({ data: null }));
-      setUser(session.data?.user ? {
-        id: session.data.user.id,
-        name: session.data.user.name,
-        email: session.data.user.email,
-        image: session.data.user.image || '',
-        emailVerified: session.data.user.emailVerified,
-      } : null);
+      setUser(null);
       setSubscription(null);
-      setError(null); // Don't show error to user, just log it
+      setError(null);
     } finally {
       setIsLoading(false);
     }
@@ -83,10 +56,8 @@ export function EnhancedAuthProvider({ children }: { children: ReactNode }) {
     try {
       setIsLoading(true);
       setError(null);
-      await authClient.signIn.social({ 
-        provider: "patreon",
-        callbackURL: window.location.href,
-      });
+      console.warn('Authentication has been removed');
+      setError('Authentication has been removed');
     } catch (error) {
       console.error('Sign in error:', error);
       setError(error instanceof Error ? error.message : 'Failed to sign in');
@@ -98,7 +69,6 @@ export function EnhancedAuthProvider({ children }: { children: ReactNode }) {
     try {
       setIsLoading(true);
       setError(null);
-      await authClient.signOut();
       setUser(null);
       setSubscription(null);
     } catch (error) {
@@ -111,10 +81,6 @@ export function EnhancedAuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     refresh();
-    
-    // Set up periodic refresh every 5 minutes
-    const interval = setInterval(refresh, 5 * 60 * 1000);
-    return () => clearInterval(interval);
   }, []);
 
   return (

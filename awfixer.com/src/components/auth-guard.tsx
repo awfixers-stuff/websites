@@ -39,13 +39,10 @@ export function AuthGuard({
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <h2 className="text-2xl font-bold mb-4">Authentication Required</h2>
-          <p className="text-gray-600 mb-6">Please sign in with Patreon to continue.</p>
-          <button
-            onClick={() => window.location.href = '/api/auth/signin/patreon'}
-            className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-full"
-          >
-            Sign In with Patreon
-          </button>
+          <p className="text-gray-600 mb-6">Authentication has been removed from this application.</p>
+          <div className="bg-gray-500 text-white font-bold py-2 px-6 rounded-full cursor-not-allowed opacity-50">
+            Sign In Disabled
+          </div>
         </div>
       </div>
     );
