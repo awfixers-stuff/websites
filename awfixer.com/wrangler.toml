@@ -1,0 +1,25 @@
+name = "awfixer-com"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+# OpenNext generates the worker file during build
+main = ".open-next/worker.js"
+
+# Assets configuration
+[site]
+bucket = ".open-next/assets"
+
+# Observability (optional but recommended)
+observability = { enabled = true }
+
+# Environment variables (if needed)
+# [vars]
+# YOUR_VAR = "value"
+
+# Build configuration
+[build]
+command = "bun run build"
+
+# For local development
+[dev]
+port = 3000
