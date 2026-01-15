@@ -125,6 +125,35 @@ export function DocsSidebar({ sidebar, className }: DocsSidebarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set());
+  const [isNavOrTocOpen, setIsNavOrTocOpen] = useState(false);
+
+  // Listen for navbar and TOC mobile menu state changes
+  useEffect(() => {
+    const checkNavTocState = () => {
+      const navOpen = document.body.hasAttribute("data-nav-open");
+      const tocOpen = document.body.hasAttribute("data-toc-open");
+      setIsNavOrTocOpen(navOpen || tocOpen);
+    };
+
+    // Check initial state
+    checkNavTocState();
+
+    // Observe changes to body attributes
+    const observer = new MutationObserver(checkNavTocState);
+    observer.observe(document.body, { attributes: true, attributeFilter: ["data-nav-open", "data-toc-open"] });
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Broadcast docs sidebar open state to document for cross-component coordination
+  useEffect(() => {
+    if (isOpen) {
+      document.body.setAttribute("data-docs-open", "true");
+    } else {
+      document.body.removeAttribute("data-docs-open");
+    }
+    return () => document.body.removeAttribute("data-docs-open");
+  }, [isOpen]);
 
   // Auto-expand sections and items based on current path
   useEffect(() => {
@@ -238,8 +267,9 @@ export function DocsSidebar({ sidebar, className }: DocsSidebarProps) {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          "lg:hidden fixed top-20 left-4 z-50 p-2 bg-background border rounded-lg shadow-sm",
-          "hover:bg-accent transition-colors"
+          "lg:hidden fixed top-[140px] left-4 z-40 p-2 bg-background/70 border rounded-lg shadow-sm backdrop-blur-md",
+          "hover:bg-accent transition-all duration-300",
+          isNavOrTocOpen && !isOpen && "-translate-y-full opacity-0 pointer-events-none"
         )}
         aria-label={isOpen ? "Close sidebar" : "Open sidebar"}
       >

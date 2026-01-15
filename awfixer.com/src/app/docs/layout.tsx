@@ -8,7 +8,7 @@ interface DocsLayoutProps {
 export default function DocsLayout({ children }: DocsLayoutProps) {
   return (
     <div className="container mx-auto px-4">
-      <div className="flex gap-8 pt-24 pb-16">
+      <div className="flex gap-8 pt-44 lg:pt-24 pb-16">
         {/* Sidebar */}
         <DocsSidebar sidebar={sidebar} className="shrink-0" />
 

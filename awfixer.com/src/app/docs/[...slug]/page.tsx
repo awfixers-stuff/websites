@@ -58,10 +58,10 @@ export default async function DocPage(props: {
 
       <article className="max-w-3xl">
         {/* Breadcrumb */}
-        <DocsBreadcrumb doc={doc} className="mb-6" />
+        <DocsBreadcrumb doc={doc} className="mb-12" />
 
         {/* Header */}
-        <header className="mb-8 space-y-4">
+        <header className="mb-12 space-y-4">
           <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
             {doc.title}
           </h1>

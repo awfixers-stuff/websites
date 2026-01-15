@@ -139,9 +139,28 @@ const ITEMS = [
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [isDocsOrTocOpen, setIsDocsOrTocOpen] = useState(false);
   const pathname = usePathname();
   const { user, isLoading, signIn, signOut } = useEnhancedAuth();
   const currentSection = getSectionFromPath(pathname);
+
+  // Listen for docs sidebar and TOC mobile menu state changes
+  useEffect(() => {
+    const checkDocsTocState = () => {
+      const docsOpen = document.body.hasAttribute("data-docs-open");
+      const tocOpen = document.body.hasAttribute("data-toc-open");
+      setIsDocsOrTocOpen(docsOpen || tocOpen);
+    };
+
+    // Check initial state
+    checkDocsTocState();
+
+    // Observe changes to body attributes
+    const observer = new MutationObserver(checkDocsTocState);
+    observer.observe(document.body, { attributes: true, attributeFilter: ["data-docs-open", "data-toc-open"] });
+
+    return () => observer.disconnect();
+  }, []);
 
   // Sync mobile menu state to document for cross-component coordination
   useEffect(() => {
@@ -158,6 +177,7 @@ export const Navbar = () => {
       className={cn(
         "bg-background/70 fixed left-1/2 z-50 w-[min(90%,700px)] -translate-x-1/2 rounded-4xl border backdrop-blur-md transition-all duration-300 lg:w-auto lg:max-w-[95%]",
         "top-5 lg:top-12",
+        isDocsOrTocOpen && !isMenuOpen && "max-lg:-translate-y-full max-lg:opacity-0 max-lg:pointer-events-none",
       )}
     >
       <div className="flex items-center justify-between px-6 py-3">

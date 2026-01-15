@@ -20,23 +20,35 @@ export const TableOfContents = ({ className }: TableOfContentsProps) => {
   const [headings, setHeadings] = useState<Heading[]>([]);
   const [activeId, setActiveId] = useState<string>("");
   const [isOpen, setIsOpen] = useState(false);
-  const [isNavOpen, setIsNavOpen] = useState(false);
+  const [isNavOrDocsOpen, setIsNavOrDocsOpen] = useState(false);
 
-  // Listen for navbar mobile menu state changes
+  // Listen for navbar and docs sidebar mobile menu state changes
   useEffect(() => {
-    const checkNavState = () => {
-      setIsNavOpen(document.body.hasAttribute("data-nav-open"));
+    const checkNavDocsState = () => {
+      const navOpen = document.body.hasAttribute("data-nav-open");
+      const docsOpen = document.body.hasAttribute("data-docs-open");
+      setIsNavOrDocsOpen(navOpen || docsOpen);
     };
 
     // Check initial state
-    checkNavState();
+    checkNavDocsState();
 
     // Observe changes to body attributes
-    const observer = new MutationObserver(checkNavState);
-    observer.observe(document.body, { attributes: true, attributeFilter: ["data-nav-open"] });
+    const observer = new MutationObserver(checkNavDocsState);
+    observer.observe(document.body, { attributes: true, attributeFilter: ["data-nav-open", "data-docs-open"] });
 
     return () => observer.disconnect();
   }, []);
+
+  // Broadcast TOC open state to document for cross-component coordination
+  useEffect(() => {
+    if (isOpen) {
+      document.body.setAttribute("data-toc-open", "true");
+    } else {
+      document.body.removeAttribute("data-toc-open");
+    }
+    return () => document.body.removeAttribute("data-toc-open");
+  }, [isOpen]);
 
   useEffect(() => {
     // Extract headings from the article
@@ -114,7 +126,7 @@ export const TableOfContents = ({ className }: TableOfContentsProps) => {
       <div
         className={cn(
           "lg:hidden fixed top-[72px] left-1/2 z-40 w-[min(90%,700px)] -translate-x-1/2 transition-all duration-300",
-          isNavOpen && "-translate-y-full opacity-0 pointer-events-none",
+          isNavOrDocsOpen && !isOpen && "-translate-y-full opacity-0 pointer-events-none",
         )}
       >
         <div
