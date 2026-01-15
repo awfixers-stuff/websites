@@ -1,0 +1,204 @@
+---
+title: "Configuration"
+description: "Configure your AWFixerOS environment for optimal performance."
+order: 3
+---
+
+# Configuration Guide
+
+After installing AWFixerOS, customize your environment to match your workflow.
+
+## Initial Setup Wizard
+
+The first time you log in, the Setup Wizard guides you through essential configuration:
+
+1. **Network Setup** - Connect to WiFi or Ethernet
+2. **Account Sync** - Link your AWFixer account (optional)
+3. **Privacy Settings** - Control telemetry and crash reports
+4. **Theme Selection** - Light, dark, or system default
+
+## System Settings
+
+Access system settings through the gear icon in the dock or by running:
+
+```bash
+awfix settings
+```
+
+### Display Configuration
+
+Configure your display preferences:
+
+```bash
+# List connected displays
+awfix display list
+
+# Set resolution
+awfix display set --resolution 1920x1080 --display primary
+
+# Configure multi-monitor layout
+awfix display arrange --primary DP-1 --secondary HDMI-1 --position right
+```
+
+### Keyboard Shortcuts
+
+Default shortcuts can be customized:
+
+| Action | Default | Description |
+|--------|---------|-------------|
+| Terminal | `Super + T` | Open terminal |
+| Settings | `Super + I` | Open settings |
+| App Launcher | `Super` | Application menu |
+| Screenshot | `Print` | Capture screen |
+
+### Network Configuration
+
+#### WiFi
+
+```bash
+# Scan for networks
+awfix net wifi scan
+
+# Connect to a network
+awfix net wifi connect "NetworkName" --password "your-password"
+
+# Show current connection
+awfix net status
+```
+
+#### Static IP (Advanced)
+
+Edit `/etc/awfixer/network/static.conf`:
+
+```ini
+[ethernet]
+interface = eth0
+address = 192.168.1.100
+netmask = 255.255.255.0
+gateway = 192.168.1.1
+dns = 1.1.1.1, 8.8.8.8
+```
+
+## Shell Configuration
+
+AWFixerOS uses `zsh` by default with the AWFixer configuration framework.
+
+### Customize Prompt
+
+Edit `~/.config/awfixer/shell/prompt.zsh`:
+
+```bash
+# Simple prompt
+export AWFIX_PROMPT_STYLE="minimal"
+
+# Powerline-style (default)
+export AWFIX_PROMPT_STYLE="powerline"
+
+# Two-line with git info
+export AWFIX_PROMPT_STYLE="full"
+```
+
+### Aliases
+
+Add custom aliases to `~/.config/awfixer/shell/aliases.zsh`:
+
+```bash
+# Custom aliases
+alias ll="ls -la"
+alias gs="git status"
+alias dc="docker compose"
+```
+
+## Package Management
+
+AWFixerOS uses `awfix` as its package manager:
+
+```bash
+# Update package database
+awfix update
+
+# Upgrade all packages
+awfix upgrade
+
+# Install a package
+awfix install package-name
+
+# Search packages
+awfix search keyword
+
+# Remove a package
+awfix remove package-name
+```
+
+## Development Environment
+
+### Setting Up Languages
+
+```bash
+# Node.js (via nvm integration)
+awfix install nodejs
+
+# Python (with pip and venv)
+awfix install python
+
+# Rust
+awfix install rust
+
+# Go
+awfix install golang
+```
+
+### IDE Support
+
+Popular IDEs available:
+
+```bash
+awfix install vscode       # Visual Studio Code
+awfix install zed          # Zed Editor
+awfix install neovim       # Neovim
+awfix install jetbrains    # JetBrains Toolbox
+```
+
+## Security Hardening
+
+### Firewall
+
+The firewall is enabled by default:
+
+```bash
+# Check status
+awfix firewall status
+
+# Allow a port
+awfix firewall allow 8080/tcp
+
+# Block incoming except SSH
+awfix firewall preset minimal
+```
+
+### Updates
+
+Enable automatic security updates:
+
+```bash
+awfix config set auto-update.security true
+awfix config set auto-update.schedule "04:00"
+```
+
+## Backup Configuration
+
+All AWFixerOS configuration is stored in `~/.config/awfixer/`. Back it up easily:
+
+```bash
+# Export configuration
+awfix config export ~/awfixer-config-backup.tar.gz
+
+# Import on new system
+awfix config import ~/awfixer-config-backup.tar.gz
+```
+
+## Next Steps
+
+- [Desktop Environment Guide](/docs/awfixeros/user-guide/desktop-environment)
+- [Security Hardening](/docs/awfixeros/admin-guide/security-hardening)
+- [Development Setup](/docs/awfixeros/developer-guide)

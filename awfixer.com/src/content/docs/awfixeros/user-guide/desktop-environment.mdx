@@ -1,0 +1,175 @@
+---
+title: "Desktop Environment"
+description: "Navigate and customize the AWFixerOS desktop environment."
+order: 1
+---
+
+# Desktop Environment
+
+AWFixerOS uses a custom desktop environment designed for productivity and aesthetics.
+
+## Overview
+
+The desktop consists of several key components:
+
+- **Top Panel** - System status, clock, notifications
+- **Dock** - Quick access to applications
+- **Workspace Switcher** - Multiple virtual desktops
+- **App Launcher** - Search and launch applications
+
+## Top Panel
+
+### System Tray
+
+The right side of the top panel contains:
+
+- **Network** - WiFi/Ethernet status
+- **Sound** - Volume control
+- **Battery** - Power status (laptops)
+- **Notifications** - Recent alerts
+
+### Quick Settings
+
+Click the system tray to access quick settings:
+
+- WiFi toggle
+- Bluetooth toggle
+- Dark mode switch
+- Screen brightness
+- Do Not Disturb
+
+## The Dock
+
+The dock provides quick access to your favorite applications.
+
+### Adding Applications
+
+1. Open the app launcher (`Super` key)
+2. Right-click on an application
+3. Select "Add to Dock"
+
+### Removing Applications
+
+Right-click on a dock icon and select "Remove from Dock".
+
+### Dock Position
+
+Move the dock to different positions:
+
+```bash
+awfix dock position bottom  # Default
+awfix dock position left
+awfix dock position right
+```
+
+## Workspaces
+
+Workspaces let you organize windows across multiple virtual desktops.
+
+### Switching Workspaces
+
+- **Keyboard**: `Super + 1-9` for specific workspace
+- **Gesture**: Three-finger swipe left/right
+- **Overview**: `Super + Tab` to see all workspaces
+
+### Creating Workspaces
+
+Workspaces are created automatically when you drag a window to an empty workspace indicator.
+
+### Moving Windows
+
+Drag a window to the workspace switcher, or use:
+
+- `Super + Shift + 1-9` - Move to workspace
+- `Super + Shift + Left/Right` - Move to adjacent workspace
+
+## Window Management
+
+### Tiling
+
+AWFixerOS includes a tiling mode for efficient window management:
+
+| Shortcut | Action |
+|----------|--------|
+| `Super + Left` | Tile left half |
+| `Super + Right` | Tile right half |
+| `Super + Up` | Maximize |
+| `Super + Down` | Restore/Minimize |
+
+### Window Controls
+
+Right-click the title bar for options:
+
+- Always on Top
+- Move to Workspace
+- Resize
+- Close
+
+## Customization
+
+### Themes
+
+Change the visual theme:
+
+```bash
+# List available themes
+awfix theme list
+
+# Apply a theme
+awfix theme set nord
+
+# Reset to default
+awfix theme reset
+```
+
+### Wallpaper
+
+Set your desktop wallpaper:
+
+```bash
+# Set wallpaper
+awfix wallpaper set /path/to/image.jpg
+
+# Enable slideshow
+awfix wallpaper slideshow ~/Pictures/Wallpapers --interval 30m
+```
+
+### Icon Packs
+
+Install and apply icon packs:
+
+```bash
+awfix install papirus-icons
+awfix icons set papirus
+```
+
+## Accessibility
+
+### Text Scaling
+
+Increase UI text size:
+
+```bash
+awfix accessibility text-scale 1.25  # 125%
+```
+
+### High Contrast
+
+Enable high contrast mode for better visibility:
+
+```bash
+awfix accessibility high-contrast enable
+```
+
+### Screen Reader
+
+Enable the built-in screen reader:
+
+```bash
+awfix accessibility screen-reader enable
+```
+
+## Next Steps
+
+- [File Management](/docs/awfixeros/user-guide/file-management) - Learn to manage files
+- [Software Installation](/docs/awfixeros/user-guide/software-installation) - Install applications

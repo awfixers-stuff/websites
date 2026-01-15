@@ -1,0 +1,277 @@
+---
+title: "Security Hardening"
+description: "Comprehensive guide to securing your AWFixerOS installation."
+order: 1
+badge: "Important"
+---
+
+# Security Hardening
+
+This guide covers best practices for securing your AWFixerOS installation.
+
+## Security Levels
+
+AWFixerOS supports multiple security presets:
+
+| Level | Description | Use Case |
+|-------|-------------|----------|
+| Standard | Default security settings | Desktop users |
+| Enhanced | Additional restrictions | Business use |
+| Paranoid | Maximum security | High-security environments |
+
+```bash
+# Apply security preset
+awfix security preset enhanced
+```
+
+## Firewall Configuration
+
+AWFixerOS uses `awfirewall`, a simplified interface to nftables.
+
+### Basic Commands
+
+```bash
+# Enable firewall
+awfix firewall enable
+
+# Check status
+awfix firewall status
+
+# List rules
+awfix firewall list
+```
+
+### Managing Rules
+
+```bash
+# Allow port
+awfix firewall allow 443/tcp
+awfix firewall allow 8080/tcp from 192.168.1.0/24
+
+# Block port
+awfix firewall deny 23/tcp
+
+# Allow application
+awfix firewall allow nginx
+
+# Remove rule
+awfix firewall remove 443/tcp
+```
+
+### Presets
+
+```bash
+# Home (allows common services)
+awfix firewall preset home
+
+# Server (minimal, explicit allows only)
+awfix firewall preset server
+
+# Lockdown (blocks everything except SSH)
+awfix firewall preset lockdown
+```
+
+## SSH Hardening
+
+### Key-Based Authentication
+
+```bash
+# Generate SSH key
+ssh-keygen -t ed25519 -C "user@awfixeros"
+
+# Copy to server
+ssh-copy-id user@server
+
+# Disable password auth
+awfix ssh config set PasswordAuthentication no
+awfix ssh config set PubkeyAuthentication yes
+```
+
+### Additional Hardening
+
+```bash
+# Change default port
+awfix ssh config set Port 2222
+
+# Limit users
+awfix ssh config set AllowUsers admin maintainer
+
+# Disable root login
+awfix ssh config set PermitRootLogin no
+
+# Apply changes
+awfix service restart sshd
+```
+
+## Kernel Hardening
+
+AWFixerOS includes a hardened kernel with additional security parameters.
+
+### Sysctl Settings
+
+Key security parameters in `/etc/sysctl.d/99-awfixer-security.conf`:
+
+```ini
+# Disable IP forwarding (unless needed)
+net.ipv4.ip_forward = 0
+
+# Enable SYN flood protection
+net.ipv4.tcp_syncookies = 1
+
+# Disable ICMP redirects
+net.ipv4.conf.all.accept_redirects = 0
+
+# Enable exec shield
+kernel.exec-shield = 1
+
+# Randomize memory layout
+kernel.randomize_va_space = 2
+```
+
+### Apply Changes
+
+```bash
+awfix security apply-sysctl
+```
+
+## Disk Encryption
+
+### Full Disk Encryption (LUKS)
+
+If not enabled during installation:
+
+```bash
+# This requires reinstallation, but you can encrypt additional drives:
+awfix encrypt /dev/sdb
+```
+
+### Encrypted Home Directory
+
+```bash
+# Enable encrypted home for new users
+awfix security home-encryption enable
+
+# Migrate existing user to encrypted home
+awfix security encrypt-home username
+```
+
+## Mandatory Access Control
+
+AWFixerOS uses AppArmor for mandatory access control.
+
+### Managing Profiles
+
+```bash
+# Check status
+awfix security apparmor status
+
+# List profiles
+awfix security apparmor list
+
+# Set profile to enforce mode
+awfix security apparmor enforce /usr/bin/firefox
+
+# Set to complain mode (logging only)
+awfix security apparmor complain /usr/bin/app
+```
+
+## Automatic Updates
+
+### Security Updates
+
+```bash
+# Enable automatic security updates
+awfix config set updates.security.auto true
+
+# Set update schedule
+awfix config set updates.security.schedule "04:00"
+
+# Check for updates now
+awfix update --security
+```
+
+### Unattended Upgrades
+
+```bash
+# Configure automatic upgrades
+awfix upgrades auto enable
+
+# Set reboot policy
+awfix upgrades auto reboot-policy delayed  # Options: never, immediate, delayed
+```
+
+## Audit and Logging
+
+### Enable Audit Daemon
+
+```bash
+# Start auditd
+awfix service enable auditd
+awfix service start auditd
+
+# View audit logs
+awfix audit log
+
+# Search for specific events
+awfix audit search --type USER_LOGIN --success no
+```
+
+### Log Monitoring
+
+```bash
+# Enable real-time monitoring
+awfix security monitor start
+
+# View security events
+awfix security events
+
+# Set up alerts
+awfix security alert add --type failed-login --threshold 5 --email admin@example.com
+```
+
+## Security Scanning
+
+### Vulnerability Scanner
+
+```bash
+# Run security scan
+awfix security scan
+
+# Scan specific areas
+awfix security scan --packages  # Check for vulnerable packages
+awfix security scan --config    # Check configuration
+awfix security scan --network   # Check network exposure
+```
+
+### Rootkit Detection
+
+```bash
+# Install and run rkhunter
+awfix install rkhunter
+awfix security rootkit-scan
+```
+
+## Compliance
+
+### Generate Security Report
+
+```bash
+# Generate compliance report
+awfix security report --format pdf --output security-report.pdf
+
+# Check against CIS benchmark
+awfix security benchmark cis
+```
+
+## Best Practices Checklist
+
+- [ ] Enable full disk encryption
+- [ ] Configure firewall with minimal open ports
+- [ ] Use SSH keys instead of passwords
+- [ ] Enable automatic security updates
+- [ ] Set up audit logging
+- [ ] Create non-root user for daily use
+- [ ] Enable AppArmor profiles
+- [ ] Regularly run security scans
+- [ ] Keep backups in a secure location
+- [ ] Document your security configuration

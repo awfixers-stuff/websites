@@ -1,0 +1,89 @@
+---
+title: "AWFixer Tools"
+description: "Developer tools and utilities from AWFixer."
+order: 30
+icon: "wrench"
+---
+
+# AWFixer Tools
+
+A collection of developer tools and utilities designed to improve your workflow.
+
+## Available Tools
+
+### CLI Tools
+
+- **awfix** - The AWFixerOS package manager and system utility
+- **awfixer-cloud** - Cloud infrastructure CLI
+- **awdev** - Development workflow automation
+
+### Libraries
+
+- **@awfixer/ui** - React component library
+- **@awfixer/auth** - Authentication utilities
+- **@awfixer/utils** - Common utility functions
+
+### VS Code Extensions
+
+- **AWFixer Theme** - Official color theme
+- **AWFixer Snippets** - Code snippets
+- **AWFixer Cloud** - Cloud integration
+
+## Installation
+
+### From AWFixerOS
+
+```bash
+awfix install awfixer-tools
+```
+
+### From npm
+
+```bash
+bun add @awfixer/ui @awfixer/utils
+```
+
+## Quick Start
+
+### Using @awfixer/ui
+
+```tsx
+import { Button, Card } from '@awfixer/ui';
+
+export function MyComponent() {
+  return (
+    <Card>
+      <h2>Hello World</h2>
+      <Button variant="primary">Click Me</Button>
+    </Card>
+  );
+}
+```
+
+### Using awdev
+
+```bash
+# Initialize new project
+awdev init my-project --template react
+
+# Start development
+awdev dev
+
+# Build for production
+awdev build
+
+# Deploy to AWFixer Cloud
+awdev deploy
+```
+
+## Documentation
+
+Detailed documentation for each tool is available in their respective repositories:
+
+- [awdev on GitHub](https://github.com/awfixer/awdev)
+- [@awfixer/ui on GitHub](https://github.com/awfixer/ui)
+- [@awfixer/auth on GitHub](https://github.com/awfixer/auth)
+
+## Contributing
+
+We welcome contributions! See our [contribution guidelines](https://github.com/awfixer/.github/CONTRIBUTING.md).

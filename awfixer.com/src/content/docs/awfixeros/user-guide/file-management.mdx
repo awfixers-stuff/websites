@@ -1,0 +1,278 @@
+---
+title: "File Management"
+description: "Learn to manage files and folders effectively in AWFixerOS."
+order: 2
+---
+
+# File Management
+
+AWFixerOS provides powerful tools for managing your files, both graphically and through the command line.
+
+## File Manager
+
+The default file manager is **AWFixer Files**, a modern file browser designed for productivity.
+
+### Features
+
+- **Tabbed Browsing** - Multiple folders in one window
+- **Split View** - Side-by-side folder comparison
+- **Quick Preview** - Press `Space` to preview files
+- **Search** - Fast indexed search
+- **Cloud Integration** - Access cloud storage
+
+### Keyboard Shortcuts
+
+| Shortcut | Action |
+|----------|--------|
+| `Ctrl + T` | New tab |
+| `Ctrl + W` | Close tab |
+| `Ctrl + L` | Edit location bar |
+| `Ctrl + H` | Show hidden files |
+| `F2` | Rename |
+| `Delete` | Move to trash |
+| `Shift + Delete` | Permanent delete |
+
+## Directory Structure
+
+AWFixerOS follows a standard Linux directory hierarchy with some additions:
+
+```
+/
+├── bin/          # Essential binaries
+├── boot/         # Boot loader files
+├── dev/          # Device files
+├── etc/          # Configuration files
+│   └── awfixer/  # AWFixer system config
+├── home/         # User home directories
+│   └── user/
+│       ├── Documents/
+│       ├── Downloads/
+│       ├── Pictures/
+│       ├── Music/
+│       ├── Videos/
+│       └── .config/awfixer/  # User config
+├── opt/          # Optional packages
+├── tmp/          # Temporary files
+├── usr/          # User programs
+└── var/          # Variable data
+```
+
+## Command Line Tools
+
+### Navigation
+
+```bash
+# Change directory
+cd /path/to/directory
+
+# Print working directory
+pwd
+
+# List files
+ls -la
+
+# AWFixer enhanced listing
+awfix ls
+```
+
+### File Operations
+
+```bash
+# Copy files
+cp source destination
+cp -r folder/ destination/  # Recursive
+
+# Move/rename
+mv source destination
+
+# Delete
+rm file
+rm -r folder/
+
+# Create directory
+mkdir new-folder
+
+# Create nested directories
+mkdir -p path/to/nested/folder
+```
+
+### Viewing Files
+
+```bash
+# View file contents
+cat file.txt
+
+# Page through large files
+less file.txt
+
+# View first/last lines
+head -n 20 file.txt
+tail -n 20 file.txt
+
+# AWFixer file viewer
+awfix view file.txt
+```
+
+### Searching
+
+```bash
+# Find files by name
+find /path -name "*.txt"
+
+# Find files by content
+grep -r "search term" /path
+
+# AWFixer fast search (uses index)
+awfix search "filename" ~/Documents
+awfix search --content "text to find" ~/
+```
+
+## File Permissions
+
+### Understanding Permissions
+
+```
+-rwxr-xr-x  user  group  filename
+│└┬┘└┬┘└┬┘
+│ │  │  └── Others: read, execute
+│ │  └───── Group: read, execute
+│ └──────── Owner: read, write, execute
+└────────── File type (- = file, d = directory)
+```
+
+### Changing Permissions
+
+```bash
+# Numeric mode
+chmod 755 file    # rwxr-xr-x
+chmod 644 file    # rw-r--r--
+
+# Symbolic mode
+chmod +x file     # Add execute
+chmod u+w file    # Owner can write
+chmod go-r file   # Remove read from group/others
+```
+
+### Changing Ownership
+
+```bash
+chown user file
+chown user:group file
+chown -R user:group folder/  # Recursive
+```
+
+## Compression
+
+### Creating Archives
+
+```bash
+# Tar with gzip
+tar -czf archive.tar.gz folder/
+
+# Tar with better compression
+tar -cJf archive.tar.xz folder/
+
+# Zip format
+zip -r archive.zip folder/
+
+# AWFixer compress (auto-selects best format)
+awfix compress folder/ archive
+```
+
+### Extracting Archives
+
+```bash
+# Auto-detect format
+awfix extract archive.tar.gz
+
+# Or manually
+tar -xzf archive.tar.gz
+unzip archive.zip
+```
+
+## Cloud Storage
+
+AWFixerOS integrates with popular cloud services.
+
+### Supported Services
+
+- AWFixer Cloud (native)
+- Google Drive
+- Dropbox
+- OneDrive
+- Nextcloud
+
+### Setup
+
+```bash
+# Add cloud account
+awfix cloud add google-drive
+
+# Mount cloud storage
+awfix cloud mount google-drive ~/Cloud/GoogleDrive
+
+# Sync folders
+awfix cloud sync ~/Documents google-drive:Documents
+```
+
+## Trash and Recovery
+
+### Using Trash
+
+Files deleted normally go to trash:
+
+```bash
+# Delete to trash
+rm file  # or press Delete in file manager
+
+# View trash
+awfix trash list
+
+# Restore from trash
+awfix trash restore filename
+
+# Empty trash
+awfix trash empty
+```
+
+### Permanent Deletion
+
+Bypass trash for permanent deletion:
+
+```bash
+rm --permanent file
+# or
+shred -u file  # Secure delete
+```
+
+## Tips and Tricks
+
+### Quick Directory Access
+
+Create bookmarks for frequently accessed folders:
+
+```bash
+awfix bookmark add ~/Projects/work work
+cd @work  # Jump to bookmark
+```
+
+### Batch Rename
+
+Rename multiple files at once:
+
+```bash
+awfix rename "*.jpg" --pattern "{n}-photo.jpg"
+# Renames: 1-photo.jpg, 2-photo.jpg, etc.
+```
+
+### Disk Usage
+
+Check folder sizes:
+
+```bash
+# Interactive disk usage viewer
+awfix disk usage ~/
+
+# Simple summary
+du -sh ~/Documents/*
+```

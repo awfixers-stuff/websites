@@ -1,0 +1,107 @@
+---
+title: "Developer Guide"
+description: "Development environment and tools for AWFixerOS."
+order: 3
+icon: "code"
+---
+
+# Developer Guide
+
+AWFixerOS is built with developers in mind. This guide covers setting up your development environment and using the tools we provide.
+
+## Development Environment
+
+AWFixerOS includes development tools out of the box:
+
+- Modern terminal with Zsh
+- Git with enhanced configuration
+- Docker and Podman
+- Multiple language runtimes
+- Popular editors and IDEs
+
+## Quick Setup
+
+```bash
+# Install development metapackage
+awfix install awfixer-dev
+
+# This includes:
+# - Build tools (gcc, clang, make, cmake)
+# - Languages (Node.js, Python, Rust, Go)
+# - Editors (neovim, VSCode)
+# - Tools (git, docker, kubectl)
+```
+
+## Language Support
+
+### JavaScript/TypeScript
+
+```bash
+# Bun is pre-installed and recommended
+bun --version
+
+# Node.js is also available
+awfix install nodejs
+node --version
+
+# Version management
+awfix runtime use node 20
+awfix runtime use node 22
+```
+
+### Python
+
+```bash
+# Python with uv package manager
+uv --version
+
+# Create virtual environment
+uv venv
+source .venv/bin/activate
+
+# Install packages
+uv pip install flask
+```
+
+### Rust
+
+```bash
+# Rust toolchain
+rustc --version
+cargo --version
+
+# Update toolchain
+rustup update
+```
+
+### Go
+
+```bash
+# Go compiler
+go version
+
+# Set up workspace
+go mod init project-name
+```
+
+## Container Development
+
+AWFixerOS has first-class container support.
+
+```bash
+# Docker
+docker run hello-world
+
+# Podman (rootless alternative)
+podman run hello-world
+
+# Docker Compose
+docker compose up -d
+```
+
+## Topics
+
+- Development Setup (coming soon)
+- Container Workflows (coming soon)
+- Building Packages (coming soon)
+- Contributing to AWFixerOS (coming soon)

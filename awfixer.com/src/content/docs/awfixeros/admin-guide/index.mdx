@@ -1,0 +1,74 @@
+---
+title: "Administrator Guide"
+description: "System administration and management for AWFixerOS."
+order: 2
+icon: "shield"
+---
+
+# Administrator Guide
+
+This guide covers system administration tasks for AWFixerOS, including user management, security, backup, and maintenance.
+
+## Topics Covered
+
+- **User Management** - Create and manage user accounts
+- **Security Hardening** - Secure your AWFixerOS installation
+- **Backup and Recovery** - Protect your data
+- **Update Management** - Keep your system current
+- **Performance Tuning** - Optimize system performance
+
+## Prerequisites
+
+Administrative tasks require `sudo` privileges or root access.
+
+## Quick Reference
+
+### User Management
+
+```bash
+# Add user
+awfix user add username
+
+# Delete user
+awfix user remove username
+
+# List users
+awfix user list
+
+# Modify user
+awfix user modify username --groups wheel,docker
+```
+
+### Service Management
+
+```bash
+# Service status
+awfix service status
+
+# Start/stop services
+awfix service start nginx
+awfix service stop nginx
+
+# Enable at boot
+awfix service enable nginx
+```
+
+### System Monitoring
+
+```bash
+# System health
+awfix system health
+
+# Resource usage
+awfix system resources
+
+# View logs
+awfix logs system
+awfix logs service nginx
+```
+
+## Detailed Guides
+
+- [Security Hardening](/docs/awfixeros/admin-guide/security-hardening) - Comprehensive security guide
+- Backup and Recovery (coming soon)
+- Network Administration (coming soon)

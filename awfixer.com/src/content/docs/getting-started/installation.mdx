@@ -1,0 +1,122 @@
+---
+title: "Installation"
+description: "Step-by-step guide to install AWFixerOS on your system."
+order: 2
+---
+
+# Installation Guide
+
+This guide walks you through installing AWFixerOS on your machine.
+
+## System Requirements
+
+Before you begin, ensure your system meets these minimum requirements:
+
+| Component | Minimum | Recommended |
+|-----------|---------|-------------|
+| CPU | 64-bit dual-core | 64-bit quad-core |
+| RAM | 4 GB | 8 GB or more |
+| Storage | 25 GB | 50 GB or more |
+| Graphics | Basic VGA | OpenGL 3.3+ capable |
+
+## Download
+
+1. Visit our [downloads page](/products/awfixeros/downloads)
+2. Choose your preferred edition:
+   - **Desktop** - Full graphical environment
+   - **Server** - Minimal, CLI-focused
+   - **Developer** - Desktop with dev tools pre-installed
+
+## Creating Installation Media
+
+### Using Balena Etcher (Recommended)
+
+```bash
+# Download Etcher from balena.io/etcher
+# Select the ISO file
+# Select your USB drive
+# Click "Flash!"
+```
+
+### Using dd (Linux/macOS)
+
+```bash
+# Find your USB device
+lsblk
+
+# Write the image (replace sdX with your device)
+sudo dd if=awfixeros.iso of=/dev/sdX bs=4M status=progress
+sudo sync
+```
+
+## Installation Steps
+
+### 1. Boot from USB
+
+1. Insert the USB drive
+2. Restart your computer
+3. Press the boot menu key (usually F12, F2, or Del)
+4. Select the USB drive
+
+### 2. Start the Installer
+
+Once booted, you'll see the AWFixerOS welcome screen. Click **Install AWFixerOS** to begin.
+
+### 3. Select Language and Keyboard
+
+Choose your preferred language and keyboard layout. These can be changed later in system settings.
+
+### 4. Partition Setup
+
+You have several options:
+
+- **Automatic** - Uses entire disk (erases all data)
+- **Alongside** - Dual-boot with existing OS
+- **Manual** - Custom partition layout
+
+### 5. User Setup
+
+Create your user account:
+
+- Username (lowercase, no spaces)
+- Full name
+- Password (strong password recommended)
+
+### 6. Complete Installation
+
+Review your choices and click **Install**. The process typically takes 10-15 minutes.
+
+## Post-Installation
+
+After installation completes:
+
+1. Remove the USB drive
+2. Restart your computer
+3. Log in with your credentials
+4. Run initial updates:
+
+```bash
+awfix update
+awfix upgrade
+```
+
+## Troubleshooting
+
+### Boot issues
+
+If the USB doesn't boot:
+- Check UEFI/Legacy BIOS settings
+- Disable Secure Boot temporarily
+- Try a different USB port
+
+### Installation hangs
+
+- Verify the ISO checksum
+- Try with fewer peripherals attached
+- Check RAM with memtest
+
+## Next Steps
+
+- [Configure your environment](/docs/getting-started/configuration)
+- [Explore the desktop](/docs/awfixeros/user-guide/desktop-environment)
+- [Set up development tools](/docs/awfixeros/developer-guide)
