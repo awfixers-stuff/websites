@@ -2,20 +2,20 @@ import { DashedLine } from "@/components/dashed-line";
 
 const stats = [
   {
-    value: "$150M",
+    value: "$0",
     label: "Raised",
   },
   {
-    value: "20K",
-    label: "Companies",
+    value: "10",
+    label: "Major Projects",
   },
   {
-    value: "1.3B",
-    label: "Monthly transactions",
+    value: "...",
+    label: "...",
   },
   {
-    value: "1.5K",
-    label: "Connections per minute",
+    value: "...",
+    label: "...",
   },
 ];
 
@@ -33,12 +33,12 @@ export function AboutHero() {
           </p>
 
           <p className="text-muted-foreground mt-8 hidden max-w-lg space-y-6 text-lg text-balance md:block lg:mt-12">
-            At AWFixer, we are dedicated to transforming the way developers build,
-            debug, and deploy applications. Our mission is to provide our
+            At AWFixer, we are dedicated to transforming the way developers
+            build, debug, and deploy applications. Our mission is to provide our
             customers with an unbeatable edge over bugs, performance issues, and
-            technical debt through actionable insights and seamless
-            development workflows. We'll stop at nothing to give you the tools you need
-            to get every project across the finish line.
+            technical debt through actionable insights and seamless development
+            workflows. We'll stop at nothing to give you the tools you need to
+            get every project across the finish line.
             <br />
             <br />
             We're developer-obsessed — investing the time to understand every
