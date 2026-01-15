@@ -25,6 +25,10 @@ import {
   Users,
   BarChart,
   Target,
+  Book,
+  Rocket,
+  Settings,
+  Code,
 } from "lucide-react";
 
 import { useEnhancedAuth } from "@/components/enhanced-auth-provider";
@@ -41,12 +45,21 @@ import {
 import { cn } from "@/lib/utils";
 
 // Helper to get current section from pathname
-const getSectionFromPath = (pathname: string): { label: string; icon: React.ComponentType<{ className?: string }> } | null => {
+const getSectionFromPath = (
+  pathname: string,
+): {
+  label: string;
+  icon: React.ComponentType<{ className?: string }>;
+} | null => {
   if (pathname === "/" || pathname === "") return null;
 
-  const sectionMap: Record<string, { label: string; icon: React.ComponentType<{ className?: string }> }> = {
+  const sectionMap: Record<
+    string,
+    { label: string; icon: React.ComponentType<{ className?: string }> }
+  > = {
     "/projects": { label: "Projects", icon: FolderKanban },
     "/products": { label: "Products", icon: Package },
+    "/docs": { label: "Docs", icon: Book },
     "/about": { label: "About Us", icon: Building2 },
     "/pricing": { label: "Pricing", icon: DollarSign },
     "/faq": { label: "FAQ", icon: HelpCircle },
@@ -129,6 +142,39 @@ const ITEMS = [
       },
     ],
   },
+  {
+    label: "Docs",
+    href: "/docs",
+    icon: Book,
+    dropdownItems: [
+      {
+        title: "Getting Started",
+        icon: Rocket,
+        href: "/docs/getting-started",
+        description: "Begin your journey with AWFixer products and services",
+      },
+      {
+        title: "AWFixerOS",
+        icon: Settings,
+        href: "/docs/awfixeros",
+        description:
+          "Complete documentation for AWFixerOS - a modern, security-focused operating system",
+      },
+      {
+        title: "AWFixer Cloud",
+        icon: Cloud,
+        href: "/docs/cloud",
+        description:
+          "Documentation for AWFixer Cloud infrastructure and services",
+      },
+      {
+        title: "AWFixer Tools",
+        icon: Wrench,
+        href: "/docs/tools",
+        description: "Developer tools and utilities from AWFixer",
+      },
+    ],
+  },
   { label: "About Us", href: "/about", icon: Building2 },
   { label: "Pricing", href: "/pricing", icon: DollarSign },
   { label: "FAQ", href: "/faq", icon: HelpCircle },
@@ -157,7 +203,10 @@ export const Navbar = () => {
 
     // Observe changes to body attributes
     const observer = new MutationObserver(checkDocsTocState);
-    observer.observe(document.body, { attributes: true, attributeFilter: ["data-docs-open", "data-toc-open"] });
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ["data-docs-open", "data-toc-open"],
+    });
 
     return () => observer.disconnect();
   }, []);
@@ -177,7 +226,9 @@ export const Navbar = () => {
       className={cn(
         "bg-background/70 fixed left-1/2 z-50 w-[min(90%,700px)] -translate-x-1/2 rounded-4xl border backdrop-blur-md transition-all duration-300 lg:w-auto lg:max-w-[95%]",
         "top-5 lg:top-12",
-        isDocsOrTocOpen && !isMenuOpen && "max-lg:-translate-y-full max-lg:opacity-0 max-lg:pointer-events-none",
+        isDocsOrTocOpen &&
+          !isMenuOpen &&
+          "max-lg:pointer-events-none max-lg:-translate-y-full max-lg:opacity-0",
       )}
     >
       <div className="flex items-center justify-between px-6 py-3">

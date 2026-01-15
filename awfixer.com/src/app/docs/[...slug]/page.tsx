@@ -66,9 +66,7 @@ export default async function DocPage(props: {
             {doc.title}
           </h1>
           {doc.description && (
-            <p className="text-lg text-muted-foreground">
-              {doc.description}
-            </p>
+            <p className="text-muted-foreground text-lg">{doc.description}</p>
           )}
         </header>
 

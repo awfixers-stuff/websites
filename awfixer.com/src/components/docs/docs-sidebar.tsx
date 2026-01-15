@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -19,8 +20,11 @@ import {
   FileText,
 } from "lucide-react";
 
+import type {
+  SidebarSection,
+  SidebarItem,
+} from "@/lib/generated/docs-manifest";
 import { cn } from "@/lib/utils";
-import type { SidebarSection, SidebarItem } from "@/lib/generated/docs-manifest";
 
 // Icon mapping for sections
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -59,9 +63,12 @@ function SidebarItemComponent({
   const isExpanded = expandedItems.has(item.slug);
 
   // Check if any child is active
-  const isChildActive = hasChildren && item.children?.some(
-    child => pathname === child.path || pathname.startsWith(child.path + "/")
-  );
+  const isChildActive =
+    hasChildren &&
+    item.children?.some(
+      (child) =>
+        pathname === child.path || pathname.startsWith(child.path + "/"),
+    );
 
   const Icon = item.icon ? iconMap[item.icon] : null;
 
@@ -71,7 +78,7 @@ function SidebarItemComponent({
         <Link
           href={item.path}
           className={cn(
-            "flex-1 flex items-center gap-2 px-3 py-2 text-sm rounded-lg transition-colors",
+            "flex flex-1 items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors",
             "hover:bg-accent hover:text-accent-foreground",
             isActive && "bg-primary/10 text-primary font-medium",
             isChildActive && !isActive && "text-foreground",
@@ -83,7 +90,7 @@ function SidebarItemComponent({
           {Icon && <Icon className="size-4 shrink-0" />}
           <span className="truncate">{item.title}</span>
           {item.badge && (
-            <span className="ml-auto text-xs bg-primary/20 text-primary px-1.5 py-0.5 rounded">
+            <span className="bg-primary/20 text-primary ml-auto rounded px-1.5 py-0.5 text-xs">
               {item.badge}
             </span>
           )}
@@ -91,7 +98,7 @@ function SidebarItemComponent({
         {hasChildren && (
           <button
             onClick={() => toggleExpanded(item.slug)}
-            className="p-2 hover:bg-accent rounded-lg transition-colors"
+            className="hover:bg-accent rounded-lg p-2 transition-colors"
             aria-label={isExpanded ? "Collapse" : "Expand"}
           >
             {isExpanded ? (
@@ -124,7 +131,9 @@ export function DocsSidebar({ sidebar, className }: DocsSidebarProps) {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
-  const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set());
+  const [expandedSections, setExpandedSections] = useState<Set<string>>(
+    new Set(),
+  );
   const [isNavOrTocOpen, setIsNavOrTocOpen] = useState(false);
 
   // Listen for navbar and TOC mobile menu state changes
@@ -140,7 +149,10 @@ export function DocsSidebar({ sidebar, className }: DocsSidebarProps) {
 
     // Observe changes to body attributes
     const observer = new MutationObserver(checkNavTocState);
-    observer.observe(document.body, { attributes: true, attributeFilter: ["data-nav-open", "data-toc-open"] });
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ["data-nav-open", "data-toc-open"],
+    });
 
     return () => observer.disconnect();
   }, []);
@@ -163,7 +175,8 @@ export function DocsSidebar({ sidebar, className }: DocsSidebarProps) {
     for (const section of sidebar) {
       // Check if current page is in this section
       const isInSection = section.items.some(
-        item => pathname === item.path || pathname.startsWith(item.path + "/")
+        (item) =>
+          pathname === item.path || pathname.startsWith(item.path + "/"),
       );
 
       if (isInSection) {
@@ -193,7 +206,7 @@ export function DocsSidebar({ sidebar, className }: DocsSidebarProps) {
   }, [pathname]);
 
   const toggleExpanded = (slug: string) => {
-    setExpandedItems(prev => {
+    setExpandedItems((prev) => {
       const next = new Set(prev);
       if (next.has(slug)) {
         next.delete(slug);
@@ -205,7 +218,7 @@ export function DocsSidebar({ sidebar, className }: DocsSidebarProps) {
   };
 
   const toggleSection = (slug: string) => {
-    setExpandedSections(prev => {
+    setExpandedSections((prev) => {
       const next = new Set(prev);
       if (next.has(slug)) {
         next.delete(slug);
@@ -227,8 +240,8 @@ export function DocsSidebar({ sidebar, className }: DocsSidebarProps) {
             <button
               onClick={() => toggleSection(section.slug)}
               className={cn(
-                "w-full flex items-center justify-between px-3 py-2 text-sm font-semibold",
-                "hover:bg-accent rounded-lg transition-colors"
+                "flex w-full items-center justify-between px-3 py-2 text-sm font-semibold",
+                "hover:bg-accent rounded-lg transition-colors",
               )}
             >
               <div className="flex items-center gap-2">
@@ -267,9 +280,11 @@ export function DocsSidebar({ sidebar, className }: DocsSidebarProps) {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          "lg:hidden fixed top-[140px] left-4 z-40 p-2 bg-background/70 border rounded-lg shadow-sm backdrop-blur-md",
+          "bg-background/70 fixed top-[140px] right-4 z-40 rounded-lg border p-2 shadow-sm backdrop-blur-md lg:hidden",
           "hover:bg-accent transition-all duration-300",
-          isNavOrTocOpen && !isOpen && "-translate-y-full opacity-0 pointer-events-none"
+          isNavOrTocOpen &&
+            !isOpen &&
+            "pointer-events-none -translate-y-full opacity-0",
         )}
         aria-label={isOpen ? "Close sidebar" : "Open sidebar"}
       >
@@ -279,7 +294,7 @@ export function DocsSidebar({ sidebar, className }: DocsSidebarProps) {
       {/* Mobile overlay */}
       {isOpen && (
         <div
-          className="lg:hidden fixed inset-0 z-40 bg-background/80 backdrop-blur-sm"
+          className="bg-background/80 fixed inset-0 z-40 backdrop-blur-sm lg:hidden"
           onClick={() => setIsOpen(false)}
         />
       )}
@@ -287,18 +302,18 @@ export function DocsSidebar({ sidebar, className }: DocsSidebarProps) {
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed lg:sticky top-0 lg:top-24 left-0 z-40 lg:z-0",
-          "h-screen lg:h-[calc(100vh-6rem)] w-72",
+          "fixed top-0 right-0 z-40 lg:sticky lg:top-24 lg:z-0",
+          "h-screen w-72 lg:h-[calc(100vh-6rem)]",
           "bg-background lg:bg-transparent",
-          "border-r lg:border-none",
-          "p-6 overflow-y-auto",
+          "border-l lg:border-none",
+          "overflow-y-auto p-6",
           "transition-transform duration-300 lg:transform-none",
-          isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0",
-          className
+          isOpen ? "translate-x-0" : "translate-x-full lg:translate-x-0",
+          className,
         )}
       >
         {/* Mobile header */}
-        <div className="lg:hidden mb-6 pb-4 border-b">
+        <div className="mb-6 border-b pb-4 lg:hidden">
           <h2 className="text-lg font-bold">Documentation</h2>
         </div>
 

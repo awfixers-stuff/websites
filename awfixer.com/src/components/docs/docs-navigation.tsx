@@ -4,8 +4,8 @@ import Link from "next/link";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-import { cn } from "@/lib/utils";
 import type { DocMetadata } from "@/lib/generated/docs-manifest";
+import { cn } from "@/lib/utils";
 
 interface DocsNavigationProps {
   prev: DocMetadata | null;
@@ -18,25 +18,22 @@ export function DocsNavigation({ prev, next, className }: DocsNavigationProps) {
 
   return (
     <nav
-      className={cn(
-        "flex items-stretch gap-4 border-t pt-8 mt-12",
-        className
-      )}
+      className={cn("mt-12 flex items-stretch gap-4 border-t pt-8", className)}
     >
       {prev ? (
         <Link
           href={prev.path}
           className={cn(
-            "flex-1 flex flex-col gap-2 p-4 rounded-xl border",
+            "flex flex-1 flex-col gap-2 rounded-xl border p-4",
             "hover:bg-accent hover:border-primary/20 transition-colors",
-            "group"
+            "group",
           )}
         >
-          <span className="flex items-center gap-1 text-sm text-muted-foreground">
-            <ChevronLeft className="size-4 group-hover:-translate-x-1 transition-transform" />
+          <span className="text-muted-foreground flex items-center gap-1 text-sm">
+            <ChevronLeft className="size-4 transition-transform group-hover:-translate-x-1" />
             Previous
           </span>
-          <span className="font-medium group-hover:text-primary transition-colors">
+          <span className="group-hover:text-primary font-medium transition-colors">
             {prev.title}
           </span>
         </Link>
@@ -48,16 +45,16 @@ export function DocsNavigation({ prev, next, className }: DocsNavigationProps) {
         <Link
           href={next.path}
           className={cn(
-            "flex-1 flex flex-col gap-2 p-4 rounded-xl border text-right",
+            "flex flex-1 flex-col gap-2 rounded-xl border p-4 text-right",
             "hover:bg-accent hover:border-primary/20 transition-colors",
-            "group"
+            "group",
           )}
         >
-          <span className="flex items-center justify-end gap-1 text-sm text-muted-foreground">
+          <span className="text-muted-foreground flex items-center justify-end gap-1 text-sm">
             Next
-            <ChevronRight className="size-4 group-hover:translate-x-1 transition-transform" />
+            <ChevronRight className="size-4 transition-transform group-hover:translate-x-1" />
           </span>
-          <span className="font-medium group-hover:text-primary transition-colors">
+          <span className="group-hover:text-primary font-medium transition-colors">
             {next.title}
           </span>
         </Link>
