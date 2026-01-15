@@ -11,7 +11,11 @@
       "mcp__serena__get_current_config",
       "mcp__serena__find_file",
       "mcp__serena__search_for_pattern",
-      "mcp__serena__find_symbol"
+      "mcp__serena__find_symbol",
+      "Bash(ls:*)",
+      "Bash(bun run lint:*)",
+      "Bash(bunx next lint:*)",
+      "Bash(bun next lint:*)"
     ]
   }
 }
