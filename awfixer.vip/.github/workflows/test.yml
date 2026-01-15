@@ -14,7 +14,7 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
@@ -39,7 +39,7 @@ jobs:
       
       - name: Upload coverage to artifacts
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: coverage-report-${{ github.run_number }}
           path: coverage/
@@ -47,7 +47,7 @@ jobs:
       
       - name: Upload test results
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: unit-test-results-${{ github.run_number }}
           path: tests/vitest-report.html
@@ -60,7 +60,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
@@ -83,7 +83,7 @@ jobs:
       
       - name: Upload Playwright report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: playwright-report-${{ github.run_number }}
           path: tests/playwright-report/
@@ -92,7 +92,7 @@ jobs:
       
       - name: Upload test screenshots
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: test-screenshots-${{ github.run_number }}
           path: tests/test-results/
@@ -101,7 +101,7 @@ jobs:
       
       - name: Upload test traces
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: test-traces-${{ github.run_number }}
           path: tests/test-results/**/trace.zip
@@ -114,7 +114,7 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
@@ -137,7 +137,7 @@ jobs:
       
       - name: Upload visual diff images
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: visual-diffs-${{ github.run_number }}
           path: tests/test-results/**/*-actual.png
@@ -150,7 +150,7 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
@@ -173,7 +173,7 @@ jobs:
       
       - name: Upload accessibility reports
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: accessibility-report-${{ github.run_number }}
           path: tests/playwright-report/
