@@ -18,7 +18,10 @@
       "Bash(chmod:*)",
       "mcp__serena__search_for_pattern",
       "Bash(grep:*)",
-      "Bash(done)"
+      "Bash(done)",
+      "Bash(bun scripts/generate-posts.ts:*)",
+      "Bash(bun run build:*)",
+      "Bash(bun run:*)"
     ],
     "deny": [],
     "ask": []

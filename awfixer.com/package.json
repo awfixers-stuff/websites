@@ -9,15 +9,17 @@
   },
   "scripts": {
     "dev": "next dev --turbopack",
+    "prebuild": "bun scripts/generate-posts.ts",
     "build": "next build",
-    "build:worker": "next build && opennextjs-cloudflare",
+    "build:worker": "bun scripts/generate-posts.ts && npx opennextjs-cloudflare build",
     "start": "next start",
     "preview": "wrangler dev",
     "deploy": "wrangler deploy",
     "cf:dev": "wrangler dev",
     "cf:deploy": "wrangler deploy --minify",
     "lint": "next lint --fix",
-    "format": "prettier -w ."
+    "format": "prettier -w .",
+    "generate:posts": "bun scripts/generate-posts.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

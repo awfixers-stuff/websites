@@ -1,9 +1,15 @@
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
-import { getAuthorWithFallback, type Author } from "./authors";
+/**
+ * Blog post utilities for Cloudflare Workers compatibility.
+ *
+ * Posts are loaded from a generated manifest file (created at build time)
+ * rather than reading from the filesystem at runtime. This is necessary
+ * because Cloudflare Workers don't have filesystem access.
+ *
+ * To update posts, run: bun scripts/generate-posts.ts
+ */
 
-const postsDirectory = path.join(process.cwd(), "src/content/blog");
+import { getAuthorWithFallback, type Author } from "./authors";
+import { posts as generatedPosts } from "./generated/posts";
 
 export type Post = {
   slug: string;
@@ -14,77 +20,43 @@ export type Post = {
   content: string;
 };
 
+/**
+ * Get all posts sorted by date (newest first)
+ */
 export function getSortedPostsData(): Post[] {
-  // Create directory if it doesn't exist
-  if (!fs.existsSync(postsDirectory)) {
-    return [];
-  }
-
-  const fileNames = fs.readdirSync(postsDirectory);
-  const allPostsData = fileNames.map((fileName) => {
-    // Remove ".mdx" from file name to get id
-    const slug = fileName.replace(/\.mdx$/, "");
-
-    // Read markdown file as string
-    const fullPath = path.join(postsDirectory, fileName);
-    const fileContents = fs.readFileSync(fullPath, "utf8");
-
-    // Use gray-matter to parse the post metadata section
-    const matterResult = matter(fileContents);
-
-    const frontmatter = matterResult.data as {
-      title: string;
-      date: string;
-      excerpt: string;
-      author: string;
-    };
-
-    // Combine the data with the id and resolve author
-    return {
-      slug,
-      title: frontmatter.title,
-      date: frontmatter.date,
-      excerpt: frontmatter.excerpt,
-      author: getAuthorWithFallback(frontmatter.author),
-      content: matterResult.content,
-    };
-  });
-
-  // Sort posts by date
-  return allPostsData.sort((a, b) => {
-    if (a.date < b.date) {
-      return 1;
-    } else {
-      return -1;
-    }
-  });
+  return generatedPosts.map((post) => ({
+    slug: post.slug,
+    title: post.title,
+    date: post.date,
+    excerpt: post.excerpt,
+    author: getAuthorWithFallback(post.authorId),
+    content: post.content,
+  }));
 }
 
+/**
+ * Get a single post by slug
+ */
 export function getPostData(slug: string): Post | null {
-  const fullPath = path.join(postsDirectory, `${slug}.mdx`);
+  const post = generatedPosts.find((p) => p.slug === slug);
 
-  if (!fs.existsSync(fullPath)) {
+  if (!post) {
     return null;
   }
 
-  const fileContents = fs.readFileSync(fullPath, "utf8");
-
-  // Use gray-matter to parse the post metadata section
-  const matterResult = matter(fileContents);
-
-  const frontmatter = matterResult.data as {
-    title: string;
-    date: string;
-    excerpt: string;
-    author: string;
-  };
-
   return {
-    slug,
-    title: frontmatter.title,
-    date: frontmatter.date,
-    excerpt: frontmatter.excerpt,
-    author: getAuthorWithFallback(frontmatter.author),
-    content: matterResult.content,
+    slug: post.slug,
+    title: post.title,
+    date: post.date,
+    excerpt: post.excerpt,
+    author: getAuthorWithFallback(post.authorId),
+    content: post.content,
   };
+}
+
+/**
+ * Get all post slugs (for static path generation)
+ */
+export function getAllPostSlugs(): string[] {
+  return generatedPosts.map((post) => post.slug);
 }
