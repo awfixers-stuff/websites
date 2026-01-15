@@ -28,7 +28,6 @@ import {
   Book,
   Rocket,
   Settings,
-  Code,
 } from "lucide-react";
 
 import { useEnhancedAuth } from "@/components/enhanced-auth-provider";
