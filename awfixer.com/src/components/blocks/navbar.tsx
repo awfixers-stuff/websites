@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -39,6 +39,32 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
+
+// Helper to get current section from pathname
+const getSectionFromPath = (pathname: string): { label: string; icon: React.ComponentType<{ className?: string }> } | null => {
+  if (pathname === "/" || pathname === "") return null;
+
+  const sectionMap: Record<string, { label: string; icon: React.ComponentType<{ className?: string }> }> = {
+    "/projects": { label: "Projects", icon: FolderKanban },
+    "/products": { label: "Products", icon: Package },
+    "/about": { label: "About Us", icon: Building2 },
+    "/pricing": { label: "Pricing", icon: DollarSign },
+    "/faq": { label: "FAQ", icon: HelpCircle },
+    "/blog": { label: "Blog", icon: FileText },
+    "/contact": { label: "Contact", icon: Mail },
+    "/privacy": { label: "Privacy", icon: Shield },
+    "/login": { label: "Sign In", icon: User },
+    "/signup": { label: "Sign Up", icon: User },
+    "/protected": { label: "Dashboard", icon: User },
+  };
+
+  // Check for exact match first
+  if (sectionMap[pathname]) return sectionMap[pathname];
+
+  // Check for section prefix (e.g., /products/awfixeros matches /products)
+  const firstSegment = "/" + pathname.split("/")[1];
+  return sectionMap[firstSegment] || null;
+};
 
 const ITEMS = [
   {
@@ -115,6 +141,7 @@ export const Navbar = () => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const pathname = usePathname();
   const { user, isLoading, signIn, signOut } = useEnhancedAuth();
+  const currentSection = getSectionFromPath(pathname);
 
   // Sync mobile menu state to document for cross-component coordination
   useEffect(() => {
@@ -143,6 +170,19 @@ export const Navbar = () => {
             className="rounded-full"
           />
         </Link>
+
+        {/* Section Indicator (Desktop) */}
+        {currentSection && (
+          <div className="ml-3 flex items-center gap-1.5 max-lg:hidden">
+            <span className="text-muted-foreground/50">/</span>
+            <div className="bg-accent/50 flex items-center gap-1.5 rounded-full px-2.5 py-1">
+              <currentSection.icon className="text-muted-foreground size-3.5" />
+              <span className="text-muted-foreground text-xs font-medium">
+                {currentSection.label}
+              </span>
+            </div>
+          </div>
+        )}
 
         {/* Desktop Navigation */}
         <NavigationMenu className="ml-6 max-lg:hidden">
@@ -266,7 +306,7 @@ export const Navbar = () => {
               >
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
               </svg>
-              <span className="relative z-10">Sign In with Patreon</span>
+              <span className="relative z-10">Sign In</span>
             </Button>
           )}
 
@@ -463,7 +503,7 @@ export const Navbar = () => {
                 >
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
                 </svg>
-                Sign In with Patreon
+                Sign In
               </Button>
             )}
           </div>

@@ -18,7 +18,9 @@
       "Bash(bun next lint:*)",
       "mcp__context7__resolve-library-id",
       "mcp__context7__query-docs",
-      "Bash(bun:*)"
+      "Bash(bun:*)",
+      "Bash(bunx tsc:*)",
+      "mcp__serena__think_about_whether_you_are_done"
     ]
   }
 }
