@@ -17,7 +17,8 @@
       "Bash(bunx next lint:*)",
       "Bash(bun next lint:*)",
       "mcp__context7__resolve-library-id",
-      "mcp__context7__query-docs"
+      "mcp__context7__query-docs",
+      "Bash(bun:*)"
     ]
   }
 }

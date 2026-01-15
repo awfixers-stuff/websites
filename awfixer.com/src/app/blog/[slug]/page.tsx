@@ -2,14 +2,15 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { ChevronLeft } from "lucide-react";
-import { MDXRemote } from "next-mdx-remote/rsc";
 
 import { AuthorByline } from "@/components/blocks/author-byline";
 import { AuthorCard } from "@/components/blocks/author-card";
+import { MDXContent } from "@/components/blog/mdx-content";
 import { TableOfContents } from "@/components/blocks/table-of-contents";
 import { Button } from "@/components/ui/button";
 import { AWFIXER } from "@/lib/authors";
 import { getPostData, getSortedPostsData } from "@/lib/blog";
+import { getPostComponent } from "@/lib/generated/post-components";
 
 export async function generateStaticParams() {
   const posts = getSortedPostsData();
@@ -46,6 +47,13 @@ export default async function BlogPost(props: {
     notFound();
   }
 
+  // Get the pre-compiled MDX component
+  const PostContent = getPostComponent(params.slug);
+
+  if (!PostContent) {
+    notFound();
+  }
+
   return (
     <>
       {/* Table of Contents */}
@@ -74,7 +82,7 @@ export default async function BlogPost(props: {
         </header>
 
         <div className="prose prose-gray dark:prose-invert max-w-none">
-          <MDXRemote source={post.content} />
+          <MDXContent Component={PostContent} />
         </div>
 
         {/* Author bio at the end of the post */}
