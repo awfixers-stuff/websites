@@ -63,7 +63,7 @@ jobs:
 
   academy-types:
     name: awfixer.academy
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     defaults:
       run:
         working-directory: awfixer.academy
@@ -82,7 +82,7 @@ jobs:
 
   vip-types:
     name: awfixer.vip
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     defaults:
       run:
         working-directory: awfixer.vip
@@ -101,7 +101,7 @@ jobs:
 
   wiki-types:
     name: awfixerwiki
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     defaults:
       run:
         working-directory: awfixerwiki
@@ -120,7 +120,7 @@ jobs:
 
   com-types:
     name: awfixer.com
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     defaults:
       run:
         working-directory: awfixer.com
@@ -141,7 +141,7 @@ jobs:
 
   me-types:
     name: awfixer.me
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     defaults:
       run:
         working-directory: awfixer.me
