@@ -16,10 +16,9 @@ observability = { enabled = true }
 # [vars]
 # YOUR_VAR = "value"
 
-# Build configuration
-[build]
-command = "bun run build"
-
 # For local development
 [dev]
 port = 3000
+
+# Note: Do NOT use [build] section here - configure build in Cloudflare Pages dashboard
+# or use: wrangler deploy after running build:worker locally

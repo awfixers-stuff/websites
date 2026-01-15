@@ -22,13 +22,12 @@ observability = { enabled = true }
 # For production environment variables, use:
 # wrangler secret put SANITY_API_TOKEN
 
-# Build configuration
-[build]
-command = "pnpm run build"
-
 # For local development
 [dev]
 port = 3000
+
+# Note: Do NOT use [build] section here - configure build in Cloudflare Pages dashboard
+# or use: wrangler deploy after running build:worker locally
 
 # NOTE: For Sanity CMS integration, you may need to configure:
 # - CORS settings in Sanity.io dashboard
