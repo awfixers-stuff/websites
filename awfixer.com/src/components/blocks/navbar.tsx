@@ -415,7 +415,7 @@ export const Navbar = () => {
       {/*  Mobile Menu Navigation */}
       <div
         className={cn(
-          "bg-background fixed inset-x-0 top-[calc(100%+1rem)] flex flex-col rounded-2xl border p-6 transition-all duration-300 ease-in-out lg:hidden",
+          "bg-background fixed top-[calc(100%+1rem)] left-1/2 flex w-[min(90%,700px)] -translate-x-1/2 flex-col rounded-2xl border p-6 transition-all duration-300 ease-in-out lg:hidden",
           isMenuOpen
             ? "visible translate-y-0 opacity-100"
             : "invisible -translate-y-4 opacity-0",
