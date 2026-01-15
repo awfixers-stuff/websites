@@ -1,0 +1,9 @@
+{
+  "import": ["../.cspell.json"],
+  "words": [
+    "shadcn",
+    "reka",
+    "posthog",
+    "betterauth"
+  ]
+}

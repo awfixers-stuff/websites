@@ -10,7 +10,7 @@ on:
 jobs:
   unit-tests:
     name: Unit Tests
-    runs-on: ubuntu-latest
+    runs-on: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
     timeout-minutes: 15
     steps:
       - name: Checkout code
@@ -56,26 +56,23 @@ jobs:
 
   e2e-tests:
     name: E2E Tests
-    runs-on: ubuntu-latest
+    runs-on: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
     timeout-minutes: 30
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
-      
+
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
-      
+
       - name: Install dependencies
         run: bun install --frozen-lockfile
-      
+
       - name: Install Playwright browsers
         run: bunx playwright install --with-deps chromium firefox webkit
-      
-      - name: Build application
-        run: bun run build
-      
+
       - name: Run E2E tests
         run: bun run test:e2e
         env:
@@ -110,26 +107,23 @@ jobs:
 
   visual-regression:
     name: Visual Regression Tests
-    runs-on: ubuntu-latest
+    runs-on: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
     timeout-minutes: 30
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
-      
+
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
-      
+
       - name: Install dependencies
         run: bun install --frozen-lockfile
-      
+
       - name: Install Playwright browsers
         run: bunx playwright install --with-deps chromium
-      
-      - name: Build application
-        run: bun run build
-      
+
       - name: Run visual regression tests
         run: bun run test:e2e tests/e2e/visual-regression.spec.ts
         env:
@@ -146,26 +140,23 @@ jobs:
 
   accessibility-tests:
     name: Accessibility Tests
-    runs-on: ubuntu-latest
+    runs-on: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
     timeout-minutes: 20
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
-      
+
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
-      
+
       - name: Install dependencies
         run: bun install --frozen-lockfile
-      
+
       - name: Install Playwright browsers
         run: bunx playwright install --with-deps chromium
-      
-      - name: Build application
-        run: bun run build
-      
+
       - name: Run accessibility tests
         run: bun run test:e2e tests/e2e/accessibility.spec.ts
         env:
@@ -182,7 +173,7 @@ jobs:
 
   test-summary:
     name: Test Summary
-    runs-on: ubuntu-latest
+    runs-on: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
     needs: [unit-tests, e2e-tests, visual-regression, accessibility-tests]
     if: always()
     steps:

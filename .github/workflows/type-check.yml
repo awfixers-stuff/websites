@@ -11,7 +11,7 @@ permissions:
 jobs:
   blog-types:
     name: awfixer.blog
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
     defaults:
       run:
         working-directory: awfixer.blog
@@ -63,7 +63,7 @@ jobs:
 
   academy-types:
     name: awfixer.academy
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
     defaults:
       run:
         working-directory: awfixer.academy
@@ -82,7 +82,7 @@ jobs:
 
   vip-types:
     name: awfixer.vip
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
     defaults:
       run:
         working-directory: awfixer.vip
@@ -101,7 +101,7 @@ jobs:
 
   wiki-types:
     name: awfixerwiki
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
     defaults:
       run:
         working-directory: awfixerwiki
@@ -120,7 +120,7 @@ jobs:
 
   com-types:
     name: awfixer.com
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
     defaults:
       run:
         working-directory: awfixer.com
@@ -141,7 +141,7 @@ jobs:
 
   me-types:
     name: awfixer.me
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
     defaults:
       run:
         working-directory: awfixer.me
