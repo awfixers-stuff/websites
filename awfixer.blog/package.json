@@ -45,6 +45,11 @@
     "perf:budget": "npx tsx src/scripts/validate-performance-budget.ts",
     "perf:budget:verbose": "npx tsx src/scripts/validate-performance-budget.ts --verbose",
     "perf:validate": "pnpm build && pnpm perf:budget && pnpm e2e:perf",
+    "build:worker": "pnpm run build && opennextjs-cloudflare",
+    "preview": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "cf:dev": "wrangler dev",
+    "cf:deploy": "wrangler deploy --minify",
     "prepare": "husky"
   },
   "dependencies": {
@@ -125,7 +130,9 @@
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.16",
-    "vitest-axe": "^0.1.0"
+    "vitest-axe": "^0.1.0",
+    "@opennextjs/cloudflare": "^1.14.8",
+    "wrangler": "^4.59.1"
   },
   "pnpm": {
     "overrides": {
