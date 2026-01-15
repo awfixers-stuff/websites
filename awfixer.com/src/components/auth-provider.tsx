@@ -1,7 +1,6 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
-import { authClient } from "@/lib/auth-client";
 
 interface User {
   id: string;
@@ -27,8 +26,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const refresh = async () => {
     try {
-      const session = await authClient.getSession();
-      setUser(session.data?.user || null);
+      setUser(null);
     } catch (error) {
       setUser(null);
     } finally {

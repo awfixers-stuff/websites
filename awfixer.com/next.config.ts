@@ -4,6 +4,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
   allowedDevOrigins: ["192.168.1.243", "localhost"],
+  output: "standalone",
   images: {
     unoptimized: true,
   },
