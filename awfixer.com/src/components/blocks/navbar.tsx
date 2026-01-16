@@ -191,11 +191,38 @@ const ITEMS = [
       },
     ],
   },
-  { label: "About Us", href: "/about", icon: Building2 },
-  { label: "Pricing", href: "/pricing", icon: DollarSign },
-  { label: "FAQ", href: "/faq", icon: HelpCircle },
+  {
+    label: "Company",
+    href: "/about",
+    icon: Building2,
+    dropdownItems: [
+      {
+        title: "About Us",
+        icon: Building2,
+        href: "/about",
+        description: "Learn about AWFixer's mission and team",
+      },
+      {
+        title: "Pricing",
+        icon: DollarSign,
+        href: "/pricing",
+        description: "Plans and pricing for all our products",
+      },
+      {
+        title: "FAQ",
+        icon: HelpCircle,
+        href: "/faq",
+        description: "Frequently asked questions",
+      },
+      {
+        title: "Contact",
+        icon: Mail,
+        href: "/contact",
+        description: "Get in touch with our team",
+      },
+    ],
+  },
   { label: "Blog", href: "/blog", icon: FileText },
-  { label: "Contact", href: "/contact", icon: Mail },
 ];
 
 // Matrix dropdown component for Projects
@@ -329,7 +356,7 @@ export const Navbar = () => {
   return (
     <section
       className={cn(
-        "bg-background/70 fixed left-1/2 z-50 w-[min(90%,700px)] -translate-x-1/2 rounded-4xl border backdrop-blur-md transition-all duration-300 lg:w-auto lg:max-w-[95%]",
+        "bg-background/70 fixed left-1/2 z-50 w-[90%] max-w-[700px] -translate-x-1/2 rounded-4xl border backdrop-blur-md transition-all duration-300 lg:w-auto lg:max-w-[95%]",
         "top-5 lg:top-12",
         isDocsOrTocOpen &&
           !isMenuOpen &&
@@ -534,7 +561,8 @@ export const Navbar = () => {
       {/*  Mobile Menu Navigation */}
       <div
         className={cn(
-          "bg-background fixed top-[calc(100%+1rem)] left-1/2 flex w-[min(90%,700px)] -translate-x-1/2 flex-col rounded-2xl border p-6 transition-all duration-300 ease-in-out lg:hidden",
+          "bg-background fixed left-1/2 flex w-[90%] max-w-[700px] -translate-x-1/2 flex-col rounded-2xl border p-6 transition-all duration-300 ease-in-out lg:hidden",
+          "top-24",
           isMenuOpen
             ? "visible translate-y-0 opacity-100"
             : "invisible -translate-y-4 opacity-0",

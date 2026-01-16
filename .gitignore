@@ -1,0 +1,13 @@
+*.lock
+*.env
+.env
+*.env.*
+.env.local
+.env.*
+node_modules
+.astro
+.next
+.open-next
+.epen_next
+pnpm-lock.yaml
+package-lock.json

@@ -14,7 +14,7 @@
     "@astrojs/mdx": "^4.3.13",
     "@astrojs/sitemap": "^3.6.0",
     "@astrojs/starlight": "^0.37.1",
-    "@astrojs/vercel": "^9.0.3",
+    "@astrojs/cloudflare": "^12.6.12",
     "@ory/client": "^1.22.15",
     "@tailwindcss/vite": "^4.1.18",
     "@vercel/analytics": "^1.6.1",
@@ -31,8 +31,7 @@
     "resend": "^6.7.0",
     "rimraf": "^6.1.2",
     "tailwindcss": "^4.1.17",
-    "to-ico": "^1.1.5",
-    "vercel": "^50.1.6"
+    "to-ico": "^1.1.5"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.11",
