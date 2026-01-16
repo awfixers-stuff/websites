@@ -4,19 +4,78 @@ on:
   push:
     branches: [main, dev, prod]
   pull_request:
-  issues:
-    types: [opened, edited]
 
 permissions:
   contents: read
 
 jobs:
-  blog-spellcheck:
-    name: awfixer.blog
-    runs-on: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
+  select-runner:
+    name: Select runner
+    runs-on: ubuntu-latest
+    outputs:
+      runner: ${{ steps.set-runner.outputs.runner }}
+    steps:
+      - name: Set runner based on event and branch
+        id: set-runner
+        run: |
+          if [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main" ]]; then
+            echo "runner=blacksmith-4vcpu-ubuntu-2404" >> "$GITHUB_OUTPUT"
+          else
+            echo "runner=ubuntu-latest" >> "$GITHUB_OUTPUT"
+          fi
+
+  spellcheck:
+    name: ${{ matrix.target.name }}
+    needs: select-runner
+    runs-on: ${{ needs.select-runner.outputs.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+          - name: awfixer.blog
+            working_directory: awfixer.blog
+            files: |
+              **/*.md
+              **/*.mdx
+              **/*.ts
+              **/*.tsx
+          - name: awfixer.academy
+            working_directory: awfixer.academy
+            files: |
+              **/*.md
+              **/*.ts
+              **/*.tsx
+          - name: awfixer.vip
+            working_directory: awfixer.vip
+            files: |
+              **/*.md
+              **/*.ts
+              **/*.vue
+          - name: awfixer.com
+            working_directory: awfixer.com
+            files: |
+              **/*.md
+              **/*.mdx
+              **/*.ts
+              **/*.tsx
+          - name: awfixer.me
+            working_directory: awfixer.me
+            files: |
+              **/*.md
+              **/*.mdx
+              **/*.ts
+              **/*.astro
+          - name: awfixerwiki
+            working_directory: awfixerwiki
+            files: |
+              **/*.md
+              **/*.mdx
+              **/*.ts
+              **/*.tsx
+              **/*.astro
     defaults:
       run:
-        working-directory: awfixer.blog
+        working-directory: ${{ matrix.target.working_directory }}
     steps:
       - name: Checkout code
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
@@ -24,126 +83,8 @@ jobs:
       - name: Run spell check
         uses: streetsidesoftware/cspell-action@v6
         with:
-          root: awfixer.blog
-          files: |
-            **/*.md
-            **/*.mdx
-            **/*.ts
-            **/*.tsx
-          config: .cspell.json
-          inline: warning
-          strict: false
-
-  academy-spellcheck:
-    name: awfixer.academy
-    runs-on: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
-    defaults:
-      run:
-        working-directory: awfixer.academy
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
-
-      - name: Run spell check
-        uses: streetsidesoftware/cspell-action@v6
-        with:
-          root: awfixer.academy
-          files: |
-            **/*.md
-            **/*.ts
-            **/*.tsx
-          config: .cspell.json
-          inline: warning
-          strict: false
-
-  vip-spellcheck:
-    name: awfixer.vip
-    runs-on: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
-    defaults:
-      run:
-        working-directory: awfixer.vip
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
-
-      - name: Run spell check
-        uses: streetsidesoftware/cspell-action@v6
-        with:
-          root: awfixer.vip
-          files: |
-            **/*.md
-            **/*.ts
-            **/*.vue
-          config: .cspell.json
-          inline: warning
-          strict: false
-
-  com-spellcheck:
-    name: awfixer.com
-    runs-on: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
-    defaults:
-      run:
-        working-directory: awfixer.com
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
-
-      - name: Run spell check
-        uses: streetsidesoftware/cspell-action@v6
-        with:
-          root: awfixer.com
-          files: |
-            **/*.md
-            **/*.mdx
-            **/*.ts
-            **/*.tsx
-          config: .cspell.json
-          inline: warning
-          strict: false
-
-  me-spellcheck:
-    name: awfixer.me
-    runs-on: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
-    defaults:
-      run:
-        working-directory: awfixer.me
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
-
-      - name: Run spell check
-        uses: streetsidesoftware/cspell-action@v6
-        with:
-          root: awfixer.me
-          files: |
-            **/*.md
-            **/*.mdx
-            **/*.ts
-            **/*.astro
-          config: .cspell.json
-          inline: warning
-          strict: false
-
-  wiki-spellcheck:
-    name: awfixerwiki
-    runs-on: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
-    defaults:
-      run:
-        working-directory: awfixerwiki
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
-
-      - name: Run spell check
-        uses: streetsidesoftware/cspell-action@v6
-        with:
-          root: awfixerwiki
-          files: |
-            **/*.md
-            **/*.mdx
-            **/*.ts
-            **/*.tsx
-            **/*.astro
+          root: ${{ matrix.target.working_directory }}
+          files: ${{ matrix.target.files }}
           config: .cspell.json
           inline: warning
           strict: false

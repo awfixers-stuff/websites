@@ -9,9 +9,25 @@ permissions:
   contents: read
 
 jobs:
+  select-runner:
+    name: Select runner
+    runs-on: ubuntu-latest
+    outputs:
+      runner: ${{ steps.set-runner.outputs.runner }}
+    steps:
+      - name: Set runner based on event and branch
+        id: set-runner
+        run: |
+          if [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main" ]]; then
+            echo "runner=blacksmith-4vcpu-ubuntu-2404" >> "$GITHUB_OUTPUT"
+          else
+            echo "runner=ubuntu-latest" >> "$GITHUB_OUTPUT"
+          fi
+
   blog-types:
     name: awfixer.blog
-    runs-on: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
+    needs: select-runner
+    runs-on: ${{ needs.select-runner.outputs.runner }}
     defaults:
       run:
         working-directory: awfixer.blog
@@ -63,7 +79,8 @@ jobs:
 
   academy-types:
     name: awfixer.academy
-    runs-on: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
+    needs: select-runner
+    runs-on: ${{ needs.select-runner.outputs.runner }}
     defaults:
       run:
         working-directory: awfixer.academy
@@ -82,7 +99,8 @@ jobs:
 
   vip-types:
     name: awfixer.vip
-    runs-on: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
+    needs: select-runner
+    runs-on: ${{ needs.select-runner.outputs.runner }}
     defaults:
       run:
         working-directory: awfixer.vip
@@ -101,7 +119,8 @@ jobs:
 
   wiki-types:
     name: awfixerwiki
-    runs-on: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
+    needs: select-runner
+    runs-on: ${{ needs.select-runner.outputs.runner }}
     defaults:
       run:
         working-directory: awfixerwiki
@@ -120,7 +139,8 @@ jobs:
 
   com-types:
     name: awfixer.com
-    runs-on: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
+    needs: select-runner
+    runs-on: ${{ needs.select-runner.outputs.runner }}
     defaults:
       run:
         working-directory: awfixer.com
@@ -141,7 +161,8 @@ jobs:
 
   me-types:
     name: awfixer.me
-    runs-on: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
+    needs: select-runner
+    runs-on: ${{ needs.select-runner.outputs.runner }}
     defaults:
       run:
         working-directory: awfixer.me

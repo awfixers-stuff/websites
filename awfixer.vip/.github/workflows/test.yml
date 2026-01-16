@@ -8,13 +8,29 @@ on:
   workflow_dispatch:  # Allow manual triggering
 
 jobs:
+  select-runner:
+    name: Select runner
+    runs-on: ubuntu-latest
+    outputs:
+      runner: ${{ steps.set-runner.outputs.runner }}
+    steps:
+      - name: Set runner based on event and branch
+        id: set-runner
+        run: |
+          if [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main" ]]; then
+            echo "runner=blacksmith-4vcpu-ubuntu-2404" >> "$GITHUB_OUTPUT"
+          else
+            echo "runner=ubuntu-latest" >> "$GITHUB_OUTPUT"
+          fi
+
   unit-tests:
     name: Unit Tests
-    runs-on: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
+    needs: select-runner
+    runs-on: ${{ needs.select-runner.outputs.runner }}
     timeout-minutes: 15
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
       
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
@@ -56,11 +72,12 @@ jobs:
 
   e2e-tests:
     name: E2E Tests
-    runs-on: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
+    needs: select-runner
+    runs-on: ${{ needs.select-runner.outputs.runner }}
     timeout-minutes: 30
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
@@ -107,11 +124,12 @@ jobs:
 
   visual-regression:
     name: Visual Regression Tests
-    runs-on: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
+    needs: select-runner
+    runs-on: ${{ needs.select-runner.outputs.runner }}
     timeout-minutes: 30
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
@@ -140,11 +158,12 @@ jobs:
 
   accessibility-tests:
     name: Accessibility Tests
-    runs-on: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
+    needs: select-runner
+    runs-on: ${{ needs.select-runner.outputs.runner }}
     timeout-minutes: 20
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
@@ -173,8 +192,8 @@ jobs:
 
   test-summary:
     name: Test Summary
-    runs-on: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }}
-    needs: [unit-tests, e2e-tests, visual-regression, accessibility-tests]
+    needs: [select-runner, unit-tests, e2e-tests, visual-regression, accessibility-tests]
+    runs-on: ${{ needs.select-runner.outputs.runner }}
     if: always()
     steps:
       - name: Check test results
