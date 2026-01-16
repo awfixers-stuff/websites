@@ -11,7 +11,7 @@
     "test:real": "bun test.ts"
   },
   "dependencies": {
-    "@opencode-ai/sdk": "^0.15.0",
+    "@opencode-ai/sdk": "^1.0.0",
     "zod": "^4.1.9"
   },
   "devDependencies": {
