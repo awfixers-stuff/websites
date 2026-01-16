@@ -24,6 +24,7 @@ interface PostFrontmatter {
   date: string;
   excerpt: string;
   author: string;
+  image?: string;
 }
 
 interface PostMetadata {
@@ -32,6 +33,7 @@ interface PostMetadata {
   date: string;
   excerpt: string;
   authorId: string;
+  image?: string;
 }
 
 /**
@@ -88,6 +90,7 @@ async function generatePosts(): Promise<void> {
       date: frontmatter.date,
       excerpt: frontmatter.excerpt,
       authorId: frontmatter.author,
+      image: frontmatter.image,
     });
 
     // Compile MDX to JavaScript module
@@ -132,6 +135,7 @@ export interface PostMetadata {
   date: string;
   excerpt: string;
   authorId: string;
+  image?: string;
 }
 
 export const posts: PostMetadata[] = ${JSON.stringify(posts, null, 2)};
@@ -193,6 +197,7 @@ export interface PostMetadata {
   date: string;
   excerpt: string;
   authorId: string;
+  image?: string;
 }
 
 export const posts: PostMetadata[] = [];

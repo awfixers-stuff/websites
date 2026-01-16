@@ -22,12 +22,13 @@ import {
   Shield,
   Cpu,
   Wrench,
-  Users,
-  BarChart,
-  Target,
   Book,
   Rocket,
   Settings,
+  Globe,
+  Train,
+  Monitor,
+  Zap,
 } from "lucide-react";
 
 import { useEnhancedAuth } from "@/components/enhanced-auth-provider";
@@ -78,33 +79,49 @@ const getSectionFromPath = (
   return sectionMap[firstSegment] || null;
 };
 
+// Project categories with nested structure
+const PROJECT_CATEGORIES = [
+  {
+    id: "digital",
+    title: "Digital Enhancements",
+    icon: Monitor,
+    href: "/projects/digital",
+    description: "Software and digital infrastructure projects",
+    color: "emerald",
+    projects: [
+      {
+        title: "HTTPS Reform",
+        icon: Globe,
+        href: "/projects/digital/https-reform",
+        description:
+          "Modernizing web security standards and universal HTTPS adoption",
+      },
+    ],
+  },
+  {
+    id: "physical",
+    title: "Physical Enhancements",
+    icon: Zap,
+    href: "/projects/physical",
+    description: "Hardware and physical infrastructure projects",
+    color: "amber",
+    projects: [
+      {
+        title: "Hyperloop Technology",
+        icon: Train,
+        href: "/projects/physical/hyperloop",
+        description: "High-speed vacuum tube transportation systems",
+      },
+    ],
+  },
+];
+
 const ITEMS = [
   {
     label: "Projects",
     href: "/projects",
     icon: FolderKanban,
-    dropdownItems: [
-      {
-        title: "Modern Product Teams",
-        icon: Users,
-        href: "/projects/modern-teams",
-        description:
-          "Built on habits that make the best product teams successful",
-      },
-      {
-        title: "Resource Allocation",
-        icon: BarChart,
-        href: "/projects/resource-allocation",
-        description: "Optimize your resource allocation and execution",
-      },
-      {
-        title: "Momentum Building",
-        icon: Target,
-        href: "/projects/momentum-building",
-        description:
-          "Build momentum and healthy habits for continuous improvement",
-      },
-    ],
+    isMatrix: true, // Special flag for matrix dropdown
   },
   {
     label: "Products",
@@ -181,9 +198,98 @@ const ITEMS = [
   { label: "Contact", href: "/contact", icon: Mail },
 ];
 
+// Matrix dropdown component for Projects
+const ProjectsMatrixDropdown = () => {
+  const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
+
+  return (
+    <div className="grid w-[600px] grid-cols-2 gap-4 p-4">
+      {PROJECT_CATEGORIES.map((category) => {
+        const CategoryIcon = category.icon;
+        const isHovered = hoveredCategory === category.id;
+        const colorClasses = {
+          emerald: {
+            bg: "bg-emerald-500/10 group-hover:bg-emerald-500/20",
+            text: "text-emerald-600 dark:text-emerald-400",
+            border: "border-emerald-500/20",
+          },
+          amber: {
+            bg: "bg-amber-500/10 group-hover:bg-amber-500/20",
+            text: "text-amber-600 dark:text-amber-400",
+            border: "border-amber-500/20",
+          },
+        }[category.color];
+
+        return (
+          <div
+            key={category.id}
+            className="group relative"
+            onMouseEnter={() => setHoveredCategory(category.id)}
+            onMouseLeave={() => setHoveredCategory(null)}
+          >
+            {/* Category Card */}
+            <NavigationMenuLink asChild>
+              <Link
+                href={category.href}
+                className={cn(
+                  "block rounded-lg border-2 p-4 transition-all duration-200",
+                  "hover:shadow-md",
+                  colorClasses?.border,
+                  isHovered && "border-opacity-100",
+                )}
+              >
+                <div className="mb-3 flex items-center gap-3">
+                  <div className={cn("rounded-lg p-2", colorClasses?.bg)}>
+                    <CategoryIcon
+                      className={cn("size-5", colorClasses?.text)}
+                    />
+                  </div>
+                  <div className={cn("font-semibold", colorClasses?.text)}>
+                    {category.title}
+                  </div>
+                </div>
+                <p className="text-muted-foreground mb-4 text-sm">
+                  {category.description}
+                </p>
+
+                {/* Nested Projects */}
+                <div className="space-y-2 border-t pt-3">
+                  {category.projects.map((project) => {
+                    const ProjectIcon = project.icon;
+                    return (
+                      <Link
+                        key={project.href}
+                        href={project.href}
+                        className="hover:bg-accent flex items-center gap-2 rounded-md p-2 transition-colors"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <ProjectIcon className="text-muted-foreground size-4" />
+                        <div className="min-w-0 flex-1">
+                          <div className="truncate text-sm font-medium">
+                            {project.title}
+                          </div>
+                          <div className="text-muted-foreground truncate text-xs">
+                            {project.description}
+                          </div>
+                        </div>
+                        <ChevronRight className="text-muted-foreground size-3" />
+                      </Link>
+                    );
+                  })}
+                </div>
+              </Link>
+            </NavigationMenuLink>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [openSubDropdown, setOpenSubDropdown] = useState<string | null>(null);
   const [isDocsOrTocOpen, setIsDocsOrTocOpen] = useState(false);
   const pathname = usePathname();
   const { user, isLoading, signIn, signOut } = useEnhancedAuth();
@@ -258,7 +364,20 @@ export const Navbar = () => {
         <NavigationMenu className="ml-6 max-lg:hidden">
           <NavigationMenuList className="gap-1">
             {ITEMS.map((link) =>
-              link.dropdownItems ? (
+              link.isMatrix ? (
+                // Projects with Matrix Dropdown
+                <NavigationMenuItem key={link.label}>
+                  <NavigationMenuTrigger className="data-[state=open]:bg-accent/50 bg-transparent! px-3 whitespace-nowrap">
+                    {link.icon && (
+                      <link.icon className="mr-1.5 size-4 shrink-0" />
+                    )}
+                    {link.label}
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ProjectsMatrixDropdown />
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              ) : link.dropdownItems ? (
                 <NavigationMenuItem key={link.label}>
                   <NavigationMenuTrigger className="data-[state=open]:bg-accent/50 bg-transparent! px-3 whitespace-nowrap">
                     {link.icon && (
@@ -423,7 +542,155 @@ export const Navbar = () => {
       >
         <nav className="divide-border flex flex-1 flex-col divide-y">
           {ITEMS.map((link) =>
-            link.dropdownItems ? (
+            link.isMatrix ? (
+              // Projects with nested matrix structure (Mobile)
+              <div key={link.label} className="py-4 first:pt-0 last:pb-0">
+                <button
+                  onClick={() =>
+                    setOpenDropdown(
+                      openDropdown === link.label ? null : link.label,
+                    )
+                  }
+                  className="text-primary flex w-full items-center justify-between text-base font-medium"
+                >
+                  <span className="flex items-center gap-2">
+                    {link.icon && <link.icon className="size-4" />}
+                    {link.label}
+                  </span>
+                  <ChevronRight
+                    className={cn(
+                      "size-4 transition-transform duration-200",
+                      openDropdown === link.label ? "rotate-90" : "",
+                    )}
+                  />
+                </button>
+                <div
+                  className={cn(
+                    "overflow-hidden transition-all duration-300",
+                    openDropdown === link.label
+                      ? "mt-4 max-h-[2000px] opacity-100"
+                      : "max-h-0 opacity-0",
+                  )}
+                >
+                  <div className="space-y-4">
+                    {PROJECT_CATEGORIES.map((category) => {
+                      const CategoryIcon = category.icon;
+                      const colorClasses = {
+                        emerald: {
+                          bg: "bg-emerald-500/10",
+                          text: "text-emerald-600 dark:text-emerald-400",
+                          border: "border-emerald-500/30",
+                        },
+                        amber: {
+                          bg: "bg-amber-500/10",
+                          text: "text-amber-600 dark:text-amber-400",
+                          border: "border-amber-500/30",
+                        },
+                      }[category.color];
+
+                      return (
+                        <div
+                          key={category.id}
+                          className={cn(
+                            "rounded-lg border-2 p-3",
+                            colorClasses?.border,
+                          )}
+                        >
+                          <button
+                            onClick={() =>
+                              setOpenSubDropdown(
+                                openSubDropdown === category.id
+                                  ? null
+                                  : category.id,
+                              )
+                            }
+                            className="flex w-full items-center justify-between"
+                          >
+                            <div className="flex items-center gap-2">
+                              <div
+                                className={cn(
+                                  "rounded-md p-1.5",
+                                  colorClasses?.bg,
+                                )}
+                              >
+                                <CategoryIcon
+                                  className={cn("size-4", colorClasses?.text)}
+                                />
+                              </div>
+                              <span
+                                className={cn(
+                                  "font-medium",
+                                  colorClasses?.text,
+                                )}
+                              >
+                                {category.title}
+                              </span>
+                            </div>
+                            <ChevronRight
+                              className={cn(
+                                "size-4 transition-transform duration-200",
+                                colorClasses?.text,
+                                openSubDropdown === category.id
+                                  ? "rotate-90"
+                                  : "",
+                              )}
+                            />
+                          </button>
+
+                          <div
+                            className={cn(
+                              "overflow-hidden transition-all duration-300",
+                              openSubDropdown === category.id
+                                ? "mt-3 max-h-[500px] opacity-100"
+                                : "max-h-0 opacity-0",
+                            )}
+                          >
+                            <Link
+                              href={category.href}
+                              className="text-muted-foreground mb-2 block text-sm hover:underline"
+                              onClick={() => {
+                                setIsMenuOpen(false);
+                                setOpenDropdown(null);
+                                setOpenSubDropdown(null);
+                              }}
+                            >
+                              View all {category.title.toLowerCase()} →
+                            </Link>
+                            <div className="space-y-2">
+                              {category.projects.map((project) => {
+                                const ProjectIcon = project.icon;
+                                return (
+                                  <Link
+                                    key={project.href}
+                                    href={project.href}
+                                    className="hover:bg-accent flex items-center gap-2 rounded-md p-2 transition-colors"
+                                    onClick={() => {
+                                      setIsMenuOpen(false);
+                                      setOpenDropdown(null);
+                                      setOpenSubDropdown(null);
+                                    }}
+                                  >
+                                    <ProjectIcon className="text-muted-foreground size-4" />
+                                    <div className="min-w-0 flex-1">
+                                      <div className="text-sm font-medium">
+                                        {project.title}
+                                      </div>
+                                      <div className="text-muted-foreground truncate text-xs">
+                                        {project.description}
+                                      </div>
+                                    </div>
+                                  </Link>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            ) : link.dropdownItems ? (
               <div key={link.label} className="py-4 first:pt-0 last:pb-0">
                 <button
                   onClick={() =>

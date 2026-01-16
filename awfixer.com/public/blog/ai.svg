@@ -1,0 +1,8 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#fef3c7"/>
+  <rect x="50" y="50" width="1100" height="530" rx="12" fill="#ffffff" stroke="#e5e7eb" stroke-width="2"/>
+  <circle cx="600" cy="280" r="80" fill="#f59e0b"/>
+  <text x="600" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="white">🤖</text>
+  <text x="600" y="420" text-anchor="middle" font-family="Arial, sans-serif" font-size="36" font-weight="600" fill="#1f2937">AWFixerAI</text>
+  <text x="600" y="460" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#6b7280">AI, not LLM</text>
+</svg>

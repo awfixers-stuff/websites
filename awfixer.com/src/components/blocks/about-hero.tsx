@@ -29,7 +29,8 @@ export function AboutHero() {
           </h1>
 
           <p className="text-muted-foreground mt-5 text-2xl md:text-3xl lg:text-4xl">
-            AWFixer is bringing modern web development to life with AI magic.
+            AWFixer and Friends are build a future with people in mind, not
+            profits.
           </p>
 
           <p className="text-muted-foreground mt-8 hidden max-w-lg space-y-6 text-lg text-balance md:block lg:mt-12">

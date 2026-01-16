@@ -21,6 +21,7 @@ export type CareerMetadata = {
   type: "full-time" | "part-time" | "contract" | "internship";
   excerpt: string;
   postedDate: string;
+  image?: string;
 };
 
 /**
@@ -35,6 +36,7 @@ export function getSortedCareersData(): CareerMetadata[] {
     type: career.type,
     excerpt: career.excerpt,
     postedDate: career.postedDate,
+    image: career.image,
   }));
 }
 
@@ -56,6 +58,7 @@ export function getCareerData(slug: string): CareerMetadata | null {
     type: career.type,
     excerpt: career.excerpt,
     postedDate: career.postedDate,
+    image: career.image,
   };
 }
 

@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <Background className="via-muted to-muted/80">
+      <Background>
         <Hero />
         <Logos />
         <Projects />

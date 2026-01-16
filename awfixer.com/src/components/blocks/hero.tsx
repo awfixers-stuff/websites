@@ -2,10 +2,10 @@ import Image from "next/image";
 
 import {
   ArrowRight,
-  Blend,
-  ChartNoAxesColumn,
-  CircleDot,
-  Diamond,
+  Cpu,
+  Globe,
+  Shield,
+  Zap,
 } from "lucide-react";
 
 import { AnnouncementBanner } from "@/components/blocks/announcement-banner";
@@ -14,25 +14,25 @@ import { Button } from "@/components/ui/button";
 
 const features = [
   {
-    title: "Extremely fast application start times",
-    description: "RAM is expensive, so we are making apps faster instead.",
-    icon: CircleDot,
+    title: "AWFixerOS",
+    description: "A modern, secure operating system built for performance and reliability.",
+    icon: Cpu,
   },
   {
-    title: "Cross-platform Kernel",
+    title: "AWFixer Cloud",
     description:
-      "Our internal micro kernel, helctic, will work on x86-64 and arm64 platforms",
-    icon: Blend,
+      "Scalable cloud infrastructure with auto-scaling and 99.9% uptime guarantee.",
+    icon: Globe,
   },
   {
-    title: "Milestones",
-    description: "Break projects down into concrete phases.",
-    icon: Diamond,
+    title: "AWFixer Security",
+    description: "Enterprise-grade protection with real-time threat detection.",
+    icon: Shield,
   },
   {
-    title: "Progress insights",
-    description: "Track scope, velocity, and progress over time.",
-    icon: ChartNoAxesColumn,
+    title: "AWFixer Tools",
+    description: "Professional development tools to boost your productivity.",
+    icon: Zap,
   },
 ];
 
@@ -44,17 +44,17 @@ export const Hero = () => {
         <div className="flex-1">
           <AnnouncementBanner />
           <h1 className="text-foreground max-w-160 text-3xl tracking-tight md:text-4xl lg:text-5xl xl:whitespace-nowrap">
-            AWFixer and Friends
+            Building the Future of Tech
           </h1>
 
           <p className="text-muted-foreground text-1xl mt-5 md:text-3xl">
-            AWFixer and Friends is a company focused on building the best
-            version of the internet.
+            Operating systems, cloud infrastructure, security solutions, and
+            developer tools — all designed to empower your digital journey.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-4 lg:flex-nowrap">
             <Button asChild className="rounded-2xl">
-              <a href="https://discord.awfixer.com">Join Us</a>
+              <a href="/products">Explore Products</a>
             </Button>
             <Button
               variant="outline"
@@ -62,10 +62,10 @@ export const Hero = () => {
               asChild
             >
               <a
-                href="https://awfixer.me"
+                href="https://discord.awfixer.com"
                 className="max-w-56 truncate text-start md:max-w-none"
               >
-                Built by AWFixer
+                Join the Community
                 <ArrowRight className="stroke-3" />
               </a>
             </Button>

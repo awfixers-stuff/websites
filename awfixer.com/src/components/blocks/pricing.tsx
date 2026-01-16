@@ -11,40 +11,40 @@ import { cn } from "@/lib/utils";
 
 const plans = [
   {
-    name: "Nebula Nomad",
-    monthlyPrice: "$13",
-    yearlyPrice: "$156",
-    description: "Free for everyone",
+    name: "Starter",
+    monthlyPrice: "$0",
+    yearlyPrice: "$0",
+    description: "Free for personal projects",
     features: [
-      "Unlimited members",
-      "2 teams",
-      "500 issues",
-      "Slack and Github integrations",
+      "AWFixerOS Community Edition",
+      "1 Cloud project",
+      "Basic security monitoring",
+      "Community support",
     ],
   },
   {
-    name: "Vortex Vanguard",
-    monthlyPrice: "$25",
-    yearlyPrice: "$275",
+    name: "Professional",
+    monthlyPrice: "$29",
+    yearlyPrice: "$290",
     features: [
-      "All free plan features and...",
-      "AWFixer AI",
-      "Unlimited teams",
-      "Unlimited projects and file uploads",
-      "AWFixer Insights",
-      "Admin roles",
+      "All Starter features and...",
+      "AWFixerOS Professional",
+      "5 Cloud projects",
+      "AWFixer Tools full suite",
+      "Priority support",
+      "Advanced analytics",
     ],
   },
   {
-    name: "Eclipse Enigma",
-    monthlyPrice: "$50",
-    yearlyPrice: "$500",
+    name: "Enterprise",
+    monthlyPrice: "$99",
+    yearlyPrice: "$990",
     features: [
-      "All free plan features and...",
-      "AWFixer AI",
-      "SuperAWFixer AGI",
-      "Free daily catered lunch",
-      "random HIPPA audits",
+      "All Professional features and...",
+      "Unlimited Cloud projects",
+      "AWFixer Security full suite",
+      "Dedicated support engineer",
+      "Custom SLAs",
     ],
   },
 ];
@@ -60,9 +60,9 @@ export const Pricing = ({ className }: { className?: string }) => {
             Pricing
           </h2>
           <p className="text-muted-foreground mx-auto max-w-xl leading-snug text-balance">
-            Use AWFixer for free with your whole team. Upgrade to enable
-            unlimited projects, enhanced security controls, and additional
-            features.
+            Start free with our community edition. Scale with Professional for
+            growing teams, or go Enterprise for full-suite access and dedicated
+            support.
           </p>
         </div>
 
@@ -71,7 +71,7 @@ export const Pricing = ({ className }: { className?: string }) => {
             <Card
               key={plan.name}
               className={`${
-                plan.name === "Startup"
+                plan.name === "Professional"
                   ? "outline-primary origin-top outline-4"
                   : ""
               }`}
@@ -121,7 +121,7 @@ export const Pricing = ({ className }: { className?: string }) => {
 
                 <Button
                   className="w-fit"
-                  variant={plan.name === "Startup" ? "default" : "outline"}
+                  variant={plan.name === "Professional" ? "default" : "outline"}
                 >
                   Get started
                 </Button>

@@ -20,6 +20,7 @@ export type PostMetadata = {
   date: string;
   excerpt: string;
   author: Author;
+  image?: string;
 };
 
 /**
@@ -32,6 +33,7 @@ export function getSortedPostsData(): PostMetadata[] {
     date: post.date,
     excerpt: post.excerpt,
     author: getAuthorWithFallback(post.authorId),
+    image: post.image,
   }));
 }
 
@@ -51,6 +53,7 @@ export function getPostData(slug: string): PostMetadata | null {
     date: post.date,
     excerpt: post.excerpt,
     author: getAuthorWithFallback(post.authorId),
+    image: post.image,
   };
 }
 

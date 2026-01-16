@@ -6,39 +6,57 @@
 @variant dark (&:is(.dark *));
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.92 0.04 86.47);
-  --primary-foreground: oklch(0.31 0.02 86.64);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  /* AWFixer Brand Colors - Based on #000000 and #04032F (Deep Indigo) */
+  /* Base hue: 271.42° (violet-indigo) */
 
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
+  /* Background colors - Dark indigo foundation */
+  --background: oklch(0.060 0.030 271.42);
+  --foreground: oklch(0.980 0.000 0);
+  --card: oklch(0.090 0.040 271.42);
+  --card-foreground: oklch(0.980 0.000 0);
+  --popover: oklch(0.090 0.040 271.42);
+  --popover-foreground: oklch(0.980 0.000 0);
 
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  /* Primary - Electric violet accent */
+  --primary: oklch(0.750 0.150 250);
+  --primary-foreground: oklch(0.150 0.040 250);
+
+  /* Secondary - Subtle indigo */
+  --secondary: oklch(0.200 0.040 271.42);
+  --secondary-foreground: oklch(0.980 0.000 0);
+
+  /* Muted - For subdued elements */
+  --muted: oklch(0.150 0.030 271.42);
+  --muted-foreground: oklch(0.650 0.020 271.42);
+
+  /* Accent - Cyber cyan */
+  --accent: oklch(0.550 0.120 195);
+  --accent-foreground: oklch(0.980 0.000 0);
+
+  /* Destructive */
+  --destructive: oklch(0.580 0.240 27);
+
+  /* Borders and inputs */
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 18%);
+  --ring: oklch(0.550 0.120 250);
+
+  /* Chart colors - Cohesive spectrum */
+  --chart-1: oklch(0.650 0.180 250);
+  --chart-2: oklch(0.600 0.150 195);
+  --chart-3: oklch(0.550 0.140 145);
+  --chart-4: oklch(0.700 0.160 85);
+  --chart-5: oklch(0.600 0.200 30);
+
+  /* Sidebar */
+  --sidebar: oklch(0.080 0.040 271.42);
+  --sidebar-foreground: oklch(0.980 0.000 0);
+  --sidebar-primary: oklch(0.750 0.150 250);
+  --sidebar-primary-foreground: oklch(0.980 0.000 0);
+  --sidebar-accent: oklch(0.180 0.040 271.42);
+  --sidebar-accent-foreground: oklch(0.980 0.000 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.550 0.120 250);
 
   --radius: 8px;
 
@@ -66,39 +84,47 @@
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
+  /* Dark mode uses same base as root since this is a dark-first design */
+  --background: oklch(0.045 0.025 271.42);
+  --foreground: oklch(0.980 0.000 0);
+  --card: oklch(0.080 0.035 271.42);
+  --card-foreground: oklch(0.980 0.000 0);
+  --popover: oklch(0.080 0.035 271.42);
+  --popover-foreground: oklch(0.980 0.000 0);
+
+  /* Primary - Slightly brighter in dark mode */
+  --primary: oklch(0.780 0.160 250);
+  --primary-foreground: oklch(0.120 0.035 250);
+
+  --secondary: oklch(0.180 0.035 271.42);
+  --secondary-foreground: oklch(0.980 0.000 0);
+  --muted: oklch(0.130 0.025 271.42);
+  --muted-foreground: oklch(0.620 0.018 271.42);
+
+  /* Accent - Brighter cyan */
+  --accent: oklch(0.580 0.130 195);
+  --accent-foreground: oklch(0.980 0.000 0);
+
+  --destructive: oklch(0.620 0.220 25);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  --ring: oklch(0.580 0.130 250);
 
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
+  /* Chart colors */
+  --chart-1: oklch(0.680 0.190 250);
+  --chart-2: oklch(0.630 0.160 195);
+  --chart-3: oklch(0.580 0.150 145);
+  --chart-4: oklch(0.720 0.170 85);
+  --chart-5: oklch(0.630 0.210 30);
 
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar: oklch(0.065 0.030 271.42);
+  --sidebar-foreground: oklch(0.980 0.000 0);
+  --sidebar-primary: oklch(0.780 0.160 250);
+  --sidebar-primary-foreground: oklch(0.980 0.000 0);
+  --sidebar-accent: oklch(0.160 0.035 271.42);
+  --sidebar-accent-foreground: oklch(0.980 0.000 0);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --sidebar-ring: oklch(0.580 0.130 250);
 }
 
 @theme inline {

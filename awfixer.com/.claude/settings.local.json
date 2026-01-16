@@ -21,7 +21,9 @@
       "Bash(bun:*)",
       "Bash(bunx tsc:*)",
       "mcp__serena__think_about_whether_you_are_done",
-      "mcp__acp__Bash"
+      "mcp__acp__Bash",
+      "Bash(cut:*)",
+      "Bash(uv run:*)"
     ]
   }
 }

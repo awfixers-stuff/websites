@@ -26,6 +26,7 @@ interface CareerFrontmatter {
   type: "full-time" | "part-time" | "contract" | "internship";
   excerpt: string;
   postedDate: string;
+  image?: string;
 }
 
 interface CareerMetadata {
@@ -36,6 +37,7 @@ interface CareerMetadata {
   type: "full-time" | "part-time" | "contract" | "internship";
   excerpt: string;
   postedDate: string;
+  image?: string;
 }
 
 /**
@@ -94,6 +96,7 @@ async function generateCareers(): Promise<void> {
       type: frontmatter.type,
       excerpt: frontmatter.excerpt,
       postedDate: frontmatter.postedDate,
+      image: frontmatter.image,
     });
 
     // Compile MDX to JavaScript module
@@ -139,6 +142,7 @@ export interface CareerMetadata {
   type: "full-time" | "part-time" | "contract" | "internship";
   excerpt: string;
   postedDate: string;
+  image?: string;
 }
 
 export const careers: CareerMetadata[] = ${JSON.stringify(careers, null, 2)};
@@ -202,6 +206,7 @@ export interface CareerMetadata {
   type: "full-time" | "part-time" | "contract" | "internship";
   excerpt: string;
   postedDate: string;
+  image?: string;
 }
 
 export const careers: CareerMetadata[] = [];

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { ChevronLeft } from "lucide-react";
 
+import { Background } from "@/components/background";
 import { AuthorByline } from "@/components/blocks/author-byline";
 import { AuthorCard } from "@/components/blocks/author-card";
 import { MDXContent } from "@/components/blog/mdx-content";
@@ -34,6 +35,30 @@ export async function generateMetadata(props: {
   return {
     title: `${post.title} - AWFixer Blog`,
     description: post.excerpt,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      url: `/blog/${post.slug}`,
+      siteName: "AWFixer Blog",
+      images: post.image ? [
+        {
+          url: post.image,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ] : [],
+      type: "article",
+      publishedTime: post.date,
+      authors: [post.author.name],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: post.image ? [post.image] : [],
+      creator: "@awfixer",
+    },
   };
 }
 
@@ -55,11 +80,11 @@ export default async function BlogPost(props: {
   }
 
   return (
-    <>
+    <Background>
       {/* Table of Contents */}
       <TableOfContents />
 
-      <article className="container mx-auto max-w-4xl pt-32 pb-24 md:py-32 max-w-5xl">
+      <article className="container mx-auto max-w-5xl px-4 py-24 md:py-32 lg:pt-44">
         <div className="mb-8">
           <Button
             variant="ghost"
@@ -90,6 +115,6 @@ export default async function BlogPost(props: {
           <AuthorCard author={AWFIXER} variant="full" />
         </div>
       </article>
-    </>
+    </Background>
   );
 }

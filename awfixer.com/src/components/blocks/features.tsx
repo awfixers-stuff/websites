@@ -9,16 +9,19 @@ import { Card, CardContent } from "@/components/ui/card";
 
 const items = [
   {
-    title: "Purpose-built for product development",
+    title: "AWFixerOS — Performance meets security",
     image: "/features/triage-card.svg",
+    href: "/products/awfixeros",
   },
   {
-    title: "Manage projects end-to-end",
+    title: "Cloud infrastructure that scales with you",
     image: "/features/cycle-card.svg",
+    href: "/products/cloud",
   },
   {
-    title: "Build momentum and healthy habits",
+    title: "Developer tools for modern workflows",
     image: "/features/overview-card.svg",
+    href: "/products/tools",
   },
 ];
 
@@ -30,19 +33,19 @@ export const Projects = () => {
         <div className="relative flex items-center justify-center">
           <DashedLine className="text-muted-foreground" />
           <span className="bg-muted text-muted-foreground absolute px-3 font-mono text-sm font-medium tracking-wide max-md:hidden">
-            MEASURE TWICE. CUT ONCE.
+            BUILD BETTER. SHIP FASTER.
           </span>
         </div>
 
         {/* Content */}
         <div className="mx-auto mt-10 grid max-w-4xl items-center gap-3 md:gap-0 lg:mt-24 lg:grid-cols-2">
           <h2 className="text-2xl tracking-tight md:text-4xl lg:text-5xl">
-            Made for modern product teams
+            Our Product Ecosystem
           </h2>
           <p className="text-muted-foreground leading-snug">
-            AWFixer is built on the habits that make the best product teams
-            successful: staying focused, moving quickly, and always aiming for
-            high-quality work.
+            From operating systems to cloud infrastructure, we build tools that
+            work together seamlessly — helping developers and businesses achieve
+            more with less friction.
           </p>
         </div>
 
@@ -63,7 +66,7 @@ export const Projects = () => {
                   </div>
 
                   <Link
-                    href="#"
+                    href={item.href}
                     className={
                       "group flex items-center justify-between gap-4 pe-4 pt-4 md:pe-6 md:pt-6"
                     }

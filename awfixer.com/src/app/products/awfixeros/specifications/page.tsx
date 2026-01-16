@@ -102,108 +102,108 @@ const developerTools = [
 export default function SpecificationsPage() {
   return (
     <div>
-      {/* Hero Section */}
-      <div className="mb-12 text-center">
-        <h1 className="mb-4 text-4xl font-bold lg:text-5xl">
-          Technical Specifications
-        </h1>
-        <p className="text-muted-foreground mx-auto max-w-2xl text-lg">
-          Detailed technical specifications for AWFixerOS. Built on proven
-          open-source technologies with modern enhancements.
-        </p>
-      </div>
+        {/* Hero Section */}
+        <div className="mb-12 text-center">
+          <h1 className="mb-4 text-4xl font-bold lg:text-5xl">
+            Technical Specifications
+          </h1>
+          <p className="text-muted-foreground mx-auto max-w-2xl text-lg">
+            Detailed technical specifications for AWFixerOS. Built on proven
+            open-source technologies with modern enhancements.
+          </p>
+        </div>
 
-      {/* Technical Specs Grid */}
-      <div className="mb-16 grid gap-6 lg:grid-cols-2">
-        {Object.values(technicalSpecs).map((section, index) => {
-          const Icon = section.icon;
-          return (
-            <Card key={index} className="border-2">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-3">
-                  <div className="rounded-lg bg-primary/10 p-2">
-                    <Icon className="h-5 w-5 text-primary" />
-                  </div>
-                  {section.title}
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {section.specs.map((spec, specIndex) => (
-                    <div
-                      key={specIndex}
-                      className="flex justify-between border-b border-border/40 pb-2 text-sm last:border-0 last:pb-0"
-                    >
-                      <span className="text-muted-foreground">{spec.label}</span>
-                      <span className="font-medium">{spec.value}</span>
+        {/* Technical Specs Grid */}
+        <div className="mb-16 grid gap-6 lg:grid-cols-2">
+          {Object.values(technicalSpecs).map((section, index) => {
+            const Icon = section.icon;
+            return (
+              <Card key={index} className="border-2">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-3">
+                    <div className="rounded-lg bg-primary/10 p-2">
+                      <Icon className="h-5 w-5 text-primary" />
                     </div>
+                    {section.title}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    {section.specs.map((spec, specIndex) => (
+                      <div
+                        key={specIndex}
+                        className="flex justify-between border-b border-border/40 pb-2 text-sm last:border-0 last:pb-0"
+                      >
+                        <span className="text-muted-foreground">{spec.label}</span>
+                        <span className="font-medium">{spec.value}</span>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+
+        {/* Software Includes */}
+        <div className="mb-16 grid gap-8 lg:grid-cols-2">
+          <div>
+            <h2 className="mb-6 text-2xl font-bold">Pre-installed Software</h2>
+            <Card className="border-2">
+              <CardContent className="pt-6">
+                <ul className="space-y-3">
+                  {softwareIncludes.map((item, index) => (
+                    <li key={index} className="flex items-start text-sm">
+                      <Check className="mr-3 mt-0.5 h-4 w-4 flex-shrink-0 text-green-500" />
+                      {item}
+                    </li>
                   ))}
-                </div>
+                </ul>
               </CardContent>
             </Card>
-          );
-        })}
-      </div>
-
-      {/* Software Includes */}
-      <div className="mb-16 grid gap-8 lg:grid-cols-2">
-        <div>
-          <h2 className="mb-6 text-2xl font-bold">Pre-installed Software</h2>
-          <Card className="border-2">
-            <CardContent className="pt-6">
-              <ul className="space-y-3">
-                {softwareIncludes.map((item, index) => (
-                  <li key={index} className="flex items-start text-sm">
-                    <Check className="mr-3 mt-0.5 h-4 w-4 flex-shrink-0 text-green-500" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-        </div>
-
-        <div>
-          <h2 className="mb-6 text-2xl font-bold">Developer Tools</h2>
-          <Card className="border-2">
-            <CardContent className="pt-6">
-              <ul className="space-y-3">
-                {developerTools.map((item, index) => (
-                  <li key={index} className="flex items-start text-sm">
-                    <Check className="mr-3 mt-0.5 h-4 w-4 flex-shrink-0 text-green-500" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-
-      {/* Hardware Compatibility Note */}
-      <div className="rounded-2xl bg-muted/50 p-8">
-        <h2 className="mb-4 text-center text-2xl font-bold">
-          Hardware Compatibility
-        </h2>
-        <p className="text-muted-foreground mx-auto mb-6 max-w-3xl text-center">
-          AWFixerOS supports a wide range of hardware out of the box. Our
-          compatibility database includes thousands of tested devices.
-        </p>
-        <div className="grid gap-4 text-center sm:grid-cols-3">
-          <div className="rounded-lg bg-background p-4">
-            <p className="text-3xl font-bold text-primary">5000+</p>
-            <p className="text-sm text-muted-foreground">Tested Laptops</p>
           </div>
-          <div className="rounded-lg bg-background p-4">
-            <p className="text-3xl font-bold text-primary">99%</p>
-            <p className="text-sm text-muted-foreground">WiFi Chip Coverage</p>
-          </div>
-          <div className="rounded-lg bg-background p-4">
-            <p className="text-3xl font-bold text-primary">Day 1</p>
-            <p className="text-sm text-muted-foreground">New GPU Support</p>
+
+          <div>
+            <h2 className="mb-6 text-2xl font-bold">Developer Tools</h2>
+            <Card className="border-2">
+              <CardContent className="pt-6">
+                <ul className="space-y-3">
+                  {developerTools.map((item, index) => (
+                    <li key={index} className="flex items-start text-sm">
+                      <Check className="mr-3 mt-0.5 h-4 w-4 flex-shrink-0 text-green-500" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
           </div>
         </div>
-      </div>
+
+        {/* Hardware Compatibility Note */}
+        <div className="rounded-2xl bg-muted/50 p-8">
+          <h2 className="mb-4 text-center text-2xl font-bold">
+            Hardware Compatibility
+          </h2>
+          <p className="text-muted-foreground mx-auto mb-6 max-w-3xl text-center">
+            AWFixerOS supports a wide range of hardware out of the box. Our
+            compatibility database includes thousands of tested devices.
+          </p>
+          <div className="grid gap-4 text-center sm:grid-cols-3">
+            <div className="rounded-lg bg-background p-4">
+              <p className="text-3xl font-bold text-primary">5000+</p>
+              <p className="text-sm text-muted-foreground">Tested Laptops</p>
+            </div>
+            <div className="rounded-lg bg-background p-4">
+              <p className="text-3xl font-bold text-primary">99%</p>
+              <p className="text-sm text-muted-foreground">WiFi Chip Coverage</p>
+            </div>
+            <div className="rounded-lg bg-background p-4">
+              <p className="text-3xl font-bold text-primary">Day 1</p>
+              <p className="text-sm text-muted-foreground">New GPU Support</p>
+            </div>
+          </div>
+        </div>
     </div>
   );
 }
