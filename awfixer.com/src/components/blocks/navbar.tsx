@@ -336,7 +336,7 @@ export const Navbar = () => {
           "max-lg:pointer-events-none max-lg:-translate-y-full max-lg:opacity-0",
       )}
     >
-      <div className="flex items-center justify-between px-6 py-3">
+      <div className="flex items-center justify-between gap-4 px-6 py-3 lg:gap-6 lg:px-8">
         <Link href="/" className="flex shrink-0 items-center gap-2">
           <Image
             src="https://github.com/awfixer-org.png"
@@ -349,7 +349,7 @@ export const Navbar = () => {
 
         {/* Section Indicator (Desktop) */}
         {currentSection && (
-          <div className="ml-3 flex items-center gap-1.5 max-lg:hidden">
+          <div className="flex items-center gap-1.5 max-lg:hidden">
             <span className="text-muted-foreground/50">/</span>
             <div className="bg-accent/50 flex items-center gap-1.5 rounded-full px-2.5 py-1">
               <currentSection.icon className="text-muted-foreground size-3.5" />
@@ -361,7 +361,7 @@ export const Navbar = () => {
         )}
 
         {/* Desktop Navigation */}
-        <NavigationMenu className="ml-6 max-lg:hidden">
+        <NavigationMenu className="max-lg:hidden">
           <NavigationMenuList className="gap-1">
             {ITEMS.map((link) =>
               link.isMatrix ? (
@@ -431,7 +431,7 @@ export const Navbar = () => {
         </NavigationMenu>
 
         {/* Auth Buttons */}
-        <div className="ml-6 flex items-center gap-2.5">
+        <div className="flex shrink-0 items-center gap-2.5">
           <ThemeToggle />
 
           {/* Loading State */}

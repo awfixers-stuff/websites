@@ -15,10 +15,8 @@ interface DocsBreadcrumbProps {
 export function DocsBreadcrumb({ doc, className }: DocsBreadcrumbProps) {
   const pathParts = doc.slug.split("/");
 
-  // Build breadcrumb items
-  const items: { label: string; href: string }[] = [
-    { label: "Docs", href: "/docs" },
-  ];
+  // Build breadcrumb items (home icon already links to /docs, so start with path segments)
+  const items: { label: string; href: string }[] = [];
 
   let currentPath = "";
   for (let i = 0; i < pathParts.length; i++) {
@@ -44,9 +42,9 @@ export function DocsBreadcrumb({ doc, className }: DocsBreadcrumbProps) {
       className={cn("flex items-center gap-1 text-sm text-muted-foreground", className)}
     >
       <Link
-        href="/"
+        href="/docs"
         className="p-1 hover:text-foreground transition-colors"
-        aria-label="Home"
+        aria-label="Documentation home"
       >
         <Home className="size-4" />
       </Link>

@@ -23,7 +23,10 @@
       "mcp__serena__think_about_whether_you_are_done",
       "mcp__acp__Bash",
       "Bash(cut:*)",
-      "Bash(uv run:*)"
+      "Bash(uv run:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "mcp__serena__think_about_collected_information"
     ]
   }
 }
