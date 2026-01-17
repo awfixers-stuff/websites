@@ -29,6 +29,8 @@ import {
   Train,
   Monitor,
   Zap,
+  FlaskConical,
+  AlertTriangle,
 } from "lucide-react";
 
 import { useEnhancedAuth } from "@/components/enhanced-auth-provider";
@@ -156,6 +158,14 @@ const ITEMS = [
         description:
           "Professional development tools to boost your productivity",
       },
+      {
+        title: "Experimental Products",
+        icon: FlaskConical,
+        href: "/products/experimental",
+        description:
+          "Cutting-edge experimental products and prototypes from AWFixer Labs",
+        isExperimental: true,
+      },
     ],
   },
   {
@@ -230,7 +240,7 @@ const ProjectsMatrixDropdown = () => {
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
 
   return (
-    <div className="grid w-[600px] grid-cols-2 gap-4 p-4">
+    <div className="grid w-150 grid-cols-2 gap-4 p-4">
       {PROJECT_CATEGORIES.map((category) => {
         const CategoryIcon = category.icon;
         const isHovered = hoveredCategory === category.id;
@@ -419,16 +429,35 @@ export const Navbar = () => {
                           <NavigationMenuLink asChild>
                             <Link
                               href={item.href}
-                              className="group hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground flex items-center gap-3 rounded-md p-3 leading-none no-underline outline-hidden transition-colors select-none"
+                              className={`group hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground flex items-center gap-3 rounded-md p-3 leading-none no-underline outline-hidden transition-colors select-none ${
+                                item.isExperimental 
+                                  ? "bg-red-50 dark:bg-red-950/50 border border-red-200 dark:border-red-800 hover:bg-red-100 dark:hover:bg-red-950" 
+                                  : ""
+                              }`}
                             >
                               {item.icon && (
-                                <item.icon className="text-muted-foreground group-hover:text-accent-foreground size-5 shrink-0 transition-colors" />
+                                <item.icon className={`size-5 shrink-0 transition-colors ${
+                                  item.isExperimental 
+                                    ? "text-red-600 dark:text-red-400 group-hover:text-red-700 dark:group-hover:text-red-300" 
+                                    : "text-muted-foreground group-hover:text-accent-foreground"
+                                }`} />
                               )}
-                              <div className="space-y-1.5 transition-transform duration-300 group-hover:translate-x-1">
-                                <div className="text-sm leading-none font-medium">
+                              <div className="space-y-1.5 transition-transform duration-300 group-hover:translate-x-1 flex-1">
+                                <div className={`text-sm leading-none font-medium flex items-center gap-2 ${
+                                  item.isExperimental 
+                                    ? "text-red-700 dark:text-red-300" 
+                                    : ""
+                                }`}>
                                   {item.title}
+                                  {item.isExperimental && (
+                                    <AlertTriangle className="size-3 text-red-600 dark:text-red-400" />
+                                  )}
                                 </div>
-                                <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
+                                <p className={`line-clamp-2 text-sm leading-snug ${
+                                  item.isExperimental 
+                                    ? "text-red-600 dark:text-red-400" 
+                                    : "text-muted-foreground"
+                                }`}>
                                   {item.description}
                                 </p>
                               </div>
@@ -752,21 +781,40 @@ export const Navbar = () => {
                       <Link
                         key={item.title}
                         href={item.href}
-                        className="group hover:bg-accent flex items-start gap-3 rounded-md p-2 transition-colors"
+                        className={`group hover:bg-accent flex items-start gap-3 rounded-md p-2 transition-colors ${
+                          item.isExperimental 
+                            ? "bg-red-50 dark:bg-red-950/50 border border-red-200 dark:border-red-800" 
+                            : ""
+                        }`}
                         onClick={() => {
                           setIsMenuOpen(false);
                           setOpenDropdown(null);
                         }}
                       >
                         {item.icon && (
-                          <item.icon className="text-muted-foreground mt-0.5 size-5 shrink-0" />
+                          <item.icon className={`mt-0.5 size-5 shrink-0 ${
+                            item.isExperimental 
+                              ? "text-red-600 dark:text-red-400" 
+                              : "text-muted-foreground"
+                          }`} />
                         )}
-                        <div className="transition-transform duration-200 group-hover:translate-x-1">
-                          <div className="text-primary font-medium">
+                        <div className="transition-transform duration-200 group-hover:translate-x-1 flex-1">
+                          <div className={`font-medium flex items-center gap-2 ${
+                            item.isExperimental 
+                              ? "text-red-700 dark:text-red-300" 
+                              : "text-primary"
+                          }`}>
                             {item.title}
+                            {item.isExperimental && (
+                              <AlertTriangle className="size-3 text-red-600 dark:text-red-400" />
+                            )}
                           </div>
 
-                          <p className="text-muted-foreground mt-1 text-sm">
+                          <p className={`mt-1 text-sm ${
+                            item.isExperimental 
+                              ? "text-red-600 dark:text-red-400" 
+                              : "text-muted-foreground"
+                          }`}>
                             {item.description}
                           </p>
                         </div>

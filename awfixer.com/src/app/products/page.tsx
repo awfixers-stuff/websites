@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Cpu, FileText, Globe, Shield, Zap } from "lucide-react";
+import { ArrowRight, Cpu, FileText, Globe, Shield, Zap, FlaskConical, AlertTriangle } from "lucide-react";
 
 import { Background } from "@/components/background";
 import { Button } from "@/components/ui/button";
@@ -69,19 +69,37 @@ const products = [
     docsHref: "/products/tools/docs",
     status: "available" as const,
     category: "Developer Tools"
+  },
+  {
+    id: "experimental",
+    name: "Experimental Products",
+    description: "Cutting-edge experimental products and prototypes from AWFixer Labs.",
+    icon: FlaskConical,
+    features: [
+      "Quantum computing frameworks",
+      "Neural interface development kits",
+      "Fusion reactor prototypes",
+      "Molecular-level 3D printing"
+    ],
+    href: "/products/experimental",
+    docsHref: "/products/experimental",
+    status: "experimental" as const,
+    category: "Research & Development"
   }
 ];
 
 const statusColors = {
   available: "bg-green-100 text-green-800",
   beta: "bg-blue-100 text-blue-800", 
-  "coming-soon": "bg-gray-100 text-gray-800"
+  "coming-soon": "bg-gray-100 text-gray-800",
+  experimental: "bg-red-100 text-red-800"
 };
 
 const statusLabels = {
   available: "Available",
   beta: "Beta",
-  "coming-soon": "Coming Soon"
+  "coming-soon": "Coming Soon",
+  experimental: "Experimental"
 };
 
 export default function ProductsPage() {
@@ -101,17 +119,38 @@ export default function ProductsPage() {
           {products.map((product) => {
             const Icon = product.icon;
             return (
-              <Card key={product.id} className="group hover:shadow-lg transition-all duration-300 border-2 hover:border-primary/20">
+              <Card key={product.id} className={`group hover:shadow-lg transition-all duration-300 border-2 ${
+                    product.status === "experimental" 
+                      ? "hover:border-red-500/30" 
+                      : "hover:border-primary/20"
+                  }`}>
                 <CardHeader>
                   <div className="flex items-center justify-between mb-4">
-                    <div className="p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
-                      <Icon className="h-6 w-6 text-primary" />
+                    <div className={`p-3 rounded-lg transition-colors ${
+                      product.status === "experimental" 
+                        ? "bg-red-500/10 group-hover:bg-red-500/20" 
+                        : "bg-primary/10 group-hover:bg-primary/20"
+                    }`}>
+                      <Icon className={`h-6 w-6 ${
+                        product.status === "experimental" 
+                          ? "text-red-600 dark:text-red-400" 
+                          : "text-primary"
+                      }`} />
                     </div>
-                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${statusColors[product.status]}`}>
-                      {statusLabels[product.status]}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${statusColors[product.status]}`}>
+                        {statusLabels[product.status]}
+                      </span>
+                      {product.status === "experimental" && (
+                        <AlertTriangle className="h-4 w-4 text-red-600 dark:text-red-400" />
+                      )}
+                    </div>
                   </div>
-                  <CardTitle className="text-2xl">{product.name}</CardTitle>
+                  <CardTitle className={`text-2xl ${
+                    product.status === "experimental" 
+                      ? "text-red-900 dark:text-red-100" 
+                      : ""
+                  }`}>{product.name}</CardTitle>
                   <CardDescription className="text-base">
                     {product.description}
                   </CardDescription>
@@ -129,9 +168,13 @@ export default function ProductsPage() {
                     ))}
                   </ul>
                   <div className="flex gap-2">
-                    <Button asChild className="flex-1">
+                    <Button asChild className={`flex-1 ${
+                      product.status === "experimental" 
+                        ? "bg-red-600 hover:bg-red-700" 
+                        : ""
+                    }`}>
                       <Link href={product.href}>
-                        Learn More
+                        {product.status === "experimental" ? "Experiment" : "Learn More"}
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Link>
                     </Button>
