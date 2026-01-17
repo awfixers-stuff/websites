@@ -33,7 +33,7 @@
     "@tresjs/core": "^5.2.1",
     "@vercel/analytics": "^1.6.1",
     "@vueuse/core": "^14.1.0",
-    "@vueuse/motion": "^2.2.0",
+    "@vueuse/motion": "^3.0.0",
     "axe-playwright": "^2.2.2",
     "better-auth": "^1.4.10",
     "class-variance-authority": "^0.7.1",
