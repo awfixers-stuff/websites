@@ -1,5 +1,3 @@
-"use client"
-
 import { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, FlaskConical, TestTube, Microscope, Dna } from "lucide-react";
