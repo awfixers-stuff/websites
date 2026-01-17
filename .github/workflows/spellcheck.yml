@@ -1,0 +1,90 @@
+name: Spell Check
+
+on:
+  push:
+    branches: [main, dev, prod]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  select-runner:
+    name: Select runner
+    runs-on: ubuntu-latest
+    outputs:
+      runner: ${{ steps.set-runner.outputs.runner }}
+    steps:
+      - name: Set runner based on event and branch
+        id: set-runner
+        run: |
+          if [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main" ]]; then
+            echo "runner=blacksmith-4vcpu-ubuntu-2404" >> "$GITHUB_OUTPUT"
+          else
+            echo "runner=ubuntu-latest" >> "$GITHUB_OUTPUT"
+          fi
+
+  spellcheck:
+    name: ${{ matrix.target.name }}
+    needs: select-runner
+    runs-on: ${{ needs.select-runner.outputs.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+          - name: awfixer.blog
+            working_directory: awfixer.blog
+            files: |
+              **/*.md
+              **/*.mdx
+              **/*.ts
+              **/*.tsx
+          - name: awfixer.academy
+            working_directory: awfixer.academy
+            files: |
+              **/*.md
+              **/*.ts
+              **/*.tsx
+          - name: awfixer.vip
+            working_directory: awfixer.vip
+            files: |
+              **/*.md
+              **/*.ts
+              **/*.vue
+          - name: awfixer.com
+            working_directory: awfixer.com
+            files: |
+              **/*.md
+              **/*.mdx
+              **/*.ts
+              **/*.tsx
+          - name: awfixer.me
+            working_directory: awfixer.me
+            files: |
+              **/*.md
+              **/*.mdx
+              **/*.ts
+              **/*.astro
+          - name: awfixerwiki
+            working_directory: awfixerwiki
+            files: |
+              **/*.md
+              **/*.mdx
+              **/*.ts
+              **/*.tsx
+              **/*.astro
+    defaults:
+      run:
+        working-directory: ${{ matrix.target.working_directory }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+
+      - name: Run spell check
+        uses: streetsidesoftware/cspell-action@v6
+        with:
+          root: ${{ matrix.target.working_directory }}
+          files: ${{ matrix.target.files }}
+          config: .cspell.json
+          inline: warning
+          strict: false

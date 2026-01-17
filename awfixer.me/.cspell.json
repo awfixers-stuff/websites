@@ -1,0 +1,7 @@
+{
+  "import": ["../.cspell.json"],
+  "words": [
+    "starlight",
+    "ory"
+  ]
+}
