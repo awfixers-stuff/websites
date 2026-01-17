@@ -12,7 +12,12 @@ export default defineConfig({
   // https://docs.astro.build/en/guides/images/#authorizing-remote-images
   site: "https://awfixer.me",
   output: "server",
-  adapter: cloudflare(),
+  adapter: cloudflare({
+    platformProxy: {
+      enabled: true,
+    },
+    imageService: "compile",
+  }),
   image: {
     domains: ["images.unsplash.com", "cdn.awfixer.space"],
   },

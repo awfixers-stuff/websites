@@ -1,0 +1,28 @@
+name = "awfixer-me"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+[env.production]
+name = "awfixer-me"
+
+[env.preview]
+name = "awfixer-me-preview"
+
+# Build configuration
+[build]
+command = "npm run build"
+cwd = "."
+watch_dir = "src/"
+
+# Pages configuration
+[pages]
+build_output_dir = "dist"
+
+# KV bindings for sessions
+[[kv_namespaces]]
+binding = "SESSION"
+id = "sessions_kv_namespace"
+
+# Environment variables (add as needed)
+# [vars]
+# ENVIRONMENT = "production"
